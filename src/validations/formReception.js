@@ -28,6 +28,10 @@ const validationSchema = yup.object().shape({
     .max(99999, "Не більше 99999")
     .positive("Не може бути сума менше за 0")
     .required("Це поле обов'язкове"),
+  description: yup
+    .string()
+    .min(3, "не менше 3 символів")
+    .required("Це поле обов'язкове"),
 });
 
 export default validationSchema;

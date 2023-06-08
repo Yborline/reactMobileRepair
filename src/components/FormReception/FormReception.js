@@ -7,7 +7,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Formik } from "formik";
 import RadioClick from "./RadioClick";
-import { Form, MarginItem } from "./FormReception.styled";
+import { Form, MarginItem, StyledTextarea } from "./FormReception.styled";
 import "dayjs/locale/uk";
 import dayjs from "dayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
@@ -41,6 +41,7 @@ const FormReception = () => {
     finishDay: null,
     finishTime: null,
     money: "",
+    description: "",
   };
 
   return (
@@ -145,9 +146,10 @@ const FormReception = () => {
                   </div>
                   <div>
                     <TimePicker
+                      disabled={values.finishDay !== null ? false : true}
                       minutesStep={10}
                       ampm={false}
-                      label="24 hours"
+                      label="Час закінчення робіт"
                       value={values.finishDay}
                       sx={{ width: "100%" }}
                       onChange={(event, newValue) =>
@@ -172,6 +174,25 @@ const FormReception = () => {
                 placeholder="Ціна"
               />
               {errors.money && touched.money && errors.money}
+            </div>
+
+            <div>
+              <StyledTextarea
+                onChange={handleChange}
+                placeholder="Опис роботи"
+                value={values.description}
+                name="description"
+              />
+
+              {/* <Input
+                type="text"
+                name="description"
+                // onChange={(event) => setCash(event.target.value)}
+                onChange={handleChange}
+                value={values.description}
+                placeholder="Ціна"
+              /> */}
+              {errors.description && touched.description && errors.description}
             </div>
 
             <Button type="submit" variant="contained">
