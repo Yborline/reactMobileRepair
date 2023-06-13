@@ -55,7 +55,9 @@ export default function Navbar() {
       <List>
         {pathNavbar.map(({ path, text, id }) => (
           <ListItem key={id} disablePadding>
-            <NavLink to={path}>{text}</NavLink>
+            <NavLink style={{ width: "100%" }} to={path}>
+              {text}
+            </NavLink>
           </ListItem>
         ))}
       </List>

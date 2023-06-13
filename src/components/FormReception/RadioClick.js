@@ -14,7 +14,19 @@ const typeOfWork = [
   { label: "Купівля", value: "purchase", id: 3 },
 ];
 
-const RadioClick = ({ setField }) => {
+const RadioClick = ({ changeValidation, setField }) => {
+  const changeRadioClick = (newValue) => {
+    if (newValue === "purchase") {
+      setField("action", newValue);
+      setField("finishDay", null);
+      setField("finishTime", null);
+      changeValidation("purchase");
+    } else {
+      changeValidation("normal");
+      setField("action", newValue);
+    }
+  };
+
   return (
     <FormControl style={{ width: "100%" }}>
       <FormLabel id="radio-buttons-group-label">Вид операції</FormLabel>
@@ -22,7 +34,7 @@ const RadioClick = ({ setField }) => {
         aria-labelledby="radio-buttons-group-label"
         defaultValue="diagnosis"
         name="radio-buttons-group"
-        onChange={(event, newValue) => setField("action", newValue)}
+        onChange={(event, newValue) => changeRadioClick(newValue)}
       >
         <List
           sx={

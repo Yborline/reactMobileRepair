@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
-
-import axios from "axios";
 import Autocomplete from "@mui/joy/Autocomplete";
-import { FormLabel, Stack } from "@mui/joy";
+import { Stack } from "@mui/joy";
 import Input from "@mui/joy/Input";
-// const model = ["apple", "xiomi", "realme", "doogee"];
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Formik } from "formik";
+import RadioClick from "./RadioClick";
+import { Form, MarginItem, StyledTextarea } from "./FormReception.styled";
+import "dayjs/locale/uk";
+import dayjs from "dayjs";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import Button from "@mui/material/Button";
+import validationSchema from "../../validations/formReception";
+import { getAllbrand } from "../../services/api";
 
-const telephones = [
-  { brand: "apple", id: 1 },
-  { brand: "xiomi", id: 2 },
-  { brand: "realme", id: 3 },
-  { brand: "doogee", id: 4 },
-];
+// const telephones = [
+//   { brand: "apple", id: 1 },
+//   { brand: "xiomi", id: 2 },
+//   { brand: "realme", id: 3 },
+//   { brand: "doogee", id: 4 },
+// ];
 
 const models = [
   { model: "iphone 11", id: 1 },
@@ -27,84 +32,192 @@ const models = [
   { model: "iphone 8", id: 7 },
 ];
 
-const options = {
-  method: "GET",
-  url: "https://mobile-phone-specs-database.p.rapidapi.com/gsm/all-brands",
-  headers: {
-    "X-RapidAPI-Key": "90b68a8498msh304d93f57b32844p18154ajsn6dcf6a62668b",
-    "X-RapidAPI-Host": "mobile-phone-specs-database.p.rapidapi.com",
-  },
-};
-
 const FormReception = () => {
-  const [brand, setBrand] = useState("");
-  const [model, setModel] = useState("");
-  const [cach, setCash] = useState("");
-  const [date, setDate] = useState(null);
-
-  const handleChange = (value, event) => {
-    if (value.brand) {
-      setBrand(value.brand);
-    } else {
-      setModel(value.model);
-    }
+  const [telephones, setTelephones] = useState([]);
+  const initial = {
+    brand: null,
+    model: [],
+    numberPhone: "",
+    name: "",
+    action: "diagnosis",
+    finishDay: null,
+    finishTime: null,
+    money: "",
+    description: "",
   };
 
-  console.log(brand);
-  console.log(model);
-  console.log(cach);
-  console.log(date);
-  return (
-    <form>
-      <h2>form</h2>
-      {/* <FormLabel>Бренд</FormLabel> */}
-      <Stack spacing={2}>
-        <Autocomplete
-          placeholder="Бренд"
-          sx={{ width: 300 }}
-          options={telephones}
-          onChange={(event, newValue) => handleChange(newValue, event)}
-          getOptionLabel={(option) => option.brand}
-        />
-        {/* <FormLabel>Модель</FormLabel> */}
-        <Autocomplete
-          placeholder="Модель"
-          sx={{ width: 300 }}
-          disabled={brand !== "" ? false : true}
-          options={models}
-          onChange={(event, newValue) => handleChange(newValue)}
-          getOptionLabel={(option) => option.model}
-        />
+  useEffect(() => {
+    getAllbrand().then((data) => setTelephones(data.allBrand));
+    // console.log(data);
+  }, []);
 
-        <Input
-          type="text"
-          // onChange={(event) => setCash(event.target.value)}
-          placeholder="Ім'я клієнта "
-          sx={{ width: 300 }}
-        />
-        <Input
-          type="number"
-          // onChange={(event) => setCash(event.target.value)}
-          placeholder="Номер телефону"
-          sx={{ width: 300 }}
-        />
-        <Input
-          type="number"
-          onChange={(event) => setCash(event.target.value)}
-          placeholder="Ціна"
-          sx={{ width: 300 }}
-        />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DatePicker"]}>
-            <DatePicker
-              value={date}
-              onChange={(newValue) => setDate(newValue)}
-              label="Basic date picker"
-            />
-          </DemoContainer>
-        </LocalizationProvider>
-      </Stack>
-    </form>
+  return (
+    <Formik
+      initialValues={initial}
+      validateOnBlur
+      validationSchema={validationSchema}
+      onSubmit={(values, formikProps) => {
+        console.log(values);
+      }}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        options,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        setFieldValue,
+        /* and other goodies */
+      }) => (
+        <Form
+          id="form"
+          encType="multipart/form-data"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
+          {/* <div> */}
+          <MarginItem spacing={2}>
+            <div>
+              <Autocomplete
+                type="text"
+                name="brand"
+                placeholder="Бренд"
+                value={values.brand}
+                options={telephones}
+                onBlur={handleBlur}
+                getOptionLabel={(option) => option.brand}
+                onChange={(event, newValue) => {
+                  setFieldValue("brand", newValue);
+                }}
+                isOptionEqualToValue={(option, value) =>
+                  option?._id === value?._id
+                }
+              />
+              {errors.brand && touched.brand && errors.brand}
+            </div>
+
+            <div>
+              <Autocomplete
+                type="text"
+                name="model"
+                placeholder="Модель"
+                disabled={values.brand !== null ? false : true}
+                options={values?.brand ? values?.brand?.model : []}
+                onChange={(event, newValue) => setFieldValue("model", newValue)}
+                // getOptionLabel={(option) => option}
+                isOptionEqualToValue={(option, value) => option === value}
+              />
+
+              {errors.model && touched.model && errors.namodelme}
+            </div>
+            <div>
+              <Input
+                type="text"
+                placeholder="Ім'я клієнта "
+                name="name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.name}
+              />
+
+              {errors.name && touched.name && errors.name}
+            </div>
+            <div>
+              <Input
+                type="number"
+                name="numberPhone"
+                // onChange={(event) => setCash(event.target.value)}
+                onChange={handleChange}
+                value={values.numberPhone}
+                placeholder="Номер телефону"
+              />
+              {errors.numberPhone && touched.numberPhone && errors.numberPhone}
+            </div>
+
+            <RadioClick setField={setFieldValue} />
+            {values.action !== "purchase" && (
+              <LocalizationProvider
+                adapterLocale="uk"
+                dateAdapter={AdapterDayjs}
+              >
+                <MarginItem spacing={2}>
+                  <div>
+                    <DatePicker
+                      onChange={(event) => setFieldValue("finishDay", event)}
+                      minDate={dayjs()}
+                      label="Дата закінчення робіт"
+                      sx={{ width: "100%" }}
+                    />
+                    {errors.finishDay && touched.finishDay && errors.finishDay}
+                  </div>
+                  <div>
+                    <TimePicker
+                      disabled={values.finishDay !== null ? false : true}
+                      minutesStep={10}
+                      ampm={false}
+                      label="Час закінчення робіт"
+                      value={values.finishDay}
+                      sx={{ width: "100%" }}
+                      onChange={(event, newValue) =>
+                        setFieldValue("finishTime", event)
+                      }
+                    />
+                    {errors.finishTime &&
+                      touched.finishTime &&
+                      errors.finishTime}
+                  </div>
+                </MarginItem>
+              </LocalizationProvider>
+            )}
+
+            <div>
+              <Input
+                type="number"
+                name="money"
+                // onChange={(event) => setCash(event.target.value)}
+                onChange={handleChange}
+                value={values.money}
+                placeholder="Ціна"
+              />
+              {errors.money && touched.money && errors.money}
+            </div>
+
+            <div>
+              <StyledTextarea
+                onChange={handleChange}
+                placeholder="Опис роботи"
+                value={values.description}
+                name="description"
+              />
+
+              {/* <Input
+                type="text"
+                name="description"
+                // onChange={(event) => setCash(event.target.value)}
+                onChange={handleChange}
+                value={values.description}
+                placeholder="Ціна"
+              /> */}
+              {errors.description && touched.description && errors.description}
+            </div>
+
+            <Button type="submit" variant="contained">
+              sss
+            </Button>
+            {/* <Radio name="action" options={listJenisKelamin} /> */}
+            {/* <Field component={RadioGroup} name="action"> */}
+            {/* <RadioPositionEnd handleChange={setFieldValue} /> */}
+            {/* </Field> */}
+          </MarginItem>
+          {/* </div> */}
+        </Form>
+      )}
+    </Formik>
   );
 };
 

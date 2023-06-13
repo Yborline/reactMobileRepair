@@ -7,6 +7,7 @@ import Repair from "./pages/Repair/Repair";
 import Accounting from "./pages/Accounting/Accounting";
 import SpareParts from "./pages/SpareParts/SpareParts";
 import Telephones from "./pages/Telephones/Telephones";
+// import Navbar from "./components/Navbar/MobileVersion";
 
 function App() {
   return (

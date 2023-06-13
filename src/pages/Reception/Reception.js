@@ -1,3 +1,4 @@
+import FormModel from "../../components/FormReception/FormModel/FormModel";
 import FormReception from "../../components/FormReception/FormReception";
 
 const Reception = () => {
