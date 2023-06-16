@@ -53,7 +53,7 @@ const FormReception = () => {
     model: null,
     numberPhone: "",
     name: "",
-    action: "diagnosis",
+    status: "diagnosis",
     finishDay: null,
     finishTime: null,
     money: "",
@@ -101,7 +101,7 @@ const FormReception = () => {
           model,
           numberPhone,
           name,
-          action,
+          status,
           finishTime,
           money,
           description,
@@ -111,10 +111,11 @@ const FormReception = () => {
         const result = {
           brand: brand.brand,
           model,
-          action,
+          status,
           name,
           numberPhone: numberPhone.toString(),
           finishDay: normalDate(finishTime),
+          statusRepair: "start",
           money,
           description,
         };
@@ -230,7 +231,7 @@ const FormReception = () => {
               changeValidation={setValidation}
               setField={setFieldValue}
             />
-            {values.action !== "purchase" && (
+            {values.status !== "purchase" && (
               <LocalizationProvider
                 adapterLocale="uk"
                 dateAdapter={AdapterDayjs}

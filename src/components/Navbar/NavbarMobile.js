@@ -25,7 +25,7 @@ const pathNavbar = [
   { path: "/history", text: "Історія", id: 6 },
 ];
 
-export default function Navbar() {
+export default function NavbarMobile() {
   const [state, setState] = React.useState(
     // top: false,
     // left: false,

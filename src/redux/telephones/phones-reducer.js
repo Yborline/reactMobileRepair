@@ -18,7 +18,7 @@ const phonesSlice = createSlice({
     builder
       // Add reducers for additional action types here, and handle loading state as needed
       .addCase(fetchTelephones.fulfilled, (state, action) => {
-        state.items = action.payload.allRepair;
+        state.items = action.payload.phones;
         state.loading = false;
         state.error = null;
       })

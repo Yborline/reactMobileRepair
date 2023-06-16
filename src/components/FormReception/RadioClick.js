@@ -17,7 +17,7 @@ const typeOfWork = [
 const RadioClick = ({ changeValidation, setField }) => {
   const changeRadioClick = (newValue) => {
     if (newValue === "purchase") {
-      setField("action", newValue);
+      setField("status", newValue);
       setField("finishDay", null);
       setField("finishTime", null);
       changeValidation("purchase");

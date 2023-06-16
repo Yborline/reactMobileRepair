@@ -19,7 +19,7 @@ export const validationSchema = yup.object().shape({
     )
     .max(40, "Не більше 40 символів")
     .required("Це поле обов'язкове"),
-  action: yup.string().oneOf(["diagnosis", "repair", "purchase"]).required(""),
+  status: yup.string().oneOf(["diagnosis", "repair", "purchase"]).required(""),
   finishDay: yup.object().required("Це поле обов'язкове"),
   finishTime: yup.object().required("Це поле обов'язкове"),
   money: yup
@@ -53,7 +53,7 @@ export const validationSchemaRepair = yup.object().shape({
     )
     .max(40, "Не більше 40 символів")
     .required("Це поле обов'язкове"),
-  action: yup.string().oneOf(["diagnosis", "repair", "purchase"]).required(""),
+  status: yup.string().oneOf(["diagnosis", "repair", "purchase"]).required(""),
   money: yup
     .number()
     .min(10, "Не менше 10")
