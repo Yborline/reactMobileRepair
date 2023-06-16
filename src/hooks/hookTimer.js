@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef, useMemo } from 'react';
-import finalDay from './finalDay';
+import { useEffect, useState, useRef, useMemo } from "react";
+import finalDay from "./finalDay";
 
 const useFinaltimer = (date, defaultValue) => {
   const intervalId = useRef(null);
@@ -14,7 +14,6 @@ const useFinaltimer = (date, defaultValue) => {
   });
 
   useEffect(() => {
-    console.log('1');
     intervalId.current = setInterval(() => {
       const day = new Date();
       //   setTime(new Date());

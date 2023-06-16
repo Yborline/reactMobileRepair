@@ -1,13 +1,14 @@
 import ItemRepair from "./ItemRepair/ItemRepair";
+import { Ul } from "./ListRepair.styled";
 
 const ListRepair = ({ phones }) => {
   console.log(phones);
 
   return (
-    <ul>
+    <Ul>
       {phones &&
         phones.map((item) => <ItemRepair key={item._id} item={item} />)}
-    </ul>
+    </Ul>
   );
 };
 

@@ -19,27 +19,6 @@ width: 280px;
 width: 500px;
 }
 `
-  const blue = {
-    100: '#DAECFF',
-    200: '#b6daff',
-    400: '#3399FF',
-    500: '#007FFF',
-    600: '#0072E5',
-    900: '#003A75',
-  };
-
-  const grey = {
-    50: '#f6f8fa',
-    100: '#eaeef2',
-    200: '#d0d7de',
-    300: '#afb8c1',
-    400: '#8c959f',
-    500: '#6e7781',
-    600: '#57606a',
-    700: '#424a53',
-    800: '#32383f',
-    900: '#24292f',
-  };
 
 
 
@@ -52,22 +31,22 @@ box-sizing: border-box;
     line-height: 1.5;
     padding: 12px;
     border-radius: 12px;
-    color:  ${grey[900]};
-    background: #fff'};
-    border: 1px solid ${grey[200]};
-    box-shadow: 0px 2px 2px ${ grey[50]};
+    color:  ${({theme})=> theme.textAreaColor};
+    background: #fff;
+    border: 1px solid ${({theme})=> theme.borderTextArea};
+    box-shadow: 0px 2px 2px ${({theme})=> theme.borderTextArea};
     width: 280px;
 @media screen and (min-width: 768px){
 width: 500px;
 }
   
     &:hover {
-      border-color: ${blue[400]};
+      border-color: ${({theme})=> theme.hoverBorderTextArea};
     }
   
     &:focus {
-      border-color: ${blue[400]};
-      box-shadow: 0 0 0 3px ${blue[200]};
+      border-color: ${({theme})=> theme.hoverBorderTextArea};
+      box-shadow: 0 0 0 3px ${({theme})=> theme.hoverShadowTextArea};
     }
   
     // firefox
@@ -75,5 +54,7 @@ width: 500px;
       outline: 0;
     }
   `
+
+
 
 

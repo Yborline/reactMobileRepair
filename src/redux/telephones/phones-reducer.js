@@ -23,7 +23,6 @@ const phonesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchTelephones.pending, (state, action) => {
-        console.log(action.type);
         state.items = [];
         state.loading = true;
         state.error = null;
