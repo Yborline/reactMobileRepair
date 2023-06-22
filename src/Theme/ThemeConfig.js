@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 export const lightTheme = {
   statusRepairStart: "#FFD700",
-  statusRepairFinish: "#00FF00",
+  statusRepairFinish: "#90EE90",
   borderList: "#D3D3D3",
   textAreaColor: "#24292f",
   borderTextArea: "#d0d7de",

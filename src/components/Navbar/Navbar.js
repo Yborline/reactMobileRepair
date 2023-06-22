@@ -22,6 +22,9 @@ const Navbar = () => {
             <NavLink to="/repair">Ремонт</NavLink>
           </li>
           <li>
+            <NavLink to="/diagnosis">Діагностика</NavLink>
+          </li>
+          <li>
             <NavLink to="/telephones">Телефони</NavLink>
           </li>
           <li>

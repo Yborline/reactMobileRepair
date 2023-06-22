@@ -1,14 +1,16 @@
-import * as React from "react";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import Radio from "@mui/material/Radio";
+// import Radio from "@mui/joy/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import List from "@mui/joy/List";
 import ListItem from "@mui/joy/ListItem";
+import { Stack } from "@mui/joy";
 import ListItemDecorator from "@mui/joy/ListItemDecorator";
-import Radio from "@mui/joy/Radio";
-import RadioGroup from "@mui/joy/RadioGroup";
 import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
 import HandymanIcon from "@mui/icons-material/Handyman";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 
 const typeOfWork = [
   { label: "Діагностика", value: "diagnosis", id: 1 },
@@ -16,45 +18,48 @@ const typeOfWork = [
   { label: "Купівля", value: "purchase", id: 3 },
 ];
 
-export default function RadioClick({ changeValidation, setField }) {
+const RadioClick = ({ changeValidation, setField }) => {
   const changeRadioClick = (newValue) => {
-    if (newValue.value === "purchase") {
-      setField("status", newValue.value);
+    if (newValue === "purchase") {
+      setField("status", newValue);
       setField("finishDay", null);
       setField("finishTime", null);
       changeValidation("purchase");
     } else {
       changeValidation("normal");
-      setField("action", newValue.value);
+      setField("action", newValue);
     }
   };
 
   return (
     <FormControl style={{ width: "100%" }}>
-      <FormLabel id="radio-buttons-group-label">
-        Вид операції
-        <RadioGroup
-          aria-labelledby="radio-buttons-group-label"
-          name="radio-buttons-group"
-          defaultValue="diagnosis"
-          onChange={(event, newValue) => changeRadioClick(event.target)}
+      <FormLabel id="radio-buttons-group-label">Вид операції</FormLabel>
+      <RadioGroup
+        aria-labelledby="radio-buttons-group-label"
+        defaultValue="diagnosis"
+        name="radio-buttons-group"
+      >
+        <List
+          sx={
+            {
+              // display: "flex",
+              // flexDirection: "row",
+              // justifyContent: "space-around",
+            }
+          }
         >
-          <List
-            sx={{
-              minWidth: 240,
-              "--List-gap": "0.5rem",
-              "--ListItem-paddingY": "1rem",
-              "--ListItem-radius": "8px",
-              "--ListItemDecorator-size": "32px",
-            }}
-          >
+          <Stack spacing={2}>
             {typeOfWork.map((item, index) => (
               <ListItem
                 variant="outlined"
                 key={item.id}
-                sx={{ boxShadow: "sm", bgcolor: "background.body" }}
+                sx={{
+                  boxShadow: "sm",
+                  borderRadius: "8px",
+                  bgcolor: "background.body",
+                }}
               >
-                <ListItemDecorator style={{ marginRight: "10px" }}>
+                <ListItemDecorator>
                   {
                     [
                       <TroubleshootIcon />,
@@ -63,10 +68,13 @@ export default function RadioClick({ changeValidation, setField }) {
                     ][index]
                   }
                 </ListItemDecorator>
-                <Radio
-                  overlay
+                <FormControlLabel
+                  // key={item.id}
+                  onChange={(event, newValue) => changeRadioClick(newValue)}
                   value={item.value}
+                  control={<Radio />}
                   label={item.label}
+                  overlay
                   sx={{ flexGrow: 1, flexDirection: "row-reverse" }}
                   slotProps={{
                     action: ({ checked }) => ({
@@ -82,29 +90,11 @@ export default function RadioClick({ changeValidation, setField }) {
                 />
               </ListItem>
             ))}
-          </List>
-        </RadioGroup>
-      </FormLabel>
+          </Stack>
+        </List>
+      </RadioGroup>
     </FormControl>
   );
-}
+};
 
-// <Field component={RadioGroup} name={name}>
-//   <Radio
-//     overlay
-//     value={item}
-//     label={item}
-//     sx={{ flexGrow: 1, flexDirection: "row-reverse" }}
-//     slotProps={{
-//       action: ({ checked }) => ({
-//         sx: (theme) => ({
-//           ...(checked && {
-//             inset: -1,
-//             border: "2px solid",
-//             borderColor: theme.vars.palette.primary[500],
-//           }),
-//         }),
-//       }),
-//     }}
-//   />
-// </Field>
+export default RadioClick;

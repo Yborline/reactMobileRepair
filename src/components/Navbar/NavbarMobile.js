@@ -19,10 +19,11 @@ const pathNavbar = [
     id: 1,
   },
   { path: "/repair", text: "Ремонт", id: 2 },
-  { path: "/telephones", text: "Телефони", id: 3 },
-  { path: "/spareParts", text: "Запчастини", id: 4 },
-  { path: "Accounting", text: "Бухгалтерія", id: 5 },
-  { path: "/history", text: "Історія", id: 6 },
+  { path: "/diagnosis", text: "Діагностика", id: 3 },
+  { path: "/telephones", text: "Телефони", id: 4 },
+  { path: "/spareParts", text: "Запчастини", id: 5 },
+  { path: "Accounting", text: "Бухгалтерія", id: 6 },
+  { path: "/history", text: "Історія", id: 7 },
 ];
 
 export default function NavbarMobile() {

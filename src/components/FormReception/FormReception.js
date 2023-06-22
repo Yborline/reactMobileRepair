@@ -24,6 +24,7 @@ import IconButton from "@mui/material/IconButton";
 import { useDispatch } from "react-redux";
 import { addTelephones } from "../../redux/telephones/phones-operations";
 import TransitionAlerts from "../Alert/AlertSuccess";
+import { normalDate } from "../../hooks/normalDate";
 // const telephones = [
 //   { brand: "apple", id: 1 },
 //   { brand: "xiomi", id: 2 },
@@ -41,6 +42,18 @@ import TransitionAlerts from "../Alert/AlertSuccess";
 //   { model: "iphone 8", id: 7 },
 // ];
 
+const initial = {
+  brand: null,
+  model: null,
+  numberPhone: "",
+  name: "",
+  status: "diagnosis",
+  finishDay: null,
+  finishTime: null,
+  money: "",
+  description: "",
+};
+
 const FormReception = () => {
   const [showModal, setShowModal] = useState(false);
   const [telephones, setTelephones] = useState([]);
@@ -48,17 +61,7 @@ const FormReception = () => {
   // const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
   console.log(telephones);
-  const initial = {
-    brand: null,
-    model: null,
-    numberPhone: "",
-    name: "",
-    status: "diagnosis",
-    finishDay: null,
-    finishTime: null,
-    money: "",
-    description: "",
-  };
+
   console.log(validation);
 
   const toggleModal = () => {
@@ -75,17 +78,17 @@ const FormReception = () => {
     setFieldValue(other, null);
   };
 
-  const normalDate = (finishTime) => {
-    if (finishTime === null) {
-      return null;
-    }
-    const { $y: year, $M: month, $D: day, $H: hour, $m: minutes } = finishTime;
-    const newMounth = month.toString().length === 1 ? `0${month + 1}` : month;
-    const d = day.toString().length === 1 ? `0${day}` : day;
-    const h = hour.toString().length === 1 ? `0${hour}` : hour;
-    const m = minutes.toString().length === 1 ? `0${minutes}` : minutes;
-    return `${year}-${newMounth}-${d}T${h}:${m}`;
-  };
+  // const normalDate = (finishTime) => {
+  //   if (finishTime === null) {
+  //     return null;
+  //   }
+  //   const { $y: year, $M: month, $D: day, $H: hour, $m: minutes } = finishTime;
+  //   const newMounth = month.toString().length === 1 ? `0${month + 1}` : month;
+  //   const d = day.toString().length === 1 ? `0${day}` : day;
+  //   const h = hour.toString().length === 1 ? `0${hour}` : hour;
+  //   const m = minutes.toString().length === 1 ? `0${minutes}` : minutes;
+  //   return `${year}-${newMounth}-${d}T${h}:${m}`;
+  // };
 
   return (
     <Formik
@@ -114,9 +117,11 @@ const FormReception = () => {
           status,
           name,
           numberPhone: numberPhone.toString(),
-          finishDay: normalDate(finishTime),
-          statusRepair: "start",
-          money,
+          finishDay: normalDate(finishTime) ? normalDate(finishTime) : null,
+          moneyRepair: status === "repair" ? money : 0,
+          moneyDiagnosis: status === "diagnosis" ? money : 0,
+          moneyPurchase: status === "purchase" ? money : 0,
+
           description,
         };
         console.log(result);
@@ -231,7 +236,7 @@ const FormReception = () => {
               changeValidation={setValidation}
               setField={setFieldValue}
             />
-            {values.status !== "purchase" && (
+            {validation !== "purchase" && (
               <LocalizationProvider
                 adapterLocale="uk"
                 dateAdapter={AdapterDayjs}

@@ -26,3 +26,44 @@ export const addTelephones = createAsyncThunk(
     }
   }
 );
+
+export const changeStatus = createAsyncThunk(
+  "phones/changeStatus",
+  async ({ id, status }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(`/action/status/${id}`, {
+        status: status,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const changeStatusStart = createAsyncThunk(
+  "phones/changeStatusRepair",
+  async ({ id, statusRepair }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(`/action/statusRepair/${id}`, {
+        statusRepair: statusRepair,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const changeTime = createAsyncThunk(
+  "phones/changeTime",
+  async ({ id, result }, { rejectWithValue }) => {
+    try {
+      console.log(result);
+      const { data } = await axios.patch(`/action/time/${id}`, result);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

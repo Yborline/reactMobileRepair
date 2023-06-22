@@ -1,5 +1,6 @@
-import hook from "../../hooks/hookTimer";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import hook from "../../../hooks/hookTimer";
+// import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import {
   LiCard,
@@ -7,11 +8,16 @@ import {
   DivStatus,
   DivTime,
   TitleCard,
-} from "./ItemRepair.styled";
+  DivButton,
+} from "./ItemRepairFinish.styled";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { changeStatus } from "../../../redux/telephones/phones-operations";
 
-const ItemRepair = ({ item }) => {
+const ItemRepairFinish = ({ item, textStatus }) => {
+  const dispatch = useDispatch();
+
   const {
     model,
     brand,
@@ -21,6 +27,9 @@ const ItemRepair = ({ item }) => {
     name,
     numberPhone,
     money,
+    status,
+    phonePrice,
+    _id,
   } = item;
   const arrayTime = finishDay.split("T");
   const normalTime = arrayTime.join(" ");
@@ -32,59 +41,54 @@ const ItemRepair = ({ item }) => {
     <LiCard style={{ position: "relative" }}>
       <div>
         <TitleCard>{headerString}</TitleCard>
-        <DivStatus>
-          <p>{statusRepair === "start" ? "В ремонті" : "Закінчено"}</p>
+        <DivStatus status={statusRepair}>
+          <p>{textStatus}</p>
         </DivStatus>
 
         <DivInfo>
           <p>{description}</p>
-          <div>
-            <IconButton
-              //   disabled={values.brand !== null ? false : true}
-              //   onClick={toggleModal}
-              aria-label="delete"
-            >
-              <LibraryAddIcon />
-            </IconButton>
-          </div>
+          <div></div>
         </DivInfo>
 
         <DivInfo>
           <p>{name}</p>
-          <IconButton aria-label="delete">
-            <LibraryAddIcon />
-          </IconButton>
         </DivInfo>
         <DivInfo>
           <p>{numberPhone}</p>
-          <IconButton aria-label="delete">
-            <LibraryAddIcon />
-          </IconButton>
         </DivInfo>
         <DivInfo>
           <p>{money} грн.</p>
-          <IconButton aria-label="delete">
-            <LibraryAddIcon />
-          </IconButton>
         </DivInfo>
         <DivTime>
           <DivInfo>
             <Button onClick={() => setShowTime(!showTime)} size="normal">
               {normalTime}
             </Button>
-
-            <IconButton aria-label="delete">
-              <LibraryAddIcon />
-            </IconButton>
           </DivInfo>
           {showTime && <p>{finalTime}</p>}
         </DivTime>
       </div>
-      <Button style={{ width: "100%" }} variant="contained" color="success">
-        Виконано
-      </Button>
+      {status === "diagnosis" && (
+        <DivButton>
+          <Button
+            onClick={() =>
+              dispatch(changeStatus({ id: _id, status: "repair" }))
+            }
+            style={{ width: "100%" }}
+            variant="contained"
+            color="info"
+          >
+            На ремонт
+          </Button>
+          {/* {phonePrice > 0 && (
+            <Button style={{ width: "100%" }} variant="contained" color="info">
+              Продати !
+            </Button>
+          )} */}
+        </DivButton>
+      )}
     </LiCard>
   );
 };
 
-export default ItemRepair;
+export default ItemRepairFinish;

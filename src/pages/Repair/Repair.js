@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTelephones } from "../../redux/telephones/phones-operations";
 import { useEffect, useState } from "react";
-import ListRepair from "../../ListRapair/ListRepair";
+import ListRepair from "../../components/ListRapair/ListRepair";
 import {
   getPhones,
   getTypesPhone,
@@ -9,45 +9,39 @@ import {
 import { Container } from "./Repair.styled";
 import Button from "@mui/material/Button";
 import { Stack } from "@mui/joy";
+import ListRepairFinish from "../../components/ListRapair/ListRepairFinish/ListRepairFinish";
 
 const Repair = () => {
   const dispatch = useDispatch();
   const { repairs, diagnosis, purchases } = useSelector(getTypesPhone);
   const [showRepair, setShowRepair] = useState(false);
-  const [showDiagnosis, setShowDiagnosis] = useState(false);
+
   const [showFinishRepair, setShowFinishRepair] = useState(false);
-  const [showFinishDiagnosis, setShowFinishDiagnosis] = useState(false);
 
-  const handleCloseAllWithoutOne = () => {
-    setShowDiagnosis(!showDiagnosis);
-    setShowRepair(!showRepair);
-  };
-
-  const handleClickDiagnosis = () => {
+  const handleClickFinishRepair = () => {
     if (showRepair) {
-      handleCloseAllWithoutOne();
+      setShowFinishRepair(!showFinishRepair);
+      setShowRepair(!showRepair);
     }
-    setShowDiagnosis(!showDiagnosis);
+    setShowFinishRepair(!showFinishRepair);
   };
+
   const handleClickRepair = () => {
-    if (showDiagnosis) {
-      handleCloseAllWithoutOne();
+    if (showFinishRepair) {
+      setShowFinishRepair(!showFinishRepair);
+      setShowRepair(!showRepair);
     }
     setShowRepair(!showRepair);
   };
-
-  useEffect(() => {
-    dispatch(fetchTelephones());
-  }, [dispatch]);
 
   // console.log(repair);
   console.log(repairs);
   console.log(diagnosis);
 
   return (
-    <Container>
+    <>
       <Stack spacing={2}>
-        <Button
+        {/* <Button
           onClick={handleClickDiagnosis}
           style={{ width: "100%" }}
           variant="contained"
@@ -57,7 +51,7 @@ const Repair = () => {
         </Button>
         <Button style={{ width: "100%" }} variant="contained" color="success">
           Виконана діагностика
-        </Button>
+        </Button> */}
         <Button
           onClick={handleClickRepair}
           style={{ width: "100%" }}
@@ -66,13 +60,25 @@ const Repair = () => {
         >
           Ремонт
         </Button>
-        <Button style={{ width: "100%" }} variant="contained" color="success">
+        <Button
+          onClick={handleClickFinishRepair}
+          style={{ width: "100%" }}
+          variant="contained"
+          color="success"
+        >
           Виконаний ремонт
         </Button>
       </Stack>
-      {showRepair && <ListRepair phones={repairs.start} />}
-      {showDiagnosis && <ListRepair phones={diagnosis.start} />}
-    </Container>
+      {showRepair && (
+        <ListRepair textStatus="В ремонті" phones={repairs.start} />
+      )}
+      {showFinishRepair && (
+        <ListRepairFinish
+          textStatus="Ремонт закінчено"
+          phones={repairs.finish}
+        />
+      )}
+    </>
   );
 };
 
