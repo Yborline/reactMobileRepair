@@ -13,8 +13,9 @@ import dayjs from "dayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import Button from "@mui/material/Button";
 import {
-  validationSchema,
+  validationDiagnosisSchema,
   validationSchemaRepair,
+  validationRepairSchema,
 } from "../../validations/formReception";
 import { getAllbrand } from "../../services/api";
 import Modal from "../Modal/Modal";
@@ -24,7 +25,7 @@ import IconButton from "@mui/material/IconButton";
 import { useDispatch } from "react-redux";
 import { addTelephones } from "../../redux/telephones/phones-operations";
 import TransitionAlerts from "../Alert/AlertSuccess";
-import { normalDate } from "../../hooks/normalDate";
+import { normalDate } from "../../helpers/normalDate";
 // const telephones = [
 //   { brand: "apple", id: 1 },
 //   { brand: "xiomi", id: 2 },
@@ -52,6 +53,7 @@ const initial = {
   finishTime: null,
   money: "",
   description: "",
+  repairPrice: "",
 };
 
 const FormReception = () => {
@@ -90,13 +92,24 @@ const FormReception = () => {
   //   return `${year}-${newMounth}-${d}T${h}:${m}`;
   // };
 
+  const choiceValidation = (value) => {
+    switch (value) {
+      case "purchase":
+        return validationSchemaRepair;
+      case "diagnosis":
+        return validationDiagnosisSchema;
+      case "repair":
+        return validationRepairSchema;
+      default:
+        return validationDiagnosisSchema;
+    }
+  };
+
   return (
     <Formik
       initialValues={initial}
       alidateOnBlur
-      validationSchema={
-        validation === "purchase" ? validationSchemaRepair : validationSchema
-      }
+      validationSchema={choiceValidation(validation)}
       onSubmit={(values, formikProps) => {
         console.log(values);
         const {
@@ -108,6 +121,7 @@ const FormReception = () => {
           finishTime,
           money,
           description,
+          repairPrice = 0,
         } = values;
         // $D.length === 1 ? "0" + $D : $D;
 
@@ -121,12 +135,12 @@ const FormReception = () => {
           moneyRepair: status === "repair" ? money : 0,
           moneyDiagnosis: status === "diagnosis" ? money : 0,
           moneyPurchase: status === "purchase" ? money : 0,
-
+          repairPrice: status === "repair" ? repairPrice : 0,
           description,
         };
         console.log(result);
         dispatch(addTelephones(result));
-        // formikProps.resetForm();
+        formikProps.resetForm();
       }}
     >
       {({
@@ -277,6 +291,21 @@ const FormReception = () => {
                   </div>
                 </MarginItem>
               </LocalizationProvider>
+            )}
+            {validation === "repair" && (
+              <div>
+                <Input
+                  type="number"
+                  name="repairPrice"
+                  // onChange={(event) => setCash(event.target.value)}
+                  onChange={handleChange}
+                  value={values.repairPrice}
+                  placeholder="Ціна запчастин"
+                />
+                {errors.repairPrice &&
+                  touched.repairPrice &&
+                  errors.repairPrice}
+              </div>
             )}
 
             <div>

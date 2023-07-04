@@ -11,15 +11,17 @@ import { useContext, useEffect } from "react";
 import ctx from "./context/themeContext";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, lightTheme, darkTheme } from "./Theme/ThemeConfig";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchTelephones } from "./redux/telephones/phones-operations";
 import Diagnosis from "./pages/Diagnosis/Diagnosis";
-import { Container } from "./App.stlyed";
+import { Container, ContainerContent } from "./App.stlyed";
+import { getLoading } from "./redux/telephones/phones-selector";
 // import Navbar from "./components/Navbar/MobileVersion";
 
 function App() {
   const { themes } = useContext(ctx);
   const dispatch = useDispatch();
+  const loadingPhone = useSelector(getLoading);
 
   useEffect(() => {
     dispatch(fetchTelephones());
@@ -28,9 +30,8 @@ function App() {
   return (
     <>
       <ThemeProvider theme={themes === "light" ? lightTheme : darkTheme}>
-        <Container>
-          <Navbar />
-
+        <Navbar />
+        <ContainerContent load={loadingPhone}>
           <Routes>
             <Route path="/" element={<Reception />} />
             <Route path="/telephones" element={<Telephones />} />
@@ -40,7 +41,8 @@ function App() {
             <Route path="/diagnosis" element={<Diagnosis />} />
             <Route path="/history" element={<History />} />
           </Routes>
-        </Container>
+        </ContainerContent>
+
         <GlobalStyles />
       </ThemeProvider>
     </>

@@ -22,10 +22,10 @@ export default function RadioClick({ changeValidation, setField }) {
       setField("status", newValue.value);
       setField("finishDay", null);
       setField("finishTime", null);
-      changeValidation("purchase");
+      changeValidation(newValue.value);
     } else {
-      changeValidation("normal");
-      setField("action", newValue.value);
+      changeValidation(newValue.value);
+      setField("status", newValue.value);
     }
   };
 

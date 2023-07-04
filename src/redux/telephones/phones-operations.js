@@ -29,10 +29,18 @@ export const addTelephones = createAsyncThunk(
 
 export const changeStatus = createAsyncThunk(
   "phones/changeStatus",
-  async ({ id, status }, { rejectWithValue }) => {
+  async (
+    { id, status, finishDay, sellPrice, statusRepair },
+    { rejectWithValue }
+  ) => {
     try {
+      const date = new Date();
+      const newDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
       const { data } = await axios.patch(`/action/status/${id}`, {
         status: status,
+        finishDay: finishDay ? finishDay : newDate,
+        sellPrice,
+        statusRepair,
       });
       return data;
     } catch (error) {
@@ -43,10 +51,14 @@ export const changeStatus = createAsyncThunk(
 
 export const changeStatusStart = createAsyncThunk(
   "phones/changeStatusRepair",
-  async ({ id, statusRepair }, { rejectWithValue }) => {
+  async ({ id, statusRepair, sellPrice, status }, { rejectWithValue }) => {
     try {
+      const date = new Date();
+      const newDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+      console.log(newDate);
       const { data } = await axios.patch(`/action/statusRepair/${id}`, {
-        statusRepair: statusRepair,
+        finishDay: newDate,
+        statusRepair,
       });
       return data;
     } catch (error) {
@@ -61,6 +73,20 @@ export const changeTime = createAsyncThunk(
     try {
       console.log(result);
       const { data } = await axios.patch(`/action/time/${id}`, result);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const changePrice = createAsyncThunk(
+  "phones/changeOther",
+  async ({ id, other, key }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(`/action/price/${id}`, {
+        [key]: other,
+      });
       return data;
     } catch (error) {
       return rejectWithValue(error);

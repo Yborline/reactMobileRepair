@@ -37,7 +37,11 @@ box-sizing: border-box;
     box-shadow: 0px 2px 2px ${({theme})=> theme.borderTextArea};
     width: 280px;
 @media screen and (min-width: 768px){
+  min-width: 500px;
 width: 500px;
+max-width: 500px;
+min-height: 60px;
+max-height: 100px;
 }
   
     &:hover {

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Backdrop = styled.div`
-z-index: 2;
+z-index: 50;
 position: fixed;
 top: 0;
 left:0;
@@ -28,14 +28,14 @@ box-shadow: 0px 2px 1px -1px rgba(0,0,0, 0.2),
 background-color: #fff;
 @media screen and (min-width: 768px){
   min-height:200px;
-    max-height:280px;
+    max-height:250px;
 max-width:600px;
 top: 30%;
 left:22%;
 }
 @media screen and (min-width: 1600px){
   min-height:200px;
-    max-height:280px;
+    max-height:250px;
 max-width:600px;
 top: 30%;
 left:36%;

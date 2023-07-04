@@ -6,7 +6,7 @@ export const LiCard = styled.li`
 position: relative;
 box-sizing: border-box;
 width: 280px;
-height: 370px;
+min-height: 370px;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -22,7 +22,7 @@ box-shadow: 10px 9px 19px -7px rgba(0,0,0,0.75);
 
 export const DivInfo = styled.div`
 display: flex;
-height: 40px;
+min-height: 40px;
 justify-content: space-between;
 align-items: center;
 &:nth-of-type(1n+1){

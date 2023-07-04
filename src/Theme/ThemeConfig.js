@@ -8,6 +8,8 @@ export const lightTheme = {
   shadowTextArea: "#f6f8fa",
   hoverBorderTextArea: "#3399FF",
   hoverShadowTextArea: "#b6daff",
+  thinLine: "#708090",
+  navBar: "#E6E6FA",
 };
 
 export const darkTheme = {

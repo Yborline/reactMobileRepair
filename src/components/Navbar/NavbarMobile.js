@@ -2,13 +2,14 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
+// import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { NavLink } from "react-router-dom";
+import { Ul, Li, Div } from "./NavbarMobile.styled";
 // import InboxIcon from "@mui/icons-material/MoveToInbox";
 // import MailIcon from "@mui/icons-material/Mail";
 
@@ -53,15 +54,15 @@ export default function NavbarMobile() {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
+      <Ul>
         {pathNavbar.map(({ path, text, id }) => (
-          <ListItem key={id} disablePadding>
+          <Li key={id} disablePadding>
             <NavLink style={{ width: "100%" }} to={path}>
               {text}
             </NavLink>
-          </ListItem>
+          </Li>
         ))}
-      </List>
+      </Ul>
       <Divider />
       {/* <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
@@ -76,16 +77,16 @@ export default function NavbarMobile() {
   );
 
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>{"bottom"}</Button>
+    <Div>
+      <Button onClick={toggleDrawer(true)}>{"right"}</Button>
       <SwipeableDrawer
-        anchor={"bottom"}
+        anchor={"right"}
         open={state}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       >
         {list()}
       </SwipeableDrawer>
-    </div>
+    </Div>
   );
 }

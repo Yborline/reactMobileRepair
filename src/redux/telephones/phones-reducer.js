@@ -3,6 +3,8 @@ import {
   addTelephones,
   changeStatus,
   changeTime,
+  changeStatusStart,
+  changePrice,
 } from "./phones-operations";
 import { combineReducers } from "redux";
 import { createReducer, createSlice } from "@reduxjs/toolkit";
@@ -41,19 +43,15 @@ const phonesSlice = createSlice({
       return {
         ...state,
         items: {
-          diagnosis:
-            payload.repair.status === "diagnosis"
-              ? [...state?.items?.diagnosis, payload.repair]
-              : state?.items?.diagnosis,
-          repair:
-            payload.repair.status === "repair"
-              ? [...state?.items?.repair, payload.repair]
-              : state?.items?.repair,
-          purchase:
-            payload.repair.status === "purchase"
-              ? [...state?.items?.purchase, payload.repair]
-              : state?.items?.purchase,
+          ...state.items,
+          [payload.repair.status]: [
+            payload.repair,
+            ...state?.items?.[payload.repair.status],
+          ],
+          // [payload.repair.status]: [payload.repair, ...state?.items?.diagnosis],
+          //  state.items.[payload.repair.status].push(payload.repair),
         },
+
         loading: false,
         error: null,
       };
@@ -61,53 +59,100 @@ const phonesSlice = createSlice({
     builder.addCase(changeStatus.fulfilled, (state, { payload }) => {
       return {
         ...state,
+
         items: {
+          // ...state.items,
+
+          // [payload.result.status]: [
+          //   payload.result,
+          //   ...state.items.diagnosis.filter(
+          //     (item) => item._id !== payload.result._id
+          //   ),
+          // ],
+
           diagnosis: [
+            payload.result.status === "diagnosis" && payload.result,
             ...state.items.diagnosis.filter(
               (item) => item._id !== payload.result._id
             ),
-            payload.result.status === "diagnosis" && payload.result,
           ],
           repair: [
+            payload.result.status === "repair" && payload.result,
             ...state.items.repair.filter(
               (item) => item._id !== payload.result._id
             ),
-            payload.result.status === "repair" && payload.result,
           ],
           purchase: [
+            payload.result.status === "purchase" && payload.result,
             ...state.items.purchase.filter(
               (item) => item._id !== payload.result._id
             ),
-            payload.result.status === "purchase" && payload.result,
           ],
         },
+
+        // diagnosis: state.items.diagnosis.map((item) =>
+        //   item._id === payload.result._id ? payload.result : item
+        // ),
+        // repair: state.items.repair.map((item) =>
+        //   item._id === payload.result._id ? payload.result : item
+        // ),
+        // purchase: state.items.purchase.map((item) =>
+        //   item._id === payload.result._id ? payload.result : item
+        // ),
+
         loading: false,
         error: null,
       };
     });
+    builder.addCase(changeTime.fulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [payload.result.status]: state.items[payload.result.status].map(
+            (item) => (item._id === payload.result._id ? payload.result : item)
+          ),
+
+          // diagnosis: state.items.diagnosis.map((item) =>
+          //   item._id === payload.result._id ? payload.result : item
+          // ),
+          // repair: state.items.repair.map((item) =>
+          //   item._id === payload.result._id ? payload.result : item
+          // ),
+          // purchase: state.items.purchase.map((item) =>
+          //   item._id === payload.result._id ? payload.result : item
+          // ),
+        },
+
+        loading: false,
+        error: null,
+      };
+    });
+    builder.addCase(changePrice.fulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [payload.result.status]: state.items[payload.result.status].map(
+            (item) => (item._id === payload.result._id ? payload.result : item)
+          ),
+        },
+
+        loading: false,
+        error: null,
+      };
+    });
+
     builder
-      .addCase(changeTime.fulfilled, (state, { payload }) => {
+      .addCase(changeStatusStart.fulfilled, (state, { payload }) => {
         return {
-          ...state,
+          // ...state,
           items: {
-            diagnosis: [
-              payload.result.status === "diagnosis" && payload.result,
-              ...state.items.diagnosis.filter(
-                (item) => item._id !== payload.result._id
-              ),
-            ],
-            repair: [
-              payload.result.status === "repair" && payload.result,
-              ...state.items.repair.filter(
-                (item) => item._id !== payload.result._id
-              ),
-            ],
-            purchase: [
-              payload.result.status === "purchase" && payload.result,
-              ...state.items.purchase.filter(
-                (item) => item._id !== payload.result._id
-              ),
-            ],
+            // ...state.items,
+            [payload.result.status]: state.items[payload.result.status].map(
+              (item) =>
+                item._id === payload.result._id ? payload.result : item
+            ),
           },
           loading: false,
           error: null,

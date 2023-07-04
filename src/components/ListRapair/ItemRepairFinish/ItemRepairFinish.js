@@ -14,9 +14,16 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeStatus } from "../../../redux/telephones/phones-operations";
+import Modal from "../../Modal/Modal";
+import FormDate from "../../FormDate/FormDate";
+import FormSellPrice from "../../FormSellPrice/FormSellPrice";
+import BuildIcon from "@mui/icons-material/Build";
+import PaidIcon from "@mui/icons-material/Paid";
 
 const ItemRepairFinish = ({ item, textStatus }) => {
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [showModalSell, setShowModalSell] = useState(false);
 
   const {
     model,
@@ -25,10 +32,13 @@ const ItemRepairFinish = ({ item, textStatus }) => {
     description,
     finishDay,
     name,
+    endRepair,
     numberPhone,
-    money,
+    moneyRepair,
+    moneyDiagnosis,
+    moneyPurchase,
     status,
-    phonePrice,
+    repairPrice,
     _id,
   } = item;
   const arrayTime = finishDay.split("T");
@@ -37,6 +47,16 @@ const ItemRepairFinish = ({ item, textStatus }) => {
   const [finalTime, setFinalTime] = hook.useFinaltimer(finishDay, "");
   const [showTime, setShowTime] = useState(false);
 
+  console.log(endRepair);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+  const toggleModalSell = () => {
+    setShowModalSell(!showModalSell);
+  };
+  // const date = new Date();
+  // console.log(date.toLocaleDateString(), date.toLocaleTimeString());
   return (
     <LiCard style={{ position: "relative" }}>
       <div>
@@ -57,20 +77,48 @@ const ItemRepairFinish = ({ item, textStatus }) => {
           <p>{numberPhone}</p>
         </DivInfo>
         <DivInfo>
-          <p>{money} грн.</p>
+          {status === "repair" ? (
+            <>
+              <p>{moneyRepair} грн.</p>
+              <PaidIcon color="action" />
+
+              <p>{repairPrice} грн.</p>
+              <BuildIcon color="action" />
+            </>
+          ) : (
+            <>
+              {" "}
+              <p>{moneyDiagnosis} грн.</p>
+            </>
+          )}
         </DivInfo>
         <DivTime>
           <DivInfo>
-            <Button onClick={() => setShowTime(!showTime)} size="normal">
-              {normalTime}
-            </Button>
+            <p> {finishDay}</p>
+            {/* <Button onClick={() => setShowTime(!showTime)} size="normal">
+              {finishDay}
+            </Button> */}
           </DivInfo>
-          {showTime && <p>{finalTime}</p>}
+          {/* {showTime &&
+            (finalTime === false ? (
+              <p>время закончилось</p>
+            ) : (
+              <p>{finalTime}</p>
+            ))} */}
         </DivTime>
       </div>
-      {status === "diagnosis" && (
+
+      {status === "diagnosis" ? (
         <DivButton>
           <Button
+            onClick={toggleModal}
+            style={{ width: "100%" }}
+            variant="contained"
+            color="info"
+          >
+            На ремонт
+          </Button>
+          {/* <Button
             onClick={() =>
               dispatch(changeStatus({ id: _id, status: "repair" }))
             }
@@ -79,13 +127,43 @@ const ItemRepairFinish = ({ item, textStatus }) => {
             color="info"
           >
             На ремонт
-          </Button>
+          </Button> */}
           {/* {phonePrice > 0 && (
             <Button style={{ width: "100%" }} variant="contained" color="info">
               Продати !
             </Button>
           )} */}
         </DivButton>
+      ) : (
+        <Button
+          onClick={toggleModalSell}
+          style={{ width: "100%" }}
+          variant="contained"
+          color="success"
+        >
+          Продажа
+        </Button>
+      )}
+      {showModal && (
+        <Modal close={toggleModal}>
+          <FormDate
+            id={_id}
+            toggleModal={toggleModal}
+            status={status}
+            time={false}
+            // finishTime={finishDay}
+          />
+        </Modal>
+      )}
+      {showModalSell && (
+        <Modal close={toggleModalSell}>
+          <FormSellPrice
+            // price={moneyPurchase}
+            id={_id}
+            status={status}
+            close={toggleModalSell}
+          />
+        </Modal>
       )}
     </LiCard>
   );

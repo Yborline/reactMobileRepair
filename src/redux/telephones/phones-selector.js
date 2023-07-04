@@ -1,6 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 export const getPhones = (state) => state.phones.items;
+export const getLoading = (state) => state.phones.loading;
 
 export const getTypesPhone = createSelector([getPhones], (phones) => {
   const { repair, diagnosis, purchase } = phones;

@@ -18,7 +18,7 @@ const useFinaltimer = (date, defaultValue) => {
       const day = new Date();
       //   setTime(new Date());
       const finaly = finalDay(date, day);
-      console.log(finaly);
+
       setState(finalDay(date, day));
     }, 30000);
     return () => {
