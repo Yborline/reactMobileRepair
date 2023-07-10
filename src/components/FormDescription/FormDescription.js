@@ -64,7 +64,7 @@ const FormDescription = ({ id, close, status, finishTime }) => {
 
           {/* <button onClick={toggleModal}>sss</button> */}
           <IconButton
-            style={{ position: "absolute", top: "20px", right: "20px" }}
+            style={{ position: "absolute", top: "0px", right: "0px" }}
             onClick={close}
             aria-label="delete"
           >

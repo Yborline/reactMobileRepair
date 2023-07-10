@@ -7,12 +7,26 @@ import {
 } from "@react-hook/window-size";
 import NavbarMobile from "./NavbarMobile";
 import LinearProgress from "@mui/joy/LinearProgress";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getLoading } from "../../redux/telephones/phones-selector";
+import { getLoggedIn } from "../../redux/auth/auth-selectors";
+import Button from "@mui/material/Button";
+import authOperations from "../../redux/auth/auth-operatins";
+import { useState } from "react";
+import Modal from "../Modal/Modal";
+import LogOut from "../LogOut/LogOut";
 
 const Navbar = () => {
+  const logged = useSelector(getLoggedIn);
   const loading = useSelector(getLoading);
   const [width, height] = useWindowSize();
+
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <Div>
       <Nav>
@@ -41,7 +55,15 @@ const Navbar = () => {
             <li>
               <NavLink to="/history">Історія</NavLink>
             </li>
-            <li>User</li>
+            {logged ? (
+              <Button color="error" type="submit" onClick={toggleModal}>
+                Вихід
+              </Button>
+            ) : (
+              <li>
+                <NavLink to="/user">User</NavLink>
+              </li>
+            )}
           </Ul>
         )}
         {loading && (
@@ -49,6 +71,11 @@ const Navbar = () => {
             sx={{ position: "absolute", bottom: "-5px", left: 0, right: 0 }}
             size="sm"
           />
+        )}
+        {showModal && (
+          <Modal close={toggleModal}>
+            <LogOut toggleModal={toggleModal} />
+          </Modal>
         )}
       </Nav>
     </Div>

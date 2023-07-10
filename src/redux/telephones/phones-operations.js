@@ -3,37 +3,52 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 axios.defaults.baseURL = "https://mobilerepair.onrender.com/api/";
 
+const token = {
+  set(token) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  },
+  unset() {
+    axios.defaults.headers.common.Authorization = "";
+  },
+};
+
 export const fetchTelephones = createAsyncThunk(
-  "phones/fetchPhones",
-  async (_, { rejectWithValue }) => {
+  "fetchPhones/phones",
+  async (_, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const persistedToken = state.auth.token;
+      token.set(persistedToken);
       const { data } = await axios.get("/action");
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const addTelephones = createAsyncThunk(
-  "phones/addPhone",
-  async (result, { rejectWithValue }) => {
+  "addPhone/phones",
+  async (result, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const persistedToken = state.auth.token;
+      token.set(persistedToken);
       const { data } = await axios.post("/action", result);
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const changeStatus = createAsyncThunk(
-  "phones/changeStatus",
-  async (
-    { id, status, finishDay, sellPrice, statusRepair },
-    { rejectWithValue }
-  ) => {
+  "changeStatus/phones",
+  async ({ id, status, finishDay, sellPrice, statusRepair }, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const persistedToken = state.auth.token;
+      token.set(persistedToken);
       const date = new Date();
       const newDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
       const { data } = await axios.patch(`/action/status/${id}`, {
@@ -44,52 +59,61 @@ export const changeStatus = createAsyncThunk(
       });
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const changeStatusStart = createAsyncThunk(
-  "phones/changeStatusRepair",
-  async ({ id, statusRepair, sellPrice, status }, { rejectWithValue }) => {
+  "changeStatusRepair/phones",
+  async ({ id, statusRepair, sellPrice, status }, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const persistedToken = state.auth.token;
+      token.set(persistedToken);
       const date = new Date();
       const newDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
       console.log(newDate);
       const { data } = await axios.patch(`/action/statusRepair/${id}`, {
         finishDay: newDate,
         statusRepair,
+        sellPrice,
       });
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const changeTime = createAsyncThunk(
-  "phones/changeTime",
-  async ({ id, result }, { rejectWithValue }) => {
+  "changeTime/phones",
+  async ({ id, result }, thunkAPI) => {
     try {
-      console.log(result);
+      const state = thunkAPI.getState();
+      const persistedToken = state.auth.token;
+      token.set(persistedToken);
       const { data } = await axios.patch(`/action/time/${id}`, result);
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const changePrice = createAsyncThunk(
-  "phones/changeOther",
-  async ({ id, other, key }, { rejectWithValue }) => {
+  "changeOther/phones",
+  async ({ id, other, key }, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const persistedToken = state.auth.token;
+      token.set(persistedToken);
       const { data } = await axios.patch(`/action/price/${id}`, {
         [key]: other,
       });
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );

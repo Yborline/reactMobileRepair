@@ -6,11 +6,9 @@ import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
 
-export default function TransitionAlerts({ open, setOpen, text }) {
+export default function TransitionAlerts({ open, setOpen, text, top }) {
   return (
-    <Box
-      sx={{ position: "absolute", top: "-100px", width: "100%", zIndex: 9099 }}
-    >
+    <Box sx={{ position: "absolute", top: top, width: "100%", zIndex: 9099 }}>
       <Collapse in={open}>
         <Alert
           action={

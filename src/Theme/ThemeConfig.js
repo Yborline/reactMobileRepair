@@ -10,6 +10,7 @@ export const lightTheme = {
   hoverShadowTextArea: "#b6daff",
   thinLine: "#708090",
   navBar: "#E6E6FA",
+  error: "#FF0000",
 };
 
 export const darkTheme = {

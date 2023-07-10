@@ -10,6 +10,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { NavLink } from "react-router-dom";
 import { Ul, Li, Div } from "./NavbarMobile.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoggedIn } from "../../redux/auth/auth-selectors";
+import authOperations from "../../redux/auth/auth-operatins";
+import Modal from "../Modal/Modal";
+import LogOut from "../LogOut/LogOut";
+import { useState } from "react";
 // import InboxIcon from "@mui/icons-material/MoveToInbox";
 // import MailIcon from "@mui/icons-material/Mail";
 
@@ -25,15 +31,14 @@ const pathNavbar = [
   { path: "/spareParts", text: "Запчастини", id: 5 },
   { path: "Accounting", text: "Бухгалтерія", id: 6 },
   { path: "/history", text: "Історія", id: 7 },
+  { path: "/user", text: "User", id: 8 },
 ];
 
 export default function NavbarMobile() {
-  const [state, setState] = React.useState(
-    // top: false,
-    // left: false,
-    false
-    // right: false,
-  );
+  const [state, setState] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const logged = useSelector(getLoggedIn);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -47,6 +52,9 @@ export default function NavbarMobile() {
     setState(open);
   };
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
   const list = () => (
     <Box
       sx={{ width: "auto" }}
@@ -56,13 +64,24 @@ export default function NavbarMobile() {
     >
       <Ul>
         {pathNavbar.map(({ path, text, id }) => (
-          <Li key={id} disablePadding>
-            <NavLink style={{ width: "100%" }} to={path}>
-              {text}
-            </NavLink>
+          <Li key={id}>
+            {logged && path === "/user" ? (
+              <Button color="error" type="submit" onClick={toggleModal}>
+                Вихід
+              </Button>
+            ) : (
+              <NavLink style={{ width: "100%" }} to={path}>
+                {text}
+              </NavLink>
+            )}
           </Li>
         ))}
       </Ul>
+      {showModal && (
+        <Modal close={toggleModal}>
+          <LogOut toggleModal={toggleModal} />
+        </Modal>
+      )}
       <Divider />
       {/* <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (

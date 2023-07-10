@@ -1,16 +1,23 @@
 import { useSelector } from "react-redux";
 import ListRepair from "../../components/ListRapair/ListRepair";
-import { getTypesPhone } from "../../redux/telephones/phones-selector";
+import {
+  findFinishPhones,
+  findFinishPurchases,
+  getTypesPhone,
+} from "../../redux/telephones/phones-selector";
 import { Button, Stack } from "@mui/material";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { Container } from "./Diagnosis.styled";
 import ListRepairFinish from "../../components/ListRapair/ListRepairFinish/ListRepairFinish";
+import EmptyText from "../../components/EmptyText/EmptyText";
+import Filter from "../../components/Filter/Filter";
 
 const Diagnosis = () => {
   const { diagnosis } = useSelector(getTypesPhone);
   const [showDiagnosis, setShowDiagnosis] = useState(false);
   const [showFinishDiagnosis, setShowFinishDiagnosis] = useState(false);
-
+  const { filteredDiagnosis } = useSelector(findFinishPhones);
   const handleClickDiagnosis = () => {
     if (showFinishDiagnosis) {
       setShowDiagnosis(!showDiagnosis);
@@ -18,6 +25,10 @@ const Diagnosis = () => {
     }
     setShowDiagnosis(!showDiagnosis);
   };
+
+  // useEffect(() => {
+  //       dispatch(fetchTelephones());
+  // })
 
   const handleClickFinishDiagnosis = () => {
     if (showDiagnosis) {
@@ -47,18 +58,28 @@ const Diagnosis = () => {
           Виконана діагностика
         </Button>
       </Stack>
-      {showDiagnosis && (
-        <ListRepair
-          textStatus="Діагностика розпочата"
-          phones={diagnosis.start}
-        />
-      )}
-      {showFinishDiagnosis && (
-        <ListRepairFinish
-          textStatus="Діагностика закінчена"
-          phones={diagnosis.finish}
-        />
-      )}
+      {showDiagnosis &&
+        (diagnosis.start.length === 0 ? (
+          <EmptyText text={"Телефонів на діагностиці не має"} />
+        ) : (
+          <ListRepair
+            textStatus="Діагностика розпочата"
+            phones={diagnosis.start}
+          />
+        ))}
+      {showFinishDiagnosis &&
+        (diagnosis.finish.length === 0 ? (
+          <EmptyText text={"Телефонів після діагностики немає"} />
+        ) : (
+          <>
+            {" "}
+            <Filter />
+            <ListRepairFinish
+              textStatus="Діагностика закінчена"
+              phones={filteredDiagnosis}
+            />
+          </>
+        ))}
     </>
   );
 };

@@ -3,6 +3,7 @@ import { fetchTelephones } from "../../redux/telephones/phones-operations";
 import { useEffect, useState } from "react";
 import ListRepair from "../../components/ListRapair/ListRepair";
 import {
+  findFinishPhones,
   getPhones,
   getTypesPhone,
 } from "../../redux/telephones/phones-selector";
@@ -10,6 +11,8 @@ import { Container } from "./Repair.styled";
 import Button from "@mui/material/Button";
 import { Stack } from "@mui/joy";
 import ListRepairFinish from "../../components/ListRapair/ListRepairFinish/ListRepairFinish";
+import EmptyText from "../../components/EmptyText/EmptyText";
+import Filter from "../../components/Filter/Filter";
 
 const Repair = () => {
   const dispatch = useDispatch();
@@ -17,7 +20,7 @@ const Repair = () => {
   const [showRepair, setShowRepair] = useState(false);
 
   const [showFinishRepair, setShowFinishRepair] = useState(false);
-
+  const { filteredRepairs } = useSelector(findFinishPhones);
   const handleClickFinishRepair = () => {
     if (showRepair) {
       setShowFinishRepair(!showFinishRepair);
@@ -39,7 +42,7 @@ const Repair = () => {
   console.log(diagnosis);
 
   return (
-    <>
+    <Container>
       <Stack spacing={2}>
         {/* <Button
           onClick={handleClickDiagnosis}
@@ -69,16 +72,26 @@ const Repair = () => {
           Виконаний ремонт
         </Button>
       </Stack>
-      {showRepair && (
-        <ListRepair textStatus="В ремонті" phones={repairs.start} />
-      )}
-      {showFinishRepair && (
-        <ListRepairFinish
-          textStatus="Ремонт закінчено"
-          phones={repairs.finish}
-        />
-      )}
-    </>
+      {showRepair &&
+        (repairs.start.length === 0 ? (
+          <EmptyText text={"Телефонів на ремонті не має"} />
+        ) : (
+          <ListRepair textStatus="В ремонті" phones={repairs.start} />
+        ))}
+      {showFinishRepair &&
+        (repairs.finish.length === 0 ? (
+          <EmptyText text={"Відремонтованих телефонів немає"} />
+        ) : (
+          <>
+            {" "}
+            <Filter />
+            <ListRepairFinish
+              textStatus="Ремонт закінчено"
+              phones={filteredRepairs}
+            />
+          </>
+        ))}
+    </Container>
   );
 };
 

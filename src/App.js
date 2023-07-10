@@ -16,36 +16,72 @@ import { fetchTelephones } from "./redux/telephones/phones-operations";
 import Diagnosis from "./pages/Diagnosis/Diagnosis";
 import { Container, ContainerContent } from "./App.stlyed";
 import { getLoading } from "./redux/telephones/phones-selector";
+import User from "./pages/User/User";
+import SignUpForm from "./components/SignUpForm/SignUpForm";
+import Register from "./pages/Register/Register";
+import PablicRoute from "./components/Route/PablicRoute";
+import PrivateRoute from "./components/Route/PrivateRoute";
 // import Navbar from "./components/Navbar/MobileVersion";
+import authOperations from "./redux/auth/auth-operatins";
+import { getLoggedIn } from "./redux/auth/auth-selectors";
+import NoMatch from "./pages/NoMatch/NoMatch";
 
 function App() {
   const { themes } = useContext(ctx);
   const dispatch = useDispatch();
   const loadingPhone = useSelector(getLoading);
+  const loggedIn = useSelector(getLoggedIn);
 
   useEffect(() => {
-    dispatch(fetchTelephones());
-  }, [dispatch]);
+    if (loggedIn) {
+      dispatch(fetchTelephones());
+    }
+    dispatch(authOperations.fetchCurrentUser());
+  }, [dispatch, loggedIn]);
   console.log(themes);
   return (
-    <>
+    <Container>
       <ThemeProvider theme={themes === "light" ? lightTheme : darkTheme}>
         <Navbar />
         <ContainerContent load={loadingPhone}>
           <Routes>
-            <Route path="/" element={<Reception />} />
-            <Route path="/telephones" element={<Telephones />} />
-            <Route path="/spareParts" element={<SpareParts />} />
-            <Route path="/accounting" element={<Accounting />} />
-            <Route path="/repair" element={<Repair />} />
-            <Route path="/diagnosis" element={<Diagnosis />} />
-            <Route path="/history" element={<History />} />
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/" element={<Reception />} />
+            </Route>
+            <Route path="/telephones" element={<PrivateRoute />}>
+              <Route path="/telephones" element={<Telephones />} />
+            </Route>
+            <Route path="/spareParts" element={<PrivateRoute />}>
+              <Route path="/spareParts" element={<SpareParts />} />
+            </Route>
+            <Route path="/accounting" element={<PrivateRoute />}>
+              <Route path="/accounting" element={<Accounting />} />
+            </Route>
+            <Route path="/repair" element={<PrivateRoute />}>
+              <Route path="/repair" element={<Repair />} />
+            </Route>
+            <Route path="/diagnosis" element={<PrivateRoute />}>
+              <Route path="/diagnosis" element={<Diagnosis />} />
+            </Route>
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/history" element={<History />} />
+            </Route>
+            <Route path="/history" element={<PrivateRoute />}>
+              <Route path="/history" element={<History />} />
+            </Route>
+            <Route path="/user" element={<PablicRoute restricted />}>
+              <Route path="/user" element={<User />} />
+            </Route>
+            <Route path="/register" element={<PablicRoute restricted />}>
+              <Route path="/register" element={<Register />} />
+            </Route>
+            <Route path="*" element={<NoMatch />}></Route>
           </Routes>
         </ContainerContent>
 
         <GlobalStyles />
       </ThemeProvider>
-    </>
+    </Container>
   );
 }
 

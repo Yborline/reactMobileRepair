@@ -4,7 +4,8 @@ import { styled } from "styled-components";
 export const Form = styled.form`
 display:flex;
 flex-direction: column;
-margin-bottom: 20px;
+height: 240px;
+justify-content: space-around;
 `
 
 export const Container = styled.div`
@@ -19,5 +20,5 @@ padding: 20px;
 
 
 export const Div = styled.div`
-height: 75px;
+
 `

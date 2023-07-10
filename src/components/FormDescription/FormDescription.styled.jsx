@@ -4,13 +4,13 @@ import { styled } from "styled-components";
 
 export const Form = styled.form`
  position: relative;
- padding : 70px 20px 20px 20px;
+
 
 display:flex;
 flex-direction:column;
-height: 280px;
+height: 160px;
 box-sizing: border-box;
-justify-content: space-evenly;
+justify-content: center;
 
 
 @media screen and (min-width: 768px){

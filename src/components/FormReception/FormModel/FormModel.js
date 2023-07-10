@@ -21,7 +21,12 @@ const FormModel = ({ brand = "", close }) => {
 
   return (
     <>
-      <TransitionAlerts open={open} setOpen={setOpen} text="Модель добавлена" />
+      <TransitionAlerts
+        open={open}
+        setOpen={setOpen}
+        text="Модель добавлена"
+        top={"-100px"}
+      />
       <Formik
         initialValues={{
           model: "",
@@ -66,7 +71,7 @@ const FormModel = ({ brand = "", close }) => {
               This is a success alert — check it out!
             </Alert> */}
             <IconButton
-              style={{ position: "absolute", top: "20px", right: "20px" }}
+              style={{ position: "absolute", top: "0px", right: "0px" }}
               onClick={close}
               aria-label="delete"
             >

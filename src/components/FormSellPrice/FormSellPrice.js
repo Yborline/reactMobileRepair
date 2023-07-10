@@ -43,14 +43,23 @@ const FormSellPrice = ({
       alidateOnBlur
       validationSchema={validationFormPrice}
       onSubmit={({ money }, formikProps) => {
-        dispatch(
-          changeStatus({
-            id,
-            statusRepair: "finish",
-            sellPrice: money,
-            status: "purchase",
-          })
-        );
+        console.log(status);
+        status === "purchase"
+          ? dispatch(
+              changeStatusStart({
+                id,
+                sellPrice: money,
+                statusRepair: "finish",
+              })
+            )
+          : dispatch(
+              changeStatus({
+                id,
+                status: "purchase",
+                sellPrice: money,
+                statusRepair: "finish",
+              })
+            );
         close();
       }}
     >
@@ -81,7 +90,7 @@ const FormSellPrice = ({
 
           {/* <button onClick={toggleModal}>sss</button> */}
           <IconButton
-            style={{ position: "absolute", top: "20px", right: "20px" }}
+            style={{ position: "absolute", top: "0px", right: "0px" }}
             onClick={close}
             aria-label="delete"
           >

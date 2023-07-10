@@ -3,7 +3,11 @@ import styled from "@emotion/styled";
 
 export const Form = styled.form`
  position: relative;
-padding : 60px 20px 20px 20px;
+
+display:flex;
+flex-direction: column;
+height: 100%;
+justify-content: space-evenly;
 
 
 `

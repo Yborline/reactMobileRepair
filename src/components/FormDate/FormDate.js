@@ -17,6 +17,8 @@ import {
 } from "../../redux/telephones/phones-operations";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { getLoading } from "../../redux/telephones/phones-selector";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const initial = {
   finishDay: null,
@@ -28,8 +30,6 @@ const FormDate = ({ id, toggleModal, time, status, finishTime }) => {
   console.log(loading);
   console.log(status);
   const dispatch = useDispatch();
-  const arrayTime = finishTime?.split("T");
-  const normalTime = arrayTime?.join(" ");
 
   const handlerAutocomplate = (setFieldValue, text, data, other) => {
     setFieldValue(text, data);
@@ -37,130 +37,115 @@ const FormDate = ({ id, toggleModal, time, status, finishTime }) => {
   };
 
   return (
-    <Container>
-      <Formik
-        initialValues={initial}
-        alidateOnBlur
-        validationSchema={validationDateSchema}
-        onSubmit={(values, formikProps) => {
-          // console.log(values);
-          const { finishTime } = values;
+    <Formik
+      initialValues={initial}
+      alidateOnBlur
+      validationSchema={validationDateSchema}
+      onSubmit={(values, formikProps) => {
+        // console.log(values);
+        const { finishTime } = values;
 
-          const result = {
-            finishDay: normalDate(finishTime),
-          };
-          console.log(result);
-          time
-            ? dispatch(changeTime({ id, result }))
-            : dispatch(
-                changeStatus({
-                  id: id,
-                  status: "repair",
-                  finishDay: normalDate(finishTime),
-                  statusRepair: "start",
-                })
-              );
-          toggleModal();
-          // status !== "purchase" && toggleModal();
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          options,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          setFieldValue,
-          onReset,
-          /* and other goodies */
-        }) => (
-          <Form
-            id="form"
-            encType="multipart/form-data"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-          >
-            {/* <TransitionAlerts open={open} setOpen={setOpen} /> */}
-
-            {/* <div> */}
-            <Stack spacing={2}>
-              {/* <button onClick={toggleModal}>sss</button> */}
-
-              <LocalizationProvider
-                adapterLocale="uk"
-                dateAdapter={AdapterDayjs}
-              >
-                <Stack spacing={2}>
-                  <Div>
-                    <DatePicker
-                      value={values.finishDay}
-                      onChange={(event) =>
-                        handlerAutocomplate(
-                          setFieldValue,
-                          "finishDay",
-                          event,
-                          "finishTime"
-                        )
-                      }
-                      minDate={dayjs()}
-                      label="Дата закінчення робіт"
-                      sx={{ width: "100%" }}
-                    />
-                    {errors.finishDay && touched.finishDay && errors.finishDay}
-                  </Div>
-                  <Div>
-                    <TimePicker
-                      disabled={values.finishDay !== null ? false : true}
-                      minutesStep={10}
-                      ampm={false}
-                      label="Час закінчення робіт"
-                      value={values.finishDay}
-                      sx={{ width: "100%" }}
-                      onChange={(event, newValue) =>
-                        setFieldValue("finishTime", event)
-                      }
-                    />
-                    {errors.finishTime &&
-                      touched.finishTime &&
-                      errors.finishTime}
-                  </Div>
-                </Stack>
-              </LocalizationProvider>
-
-              <Button type="submit" variant="contained">
-                {time ? `Змінити дату` : `На ремонт !`}
-              </Button>
-              {/* <Radio name="action" options={listJenisKelamin} /> */}
-              {/* <Field component={RadioGroup} name="action"> */}
-              {/* <RadioPositionEnd handleChange={setFieldValue} /> */}
-              {/* </Field> */}
-            </Stack>
-
-            {/* </div> */}
-          </Form>
-        )}
-      </Formik>
-      {/* {finishTime && (
-        <Button
-          style={{ width: "100%" }}
-          onClick={repairClick}
-          disabled={finishTime === null && loading === false ? true : false}
-          type="submit"
-          variant="contained"
+        const result = {
+          finishDay: normalDate(finishTime),
+        };
+        console.log(result);
+        time
+          ? dispatch(changeTime({ id, result }))
+          : dispatch(
+              changeStatus({
+                id: id,
+                status: "repair",
+                finishDay: normalDate(finishTime),
+                statusRepair: "start",
+              })
+            );
+        toggleModal();
+        // status !== "purchase" && toggleModal();
+      }}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        options,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        setFieldValue,
+        onReset,
+        /* and other goodies */
+      }) => (
+        <Form
+          id="form"
+          encType="multipart/form-data"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
         >
-          {loading ? (
-            <CircularProgress variant="plain" size="sm" />
-          ) : (
-            `На ремонт до ${normalTime}`
-          )}
-        </Button>
-      )} */}
-    </Container>
+          {/* <TransitionAlerts open={open} setOpen={setOpen} /> */}
+
+          {/* <div> */}
+          <IconButton
+            style={{ position: "absolute", top: "0px", right: "0px" }}
+            onClick={toggleModal}
+            aria-label="delete"
+          >
+            <CloseIcon style={{ width: "30px", height: "30px" }} />
+          </IconButton>
+          <Stack spacing={2}>
+            {/* <button onClick={toggleModal}>sss</button> */}
+
+            <LocalizationProvider adapterLocale="uk" dateAdapter={AdapterDayjs}>
+              <Stack spacing={2}>
+                <Div>
+                  <DatePicker
+                    value={values.finishDay}
+                    onChange={(event) =>
+                      handlerAutocomplate(
+                        setFieldValue,
+                        "finishDay",
+                        event,
+                        "finishTime"
+                      )
+                    }
+                    minDate={dayjs()}
+                    label="Дата закінчення робіт"
+                    sx={{ width: "100%" }}
+                  />
+                  {errors.finishDay && touched.finishDay && errors.finishDay}
+                </Div>
+                <Div>
+                  <TimePicker
+                    disabled={values.finishDay !== null ? false : true}
+                    minutesStep={10}
+                    ampm={false}
+                    label="Час закінчення робіт"
+                    value={values.finishDay}
+                    sx={{ width: "100%" }}
+                    onChange={(event, newValue) =>
+                      setFieldValue("finishTime", event)
+                    }
+                  />
+                  {errors.finishTime && touched.finishTime && errors.finishTime}
+                </Div>
+              </Stack>
+            </LocalizationProvider>
+
+            <Button type="submit" variant="contained">
+              {time ? `Змінити дату` : `На ремонт !`}
+            </Button>
+            {/* <Radio name="action" options={listJenisKelamin} /> */}
+            {/* <Field component={RadioGroup} name="action"> */}
+            {/* <RadioPositionEnd handleChange={setFieldValue} /> */}
+            {/* </Field> */}
+          </Stack>
+
+          {/* </div> */}
+        </Form>
+      )}
+    </Formik>
   );
 };
 

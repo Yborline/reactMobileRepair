@@ -22,26 +22,12 @@ import Modal from "../Modal/Modal";
 import FormModel from "./FormModel/FormModel";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import IconButton from "@mui/material/IconButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTelephones } from "../../redux/telephones/phones-operations";
 import TransitionAlerts from "../Alert/AlertSuccess";
 import { normalDate } from "../../helpers/normalDate";
-// const telephones = [
-//   { brand: "apple", id: 1 },
-//   { brand: "xiomi", id: 2 },
-//   { brand: "realme", id: 3 },
-//   { brand: "doogee", id: 4 },
-// ];
-
-// const models = [
-//   { model: "iphone 11", id: 1 },
-//   { model: "iphone 12", id: 2 },
-//   { model: "iphone 13", id: 3 },
-//   { model: "iphone 14", id: 4 },
-//   { model: "iphone 10", id: 5 },
-//   { model: "iphone 9", id: 6 },
-//   { model: "iphone 8", id: 7 },
-// ];
+import { getLoading } from "../../redux/telephones/phones-selector";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const initial = {
   brand: null,
@@ -60,6 +46,7 @@ const FormReception = () => {
   const [showModal, setShowModal] = useState(false);
   const [telephones, setTelephones] = useState([]);
   const [validation, setValidation] = useState("normal");
+  const loading = useSelector(getLoading);
   // const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
   console.log(telephones);
@@ -79,18 +66,6 @@ const FormReception = () => {
     setFieldValue(text, data);
     setFieldValue(other, null);
   };
-
-  // const normalDate = (finishTime) => {
-  //   if (finishTime === null) {
-  //     return null;
-  //   }
-  //   const { $y: year, $M: month, $D: day, $H: hour, $m: minutes } = finishTime;
-  //   const newMounth = month.toString().length === 1 ? `0${month + 1}` : month;
-  //   const d = day.toString().length === 1 ? `0${day}` : day;
-  //   const h = hour.toString().length === 1 ? `0${hour}` : hour;
-  //   const m = minutes.toString().length === 1 ? `0${minutes}` : minutes;
-  //   return `${year}-${newMounth}-${d}T${h}:${m}`;
-  // };
 
   const choiceValidation = (value) => {
     switch (value) {
@@ -123,7 +98,6 @@ const FormReception = () => {
           description,
           repairPrice = 0,
         } = values;
-        // $D.length === 1 ? "0" + $D : $D;
 
         const result = {
           brand: brand.brand,
@@ -154,7 +128,6 @@ const FormReception = () => {
         isSubmitting,
         setFieldValue,
         onReset,
-        /* and other goodies */
       }) => (
         <Form
           id="form"
@@ -339,9 +312,13 @@ const FormReception = () => {
               {errors.description && touched.description && errors.description}
             </div>
 
-            <Button type="submit" variant="contained">
-              sss
-            </Button>
+            <LoadingButton
+              variant="contained"
+              loading={loading}
+              onClick={handleSubmit}
+            >
+              <span>Додати</span>
+            </LoadingButton>
             {/* <Radio name="action" options={listJenisKelamin} /> */}
             {/* <Field component={RadioGroup} name="action"> */}
             {/* <RadioPositionEnd handleChange={setFieldValue} /> */}

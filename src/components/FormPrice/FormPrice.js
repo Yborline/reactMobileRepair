@@ -74,14 +74,14 @@ const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
 
           {/* <button onClick={toggleModal}>sss</button> */}
           <IconButton
-            style={{ position: "absolute", top: "20px", right: "20px" }}
+            style={{ position: "absolute", top: "0px", right: "0px" }}
             onClick={close}
             aria-label="delete"
           >
             <CloseIcon style={{ width: "30px", height: "30px" }} />
           </IconButton>
           <DivInput>
-            <FormLabel>Вкажіть ціну роботи!</FormLabel>
+            <labe>Вкажіть ціну роботи!</labe>
             <Input
               type="number"
               name="money"

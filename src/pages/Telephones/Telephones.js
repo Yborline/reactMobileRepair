@@ -1,13 +1,19 @@
 import { useSelector } from "react-redux";
 import ListPurchase from "../../components/ListPurchase/ListPurchase";
-import { getTypesPhone } from "../../redux/telephones/phones-selector";
+import {
+  findFinishPhones,
+  getTypesPhone,
+} from "../../redux/telephones/phones-selector";
 import FormDate from "../../components/FormDate/FormDate";
 import Modal from "../../components/Modal/Modal";
 import { useState } from "react";
 import { Button, Stack } from "@mui/material";
+import EmptyText from "../../components/EmptyText/EmptyText";
+import Filter from "../../components/Filter/Filter";
 
 const Telephones = () => {
   const { purchases } = useSelector(getTypesPhone);
+  const { filteredPurchases } = useSelector(findFinishPhones);
 
   const [showPurchases, setShowPurchases] = useState(false);
 
@@ -49,8 +55,22 @@ const Telephones = () => {
           Продані телефони
         </Button>
       </Stack>
-      {showPurchases && <ListPurchase phones={purchases.start} />}
-      {showFinishPurchases && <ListPurchase phones={purchases.finish} />}
+      {showPurchases &&
+        (purchases.start.length === 0 ? (
+          <EmptyText text={"Куплених телефонів немає"} />
+        ) : (
+          <ListPurchase phones={purchases.start} />
+        ))}
+      {showFinishPurchases &&
+        (purchases.finish.length === 0 ? (
+          <EmptyText text={"Проданих телефонів немає"} />
+        ) : (
+          <>
+            {" "}
+            <Filter />
+            <ListPurchase phones={filteredPurchases} />
+          </>
+        ))}
     </>
   );
 };
