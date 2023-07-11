@@ -23,9 +23,10 @@ export const Bttn = styled(Button)`
 width: 100%;
     @media screen and (min-width: 768px){
                 height: 50px;
-width: 220px;;
+width: 220px;
     }
 `
+
 export const ContainerFilter = styled.div`
     @media screen and (min-width: 768px){
 display:flex;

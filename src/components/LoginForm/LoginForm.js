@@ -148,7 +148,7 @@ const LoginForm = ({ toggleModal }) => {
                 </Li>
                 <Li>
                   <label>
-                    <Field type="checkbox" name="user" />
+                    <Field type="checkbox" name="remember" />
                     Remember me
                   </label>
                 </Li>

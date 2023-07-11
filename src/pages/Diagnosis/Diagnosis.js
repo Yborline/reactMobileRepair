@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import ListRepair from "../../components/ListRapair/ListRepair";
 import {
+  filterPhones,
   findFinishPhones,
   findFinishPurchases,
   getTypesPhone,
@@ -8,16 +9,26 @@ import {
 import { Button, Stack } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { Container } from "./Diagnosis.styled";
 import ListRepairFinish from "../../components/ListRapair/ListRepairFinish/ListRepairFinish";
 import EmptyText from "../../components/EmptyText/EmptyText";
 import Filter from "../../components/Filter/Filter";
+import { useWindowSize } from "@react-hook/window-size";
+import {
+  Container,
+  BtnContainer,
+  Bttn,
+  ContainerFilter,
+} from "./Diagnosis.styled";
+import FilterDate from "../../components/FilterDate/FilterDate";
+import Profit from "../../components/Profit/Profit";
 
 const Diagnosis = () => {
   const { diagnosis } = useSelector(getTypesPhone);
   const [showDiagnosis, setShowDiagnosis] = useState(false);
   const [showFinishDiagnosis, setShowFinishDiagnosis] = useState(false);
-  const { filteredDiagnosis } = useSelector(findFinishPhones);
+  const { filteredDiagnosis } = useSelector(filterPhones);
+  const { dateFilterDiagnosis } = useSelector(findFinishPhones);
+  const [width, height] = useWindowSize();
   const handleClickDiagnosis = () => {
     if (showFinishDiagnosis) {
       setShowDiagnosis(!showDiagnosis);
@@ -39,25 +50,32 @@ const Diagnosis = () => {
   };
 
   return (
-    <>
-      <Stack spacing={2}>
-        <Button
+    <Container>
+      <BtnContainer spacing={2}>
+        <Bttn
           onClick={handleClickDiagnosis}
-          style={{ width: "100%" }}
           variant="contained"
           color="success"
         >
           Діагностика
-        </Button>
-        <Button
+        </Bttn>
+        <Bttn
           onClick={handleClickFinishDiagnosis}
-          style={{ width: "100%" }}
           variant="contained"
           color="success"
         >
           Виконана діагностика
-        </Button>
-      </Stack>
+        </Bttn>
+      </BtnContainer>
+      {showFinishDiagnosis && (
+        <ContainerFilter>
+          <Filter
+            width={width > 768 ? "240px" : "100%"}
+            marginRight={width > 768 && "20px"}
+          />
+          <FilterDate />
+        </ContainerFilter>
+      )}
       {showDiagnosis &&
         (diagnosis.start.length === 0 ? (
           <EmptyText text={"Телефонів на діагностиці не має"} />
@@ -73,14 +91,14 @@ const Diagnosis = () => {
         ) : (
           <>
             {" "}
-            <Filter />
+            <Profit items={dateFilterDiagnosis} />
             <ListRepairFinish
               textStatus="Діагностика закінчена"
               phones={filteredDiagnosis}
             />
           </>
         ))}
-    </>
+    </Container>
   );
 };
 

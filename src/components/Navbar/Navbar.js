@@ -1,4 +1,4 @@
-import { Ul, Nav, Div } from "./Navbar.styled";
+import { Ul, Nav, Div, LiUser } from "./Navbar.styled";
 import { NavLink } from "react-router-dom";
 import {
   useWindowSize,
@@ -46,7 +46,7 @@ const Navbar = () => {
             <li>
               <NavLink to="/telephones">Телефони</NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink to="/spareParts">Запчастини</NavLink>
             </li>
             <li>
@@ -54,20 +54,21 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink to="/history">Історія</NavLink>
-            </li>
+            </li> */}
             {logged ? (
               <Button color="error" type="submit" onClick={toggleModal}>
                 Вихід
               </Button>
             ) : (
-              <li>
+              <LiUser>
                 <NavLink to="/user">User</NavLink>
-              </li>
+              </LiUser>
             )}
           </Ul>
         )}
         {loading && (
           <LinearProgress
+            color="info"
             sx={{ position: "absolute", bottom: "-5px", left: 0, right: 0 }}
             size="sm"
           />

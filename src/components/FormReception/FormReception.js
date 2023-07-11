@@ -110,6 +110,7 @@ const FormReception = () => {
           moneyDiagnosis: status === "diagnosis" ? money : 0,
           moneyPurchase: status === "purchase" ? money : 0,
           repairPrice: status === "repair" ? repairPrice : 0,
+          sellPrice: 0,
           description,
         };
         console.log(result);
@@ -141,6 +142,10 @@ const FormReception = () => {
 
           {/* <div> */}
           <MarginItem spacing={2}>
+            <RadioClick
+              changeValidation={setValidation}
+              setField={setFieldValue}
+            />
             <div>
               <Autocomplete
                 type="text"
@@ -150,6 +155,7 @@ const FormReception = () => {
                 options={telephones}
                 onBlur={handleBlur}
                 getOptionLabel={(option) => option.brand}
+                sx={{ height: "54px" }}
                 onChange={(event, newValue) =>
                   handlerAutocomplate(setFieldValue, "brand", newValue, "model")
                 }
@@ -170,6 +176,7 @@ const FormReception = () => {
               <div style={{ display: "flex" }}>
                 <Autocomplete
                   style={{
+                    height: "54px",
                     width: "100%",
                   }}
                   type="text"
@@ -203,6 +210,7 @@ const FormReception = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.name}
+                sx={{ height: "54px" }}
               />
 
               {errors.name && touched.name && errors.name}
@@ -215,14 +223,11 @@ const FormReception = () => {
                 onChange={handleChange}
                 value={values.numberPhone}
                 placeholder="Номер телефону"
+                sx={{ height: "54px" }}
               />
               {errors.numberPhone && touched.numberPhone && errors.numberPhone}
             </div>
 
-            <RadioClick
-              changeValidation={setValidation}
-              setField={setFieldValue}
-            />
             {validation !== "purchase" && (
               <LocalizationProvider
                 adapterLocale="uk"
@@ -274,6 +279,7 @@ const FormReception = () => {
                   onChange={handleChange}
                   value={values.repairPrice}
                   placeholder="Ціна запчастин"
+                  sx={{ height: "54px" }}
                 />
                 {errors.repairPrice &&
                   touched.repairPrice &&
@@ -289,6 +295,7 @@ const FormReception = () => {
                 onChange={handleChange}
                 value={values.money}
                 placeholder="Ціна"
+                sx={{ height: "54px" }}
               />
               {errors.money && touched.money && errors.money}
             </div>
@@ -314,6 +321,7 @@ const FormReception = () => {
 
             <LoadingButton
               variant="contained"
+              color="success"
               loading={loading}
               onClick={handleSubmit}
             >

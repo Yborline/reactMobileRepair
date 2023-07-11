@@ -9,6 +9,7 @@ import HandymanIcon from "@mui/icons-material/Handyman";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { useWindowSize } from "@react-hook/window-size";
 
 const typeOfWork = [
   { label: "Діагностика", value: "diagnosis", id: 1 },
@@ -17,6 +18,8 @@ const typeOfWork = [
 ];
 
 export default function RadioClick({ changeValidation, setField }) {
+  const [width, height] = useWindowSize();
+
   const changeRadioClick = (newValue) => {
     if (newValue.value === "purchase") {
       setField("status", newValue.value);
@@ -37,24 +40,39 @@ export default function RadioClick({ changeValidation, setField }) {
           aria-labelledby="radio-buttons-group-label"
           name="radio-buttons-group"
           defaultValue="diagnosis"
+          orientation="horizontal"
+          sx={{ flexDirection: "row" }}
           onChange={(event, newValue) => changeRadioClick(event.target)}
         >
           <List
-            sx={{
-              minWidth: 240,
-              "--List-gap": "0.5rem",
-              "--ListItem-paddingY": "1rem",
-              "--ListItem-radius": "8px",
-              "--ListItemDecorator-size": "32px",
-            }}
+            sx={
+              width > 768
+                ? {
+                    flexDirection: "row",
+                    "--ListItem-radius": "13px",
+                    justifyContent: "space-between",
+                  }
+                : {
+                    minWidth: 240,
+
+                    "--List-gap": "0.5rem",
+                    "--ListItem-paddingY": "1rem",
+                    "--ListItem-radius": "13px",
+                    "--ListItemDecorator-size": "12px",
+                  }
+            }
           >
             {typeOfWork.map((item, index) => (
               <ListItem
                 variant="outlined"
                 key={item.id}
-                sx={{ boxShadow: "sm", bgcolor: "background.body" }}
+                sx={{
+                  minWidth: "190px",
+                  boxShadow: "sm",
+                  bgcolor: "background.body",
+                }}
               >
-                <ListItemDecorator style={{ marginRight: "10px" }}>
+                <ListItemDecorator>
                   {
                     [
                       <TroubleshootIcon />,
@@ -67,6 +85,8 @@ export default function RadioClick({ changeValidation, setField }) {
                   overlay
                   value={item.value}
                   label={item.label}
+                  color="info"
+                  variant="outlined"
                   sx={{ flexGrow: 1, flexDirection: "row-reverse" }}
                   slotProps={{
                     action: ({ checked }) => ({
@@ -74,7 +94,7 @@ export default function RadioClick({ changeValidation, setField }) {
                         ...(checked && {
                           inset: -1,
                           border: "2px solid",
-                          borderColor: theme.vars.palette.primary[500],
+                          borderColor: "#6A5ACD",
                         }),
                       }),
                     }),

@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import Input from "@mui/joy/Input";
 import { Label, Div } from "./Filter.styled";
 
-export default function Filter() {
+export default function Filter({ width, marginRight }) {
   const valueFilter = useSelector(getFilter);
   const dispatch = useDispatch();
   const { changeFilter } = phonesSlice.actions;
@@ -18,8 +18,8 @@ export default function Filter() {
   }, [changeFilter, dispatch, location]);
 
   return (
-    <Div>
-      <Label>
+    <Div marginRight={marginRight}>
+      <Label width={width}>
         <Input
           placeholder="Фільтр"
           type="text"

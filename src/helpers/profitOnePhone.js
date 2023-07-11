@@ -6,7 +6,7 @@ const profitOnePhone = (
   sellPrice
 ) => {
   const profit =
-    sellPrice - moneyRepair - moneyDiagnosis - moneyPurchase - repairPrice;
+    sellPrice + moneyRepair + moneyDiagnosis + moneyPurchase - repairPrice;
 
   return profit;
 };

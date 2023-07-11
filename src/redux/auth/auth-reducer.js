@@ -6,7 +6,7 @@ const initialState = {
   user: { name: null, email: null, type: null },
   token: null,
   isLoggedIn: false,
-  isPageRefreshing: false,
+  isFetchingCurrentUser: false,
   userLoading: false,
   userError: null,
 };
@@ -49,7 +49,33 @@ const userSlice = createSlice({
             // isLoggedIn: payload ? true : false,
             isLoggedIn: true,
             //
-            isPageRefreshing: false,
+            isFetchingCurrentUser: false,
+          };
+        }
+      )
+      .addCase(
+        authOperations.fetchCurrentUser.pending,
+        (state, { payload }) => {
+          return {
+            ...state,
+            user: { ...payload?.user },
+            // isLoggedIn: payload ? true : false,
+
+            //
+            isFetchingCurrentUser: true,
+          };
+        }
+      )
+      .addCase(
+        authOperations.fetchCurrentUser.rejected,
+        (state, { payload }) => {
+          return {
+            ...state,
+            user: { ...payload?.user },
+            // isLoggedIn: payload ? true : false,
+            isLoggedIn: false,
+            //
+            isFetchingCurrentUser: false,
           };
         }
       )

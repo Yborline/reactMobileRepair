@@ -28,9 +28,9 @@ const pathNavbar = [
   { path: "/repair", text: "Ремонт", id: 2 },
   { path: "/diagnosis", text: "Діагностика", id: 3 },
   { path: "/telephones", text: "Телефони", id: 4 },
-  { path: "/spareParts", text: "Запчастини", id: 5 },
-  { path: "Accounting", text: "Бухгалтерія", id: 6 },
-  { path: "/history", text: "Історія", id: 7 },
+  // { path: "/spareParts", text: "Запчастини", id: 5 },
+  // { path: "Accounting", text: "Бухгалтерія", id: 6 },
+  // { path: "/history", text: "Історія", id: 7 },
   { path: "/user", text: "User", id: 8 },
 ];
 

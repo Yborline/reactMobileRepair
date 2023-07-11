@@ -75,7 +75,6 @@ const FormDescription = ({ id, close, status, finishTime }) => {
             <Input
               type="string"
               name="description"
-              // onChange={(event) => setCash(event.target.value)}
               onChange={handleChange}
               value={values.description}
               placeholder="Опис"
@@ -90,12 +89,6 @@ const FormDescription = ({ id, close, status, finishTime }) => {
           >
             Змінити опис
           </Button>
-          {/* <Radio name="action" options={listJenisKelamin} /> */}
-          {/* <Field component={RadioGroup} name="action"> */}
-          {/* <RadioPositionEnd handleChange={setFieldValue} /> */}
-          {/* </Field> */}
-
-          {/* </div> */}
         </Form>
       )}
     </Formik>

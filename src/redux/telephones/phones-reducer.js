@@ -20,6 +20,7 @@ const initialState = {
     purchase: [],
   },
   filter: "",
+  filterDate: "",
   error: null,
   loading: false,
 };
@@ -32,6 +33,12 @@ export const phonesSlice = createSlice({
       return {
         ...state,
         filter: payload,
+      };
+    },
+    changeFilterDate(state, { payload }) {
+      return {
+        ...state,
+        filterDate: payload,
       };
     },
     // standard reducer logic, with auto-generated action types per reducer

@@ -10,13 +10,14 @@ align-items:center;
 width: 100%;
 position: relative;
 
+
 `
 
 export const MarginItem = styled(Stack)`
 
-width: 280px;
+width:100%;
 @media screen and (min-width: 768px){
-width: 500px;
+width: 700px;
 }
 `
 
@@ -35,9 +36,9 @@ box-sizing: border-box;
     background: #fff;
     border: 1px solid ${({theme})=> theme.borderTextArea};
     box-shadow: 0px 2px 2px ${({theme})=> theme.borderTextArea};
-    width: 280px;
+width: 100%;
 @media screen and (min-width: 768px){
-  min-width: 500px;
+  min-width: 700px;
 width: 500px;
 max-width: 500px;
 min-height: 60px;

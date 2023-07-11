@@ -10,14 +10,21 @@ align-items: center;
 
 export const Nav = styled.nav`
 position:relative;
+
 border-bottom: 1px solid ${({ theme }) => theme.thinLine};
 
 `
 
 export const Div = styled.div`
+
 position:fixed;
 width: 100%;
 z-index: 20;
 background-color: ${({theme})=> theme.navBar}
 
 `
+
+export const LiUser = styled.li`
+display:flex;
+align-items: center;
+height: 36.5px;`

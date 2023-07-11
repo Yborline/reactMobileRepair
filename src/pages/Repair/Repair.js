@@ -3,24 +3,35 @@ import { fetchTelephones } from "../../redux/telephones/phones-operations";
 import { useEffect, useState } from "react";
 import ListRepair from "../../components/ListRapair/ListRepair";
 import {
+  filterPhones,
   findFinishPhones,
   getPhones,
   getTypesPhone,
 } from "../../redux/telephones/phones-selector";
-import { Container } from "./Repair.styled";
+import {
+  Container,
+  BtnContainer,
+  Bttn,
+  ContainerFilter,
+} from "./Repair.styled";
 import Button from "@mui/material/Button";
 import { Stack } from "@mui/joy";
 import ListRepairFinish from "../../components/ListRapair/ListRepairFinish/ListRepairFinish";
 import EmptyText from "../../components/EmptyText/EmptyText";
 import Filter from "../../components/Filter/Filter";
+import { useWindowSize } from "@react-hook/window-size";
+import FilterDate from "../../components/FilterDate/FilterDate";
+import Profit from "../../components/Profit/Profit";
 
 const Repair = () => {
   const dispatch = useDispatch();
   const { repairs, diagnosis, purchases } = useSelector(getTypesPhone);
   const [showRepair, setShowRepair] = useState(false);
+  const [width, height] = useWindowSize();
 
   const [showFinishRepair, setShowFinishRepair] = useState(false);
-  const { filteredRepairs } = useSelector(findFinishPhones);
+  const { filteredRepairs } = useSelector(filterPhones);
+  const { dateFilterRepairs } = useSelector(findFinishPhones);
   const handleClickFinishRepair = () => {
     if (showRepair) {
       setShowFinishRepair(!showFinishRepair);
@@ -43,7 +54,7 @@ const Repair = () => {
 
   return (
     <Container>
-      <Stack spacing={2}>
+      <BtnContainer spacing={2}>
         {/* <Button
           onClick={handleClickDiagnosis}
           style={{ width: "100%" }}
@@ -55,23 +66,26 @@ const Repair = () => {
         <Button style={{ width: "100%" }} variant="contained" color="success">
           Виконана діагностика
         </Button> */}
-        <Button
-          onClick={handleClickRepair}
-          style={{ width: "100%" }}
-          variant="contained"
-          color="success"
-        >
+        <Bttn onClick={handleClickRepair} variant="contained" color="success">
           Ремонт
-        </Button>
-        <Button
+        </Bttn>
+        <Bttn
           onClick={handleClickFinishRepair}
-          style={{ width: "100%" }}
           variant="contained"
           color="success"
         >
           Виконаний ремонт
-        </Button>
-      </Stack>
+        </Bttn>
+      </BtnContainer>
+      {showFinishRepair && (
+        <ContainerFilter>
+          <Filter
+            width={width > 768 ? "240px" : "100%"}
+            marginRight={width > 768 && "20px"}
+          />
+          <FilterDate />
+        </ContainerFilter>
+      )}
       {showRepair &&
         (repairs.start.length === 0 ? (
           <EmptyText text={"Телефонів на ремонті не має"} />
@@ -83,8 +97,7 @@ const Repair = () => {
           <EmptyText text={"Відремонтованих телефонів немає"} />
         ) : (
           <>
-            {" "}
-            <Filter />
+            <Profit items={dateFilterRepairs} />
             <ListRepairFinish
               textStatus="Ремонт закінчено"
               phones={filteredRepairs}

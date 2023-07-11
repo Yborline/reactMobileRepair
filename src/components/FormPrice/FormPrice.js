@@ -17,27 +17,6 @@ const initial = {
 };
 
 const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
-  const loading = useSelector(getLoading);
-  const dispatch = useDispatch();
-
-  // const choiceMoney = (value) => {
-  //   switch (value) {
-  //     case "repair":
-  //       return "moneyRepair";
-  //     case "diagnosis":
-  //       return "moneyDiagnosis";
-  //     case "purchase":
-  //       return "moneyPurchase";
-  //     default:
-  //       return "moneyDiagnosis";
-  //   }
-  // };
-  //   const repairClick = () => {
-  //     finishTime === null
-  //       ? toggleModal()
-  //       : dispatch(changeStatus({ id: id, status: "repair" }));
-  //   };
-  console.log(status);
   return (
     <Formik
       initialValues={initial}

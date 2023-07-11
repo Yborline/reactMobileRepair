@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import ListPurchase from "../../components/ListPurchase/ListPurchase";
 import {
+  filterPhones,
   findFinishPhones,
   getTypesPhone,
 } from "../../redux/telephones/phones-selector";
@@ -10,10 +11,21 @@ import { useState } from "react";
 import { Button, Stack } from "@mui/material";
 import EmptyText from "../../components/EmptyText/EmptyText";
 import Filter from "../../components/Filter/Filter";
+import {
+  Bttn,
+  BtnContainer,
+  Container,
+  ContainerFilter,
+} from "./Telephones.styled";
+import { useWindowSize } from "@react-hook/window-size";
+import FilterDate from "../../components/FilterDate/FilterDate";
+import Profit from "../../components/Profit/Profit";
 
 const Telephones = () => {
   const { purchases } = useSelector(getTypesPhone);
-  const { filteredPurchases } = useSelector(findFinishPhones);
+  const { dateFilterPurchases } = useSelector(findFinishPhones);
+  const { filteredPurchases } = useSelector(filterPhones);
+  const [width, height] = useWindowSize();
 
   const [showPurchases, setShowPurchases] = useState(false);
 
@@ -36,25 +48,28 @@ const Telephones = () => {
   };
 
   return (
-    <>
-      <Stack spacing={2}>
-        <Button
-          onClick={handleClickRepair}
-          style={{ width: "100%" }}
-          variant="contained"
-          color="success"
-        >
+    <Container>
+      <BtnContainer spacing={2}>
+        <Bttn onClick={handleClickRepair} variant="contained" color="success">
           Куплені телефони
-        </Button>
-        <Button
+        </Bttn>
+        <Bttn
           onClick={handleClickFinishPurchases}
-          style={{ width: "100%" }}
           variant="contained"
           color="success"
         >
           Продані телефони
-        </Button>
-      </Stack>
+        </Bttn>
+      </BtnContainer>
+      {showFinishPurchases && (
+        <ContainerFilter>
+          <Filter
+            width={width > 768 ? "240px" : "100%"}
+            marginRight={width > 768 && "20px"}
+          />
+          <FilterDate />
+        </ContainerFilter>
+      )}
       {showPurchases &&
         (purchases.start.length === 0 ? (
           <EmptyText text={"Куплених телефонів немає"} />
@@ -66,12 +81,11 @@ const Telephones = () => {
           <EmptyText text={"Проданих телефонів немає"} />
         ) : (
           <>
-            {" "}
-            <Filter />
+            <Profit items={dateFilterPurchases} />
             <ListPurchase phones={filteredPurchases} />
           </>
         ))}
-    </>
+    </Container>
   );
 };
 

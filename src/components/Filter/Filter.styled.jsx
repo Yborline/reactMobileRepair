@@ -4,11 +4,13 @@ import { styled } from "styled-components";
 export const Div = styled.div`
 display:flex;
 flex-direction:column;
-margin-top: 20px;
+align-items: center;
+margin-right: ${props => props.marginRight}
 `
 
 
 export const Label = styled.label`
-text-align: center;`
+text-align: center;
+width: ${props=> props.width};`
 
 
