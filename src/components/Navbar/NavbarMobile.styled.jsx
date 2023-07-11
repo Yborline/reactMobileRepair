@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const Ul = styled.ul`
 width: 65vw;
@@ -14,4 +15,12 @@ height: 30px;
 
 export const Div = styled.div`
 text-align:right;
+`
+
+export const Link = styled(NavLink)`
+color: ${({ theme }) => theme.link};
+&:hover,
+&.active{
+ color: ${({theme}) => theme.activeLink}   
+}
 `

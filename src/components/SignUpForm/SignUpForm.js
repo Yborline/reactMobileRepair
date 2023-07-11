@@ -15,6 +15,7 @@ import {
   Error,
   H3,
   SpanError,
+  Form,
 } from "./SignUpForm.styled";
 import LoginForm from "../LoginForm/LoginForm";
 import {
@@ -83,215 +84,206 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
 
   return (
     <Div>
-      {signUpForm === false ? (
-        <LoginForm />
-      ) : (
-        <>
-          <TransitionAlerts
-            open={open}
-            setOpen={setOpen}
-            text="Реєстрація пройшла успішно!"
-            top={"-18px"}
-          />
-          <DivClose>
-            <H3>Реєстрація</H3>
-          </DivClose>
-          <Formik
-            initialValues={{
-              name: "",
-              lastName: "",
-              email: "",
-              password: "",
-              confirmPassword: "",
-              user: false,
-            }}
-            validateOnBlur
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              const { name, lastName, email, password, user } = values;
-              dispatch(
-                authOperations.register({
-                  name: name.toLowerCase().trim(),
-                  lastName: lastName.toLowerCase().trim(),
-                  email: email.toLowerCase().trim(),
-                  password,
-                  user: "master",
-                })
-              );
-              setNavigation(true);
+      <TransitionAlerts
+        open={open}
+        setOpen={setOpen}
+        text="Реєстрація пройшла успішно!"
+        top={"-18px"}
+      />
+      <DivClose>
+        <H3>Реєстрація</H3>
+      </DivClose>
+      <Formik
+        initialValues={{
+          name: "",
+          lastName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          user: false,
+        }}
+        validateOnBlur
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          const { name, lastName, email, password, user } = values;
+          dispatch(
+            authOperations.register({
+              name: name.toLowerCase().trim(),
+              lastName: lastName.toLowerCase().trim(),
+              email: email.toLowerCase().trim(),
+              password,
+              user: "master",
+            })
+          );
+          setNavigation(true);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          isValid,
+          dirty,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
+          <Form
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleSubmit(values);
+              }
             }}
           >
-            {({
-              values,
-              errors,
-              touched,
-              isValid,
-              dirty,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-            }) => (
-              <form
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+            <Ul>
+              {/* <GoogleAuthBtn /> */}
+              <Li>
+                <label
+                  htmlFor="name"
+                  className="form__label"
+                  style={{ marginTop: "28px" }}
+                >
+                  Ім'я
+                  {!values.name.length || errors.name ? (
+                    <SpanError> *</SpanError>
+                  ) : (
+                    <></>
+                  )}
+                </label>
+
+                <br />
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="..."
+                  maxLength="100"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                />
+
+                <SpanError className="input__error">
+                  {touched.name && errors.name ? errors.name : ""}
+                </SpanError>
+
+                <br />
+              </Li>
+              <Li>
+                <label
+                  htmlFor="name"
+                  className="form__label"
+                  style={{ marginTop: "28px" }}
+                >
+                  Прізвище
+                  {!values.name.length || errors.name ? (
+                    <SpanError> *</SpanError>
+                  ) : (
+                    <></>
+                  )}
+                </label>
+
+                <br />
+                <Input
+                  type="text"
+                  name="lastName"
+                  placeholder="..."
+                  maxLength="100"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                />
+
+                <SpanError>
+                  {touched.lastName && errors.lastName ? errors.lastName : ""}
+                </SpanError>
+
+                <br />
+              </Li>
+
+              <Li>
+                <label htmlFor="email" className="form__label">
+                  Електронна адреса
+                  {!values.email.length || errors.email ? (
+                    <SpanError> *</SpanError>
+                  ) : (
+                    <></>
+                  )}
+                </label>
+                <br />
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  maxLength="63"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                />
+                <br />
+
+                <SpanError className="input__error">
+                  {touched.email && errors.email ? errors.email : ""}
+                </SpanError>
+              </Li>
+
+              <Li>
+                <label htmlFor="password" className="form__label">
+                  Пароль
+                  {!values.password.length || errors.password ? (
+                    <SpanError> *</SpanError>
+                  ) : (
+                    <></>
+                  )}
+                </label>
+
+                <br />
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="..."
+                  maxLength="30"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                />
+                <br />
+                <SpanError className="input__error">
+                  {touched.password && errors.password ? errors.password : ""}
+                </SpanError>
+              </Li>
+
+              <Li>
+                <label htmlFor="confirmPassword" className="form__label">
+                  Підтвердіть пароль
+                  {!values.confirmPassword.length || errors.confirmPassword ? (
+                    <SpanError> *</SpanError>
+                  ) : (
+                    <></>
+                  )}
+                </label>
+                <br />
+                <Input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="..."
+                  maxLength="30"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.confirmPassword}
+                  onPaste={(e) => {
                     e.preventDefault();
-                    handleSubmit(values);
-                  }
-                }}
-              >
-                <Ul>
-                  {/* <GoogleAuthBtn /> */}
-                  <Li>
-                    <label
-                      htmlFor="name"
-                      className="form__label"
-                      style={{ marginTop: "28px" }}
-                    >
-                      Ім'я
-                      {!values.name.length || errors.name ? (
-                        <SpanError> *</SpanError>
-                      ) : (
-                        <></>
-                      )}
-                    </label>
+                  }}
+                />
+                <br />
 
-                    <br />
-                    <Input
-                      type="text"
-                      name="name"
-                      placeholder="..."
-                      maxLength="100"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.name}
-                    />
-
-                    <SpanError className="input__error">
-                      {touched.name && errors.name ? errors.name : ""}
-                    </SpanError>
-
-                    <br />
-                  </Li>
-                  <Li>
-                    <label
-                      htmlFor="name"
-                      className="form__label"
-                      style={{ marginTop: "28px" }}
-                    >
-                      Прізвище
-                      {!values.name.length || errors.name ? (
-                        <SpanError> *</SpanError>
-                      ) : (
-                        <></>
-                      )}
-                    </label>
-
-                    <br />
-                    <Input
-                      type="text"
-                      name="lastName"
-                      placeholder="..."
-                      maxLength="100"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.lastName}
-                    />
-
-                    <SpanError>
-                      {touched.lastName && errors.lastName
-                        ? errors.lastName
-                        : ""}
-                    </SpanError>
-
-                    <br />
-                  </Li>
-
-                  <Li>
-                    <label htmlFor="email" className="form__label">
-                      Електронна адреса
-                      {!values.email.length || errors.email ? (
-                        <SpanError> *</SpanError>
-                      ) : (
-                        <></>
-                      )}
-                    </label>
-                    <br />
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="your@email.com"
-                      maxLength="63"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                    />
-                    <br />
-
-                    <SpanError className="input__error">
-                      {touched.email && errors.email ? errors.email : ""}
-                    </SpanError>
-                  </Li>
-
-                  <Li>
-                    <label htmlFor="password" className="form__label">
-                      Пароль
-                      {!values.password.length || errors.password ? (
-                        <SpanError> *</SpanError>
-                      ) : (
-                        <></>
-                      )}
-                    </label>
-
-                    <br />
-                    <Input
-                      type="password"
-                      name="password"
-                      placeholder="..."
-                      maxLength="30"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.password}
-                    />
-                    <br />
-                    <SpanError className="input__error">
-                      {touched.password && errors.password
-                        ? errors.password
-                        : ""}
-                    </SpanError>
-                  </Li>
-
-                  <Li>
-                    <label htmlFor="confirmPassword" className="form__label">
-                      Підтвердіть пароль
-                      {!values.confirmPassword.length ||
-                      errors.confirmPassword ? (
-                        <SpanError> *</SpanError>
-                      ) : (
-                        <></>
-                      )}
-                    </label>
-                    <br />
-                    <Input
-                      type="password"
-                      name="confirmPassword"
-                      placeholder="..."
-                      maxLength="30"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.confirmPassword}
-                      onPaste={(e) => {
-                        e.preventDefault();
-                      }}
-                    />
-                    <br />
-
-                    <SpanError className="input__error">
-                      {touched.confirmPassword && errors.confirmPassword
-                        ? errors.confirmPassword
-                        : ""}
-                    </SpanError>
-                  </Li>
-                  {/* {type.user === "admin" ? (
+                <SpanError className="input__error">
+                  {touched.confirmPassword && errors.confirmPassword
+                    ? errors.confirmPassword
+                    : ""}
+                </SpanError>
+              </Li>
+              {/* {type.user === "admin" ? (
                     <Li>
                       <label>
                         <Field type="checkbox" name="user" />
@@ -302,20 +294,20 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                     <></>
                   )} */}
 
-                  {error === "Request failed with status code 409" && (
-                    <Error>Такий користувач вже існує!</Error>
-                  )}
-                  <Stack style={{ width: "100%" }} spacing={2}>
-                    <LoadingButton
-                      variant="outlined"
-                      loading={loading}
-                      onClick={handleSubmit}
-                    >
-                      Зареєструватися
-                    </LoadingButton>
-                    <Button onClick={() => navigate("/user")}>Вхід</Button>
-                  </Stack>
-                  {/* {logged && (
+              {error === "Request failed with status code 409" && (
+                <Error>Такий користувач вже існує!</Error>
+              )}
+              <Stack style={{ width: "100%" }} spacing={2}>
+                <LoadingButton
+                  variant="outlined"
+                  loading={loading}
+                  onClick={handleSubmit}
+                >
+                  Зареєструватися
+                </LoadingButton>
+                <Button onClick={() => navigate("/user")}>Вхід</Button>
+              </Stack>
+              {/* {logged && (
                     <Button
                       type="submit"
                       onClick={() => dispatch(authOperations.logout())}
@@ -323,15 +315,13 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                       Exit
                     </Button>
                   )} */}
-                  {/* <p>
+              {/* <p>
                     Вже з нами? <a href="./login">Увійти</a>
                   </p> */}
-                </Ul>
-              </form>
-            )}
-          </Formik>
-        </>
-      )}
+            </Ul>
+          </Form>
+        )}
+      </Formik>
     </Div>
   );
 };

@@ -31,32 +31,6 @@ export const getTypesPhone = createSelector([getPhones], (phones) => {
   };
 });
 
-// export const findFinishPhones = createSelector(
-//   [getTypesPhone, getFilter],
-//   ({ purchases, diagnosis, repairs }, filter) => {
-//     const normalizedFilter = filter.toLowerCase();
-//     const filteredDiagnosis = diagnosis.finish.filter(
-//       ({ brand, model, description, numberPhone, finishDay }) =>
-//         `${brand} ${model} ${description} ${numberPhone} ${finishDay}`
-//           .toLowerCase()
-//           .includes(normalizedFilter)
-//     );
-//     const filteredRepairs = repairs.finish.filter(
-//       ({ brand, model, description, numberPhone, finishDay }) =>
-//         `${brand} ${model} ${description} ${numberPhone} ${finishDay}`
-//           .toLowerCase()
-//           .includes(normalizedFilter)
-//     );
-//     const filteredPurchases = purchases.finish.filter(
-//       ({ brand, model, description, numberPhone, finishDay }) =>
-//         `${brand} ${model} ${description} ${numberPhone} ${finishDay}`
-//           .toLowerCase()
-//           .includes(normalizedFilter)
-//     );
-//     return { filteredDiagnosis, filteredRepairs, filteredPurchases };
-//   }
-// );
-
 export const findFinishPhones = createSelector(
   [getTypesPhone, getFilter, getFilterDate],
   ({ purchases, diagnosis, repairs }, filter, filterDate) => {

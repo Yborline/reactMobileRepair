@@ -11,6 +11,8 @@ export const lightTheme = {
   thinLine: "#708090",
   navBar: "#E6E6FA",
   error: "#FF0000",
+  link: "#4B0082",
+  activeLink: "#7B68EE",
 };
 
 export const darkTheme = {

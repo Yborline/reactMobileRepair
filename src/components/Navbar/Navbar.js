@@ -1,5 +1,5 @@
-import { Ul, Nav, Div, LiUser } from "./Navbar.styled";
-import { NavLink } from "react-router-dom";
+import { Ul, Nav, Div, LiUser, Link } from "./Navbar.styled";
+
 import {
   useWindowSize,
   useWindowWidth,
@@ -35,16 +35,16 @@ const Navbar = () => {
         ) : (
           <Ul>
             <li>
-              <NavLink to="/">Прийом</NavLink>
+              <Link to="/">Прийом</Link>
             </li>
             <li>
-              <NavLink to="/repair">Ремонт</NavLink>
+              <Link to="/repair">Ремонт</Link>
             </li>
             <li>
-              <NavLink to="/diagnosis">Діагностика</NavLink>
+              <Link to="/diagnosis">Діагностика</Link>
             </li>
             <li>
-              <NavLink to="/telephones">Телефони</NavLink>
+              <Link to="/telephones">Телефони</Link>
             </li>
             {/* <li>
               <NavLink to="/spareParts">Запчастини</NavLink>
@@ -61,7 +61,7 @@ const Navbar = () => {
               </Button>
             ) : (
               <LiUser>
-                <NavLink to="/user">User</NavLink>
+                <Link to="/user">User</Link>
               </LiUser>
             )}
           </Ul>

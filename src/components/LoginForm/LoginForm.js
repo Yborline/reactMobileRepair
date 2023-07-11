@@ -12,6 +12,7 @@ import {
   Error,
   LoadingBttn,
   SpanError,
+  Form,
 } from "./LoginForm.styled";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SignUpForm from "../SignUpForm/SignUpForm";
@@ -89,7 +90,7 @@ const LoginForm = ({ toggleModal }) => {
             handleBlur,
             handleSubmit,
           }) => (
-            <form
+            <Form
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSubmit();
@@ -183,7 +184,7 @@ const LoginForm = ({ toggleModal }) => {
                   </Button>
                 </Stack>
               </Ul>
-            </form>
+            </Form>
           )}
         </Formik>
       </>

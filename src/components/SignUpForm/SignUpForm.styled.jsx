@@ -1,8 +1,21 @@
 import styled from "styled-components";
 
 export const Div = styled.div`
+margin-top: 20px;
+color: ${({ theme }) => theme.textBlack};
+@media screen and (min-width: 768px){
 
-color: ${({theme})=> theme.textBlack}
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+ 
+}
+`
+
+export const Form = styled.form`
+@media screen and (min-width: 768px){
+    width: 700px;
+}
 `
 
 export const H3 = styled.h3`

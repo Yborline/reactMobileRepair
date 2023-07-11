@@ -2,9 +2,21 @@ import styled from "styled-components";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 export const Div = styled.div`
-color: ${({theme})=> theme.textBlack};
-padding: 20px;
+color: ${({ theme }) => theme.textBlack};
+margin-top: 20px;
+@media screen and (min-width: 768px){
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+ 
+}
 `
+export const Form = styled.form`
+@media screen and (min-width: 768px){
+    width: 700px;
+}
+`
+
 export const Ul = styled.ul`
 display: flex;
 flex-direction:column;

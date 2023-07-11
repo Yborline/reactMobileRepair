@@ -9,7 +9,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { NavLink } from "react-router-dom";
-import { Ul, Li, Div } from "./NavbarMobile.styled";
+import { Ul, Li, Div, Link } from "./NavbarMobile.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoggedIn } from "../../redux/auth/auth-selectors";
 import authOperations from "../../redux/auth/auth-operatins";
@@ -70,9 +70,9 @@ export default function NavbarMobile() {
                 Вихід
               </Button>
             ) : (
-              <NavLink style={{ width: "100%" }} to={path}>
+              <Link style={{ width: "100%" }} to={path}>
                 {text}
-              </NavLink>
+              </Link>
             )}
           </Li>
         ))}
