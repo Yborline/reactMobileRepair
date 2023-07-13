@@ -60,6 +60,5 @@ max-height: 100px;
     }
   `
 
-
-
-
+export const SpanError = styled.span`
+color:${({ theme }) => theme.error}`

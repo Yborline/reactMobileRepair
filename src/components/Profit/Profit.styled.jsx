@@ -6,6 +6,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 margin-top: 15px;
+margin-bottom : 15px;
 `
 
 export const Bttn = styled(Button)`

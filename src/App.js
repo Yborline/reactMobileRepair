@@ -17,7 +17,6 @@ import Diagnosis from "./pages/Diagnosis/Diagnosis";
 import { Container, ContainerContent } from "./App.stlyed";
 import { getLoading } from "./redux/telephones/phones-selector";
 import User from "./pages/User/User";
-import SignUpForm from "./components/SignUpForm/SignUpForm";
 import Register from "./pages/Register/Register";
 import PablicRoute from "./components/Route/PablicRoute";
 import PrivateRoute from "./components/Route/PrivateRoute";

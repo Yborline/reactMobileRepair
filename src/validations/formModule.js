@@ -1,7 +1,10 @@
 import * as yup from "yup";
 
-const validationFormModelSchema = yup.object().shape({
+export const validationFormModelSchema = yup.object().shape({
   model: yup.string().required("Це поле обов'язкове"),
 });
 
-export default validationFormModelSchema;
+export const validationFormBrandSchema = yup.object().shape({
+  brand: yup.string().required("Це поле обов'язкове"),
+  model: yup.string().required("Це поле обов'язкове"),
+});

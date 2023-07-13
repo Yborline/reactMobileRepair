@@ -62,3 +62,8 @@ margin-bottom:20px;
 `
 export const DivButton = styled.div`
 display:flex;`
+
+export const LinkPhone = styled.a`
+&:hover{
+    color:${({theme})=>theme.activeLink};
+}`

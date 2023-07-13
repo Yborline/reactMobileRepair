@@ -19,3 +19,11 @@ export const addModel = async (id, model) => {
     return error.message;
   }
 };
+export const addBrand = async (values) => {
+  try {
+    const { data } = await axios.post(`/brand`, values);
+    return data;
+  } catch (error) {
+    return error.message;
+  }
+};

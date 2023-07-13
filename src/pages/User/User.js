@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-import LoginForm from "../../components/LoginForm/LoginForm";
+import FormLogin from "../../components/FormLogin/FormLogin";
 
 const User = () => {
   return (
     <>
-      <LoginForm />
+      <FormLogin />
     </>
   );
 };

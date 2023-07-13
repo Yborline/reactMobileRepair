@@ -77,9 +77,10 @@ const Repair = () => {
           Виконаний ремонт
         </Bttn>
       </BtnContainer>
-      {showFinishRepair && (
+      {showFinishRepair && dateFilterRepairs.length !==0 && (
         <ContainerFilter>
           <Filter
+            marginBottom={width < 768 && "15px"}
             width={width > 768 ? "240px" : "100%"}
             marginRight={width > 768 && "20px"}
           />
@@ -93,7 +94,7 @@ const Repair = () => {
           <ListRepair textStatus="В ремонті" phones={repairs.start} />
         ))}
       {showFinishRepair &&
-        (repairs.finish.length === 0 ? (
+        (dateFilterRepairs.length === 0 ? (
           <EmptyText text={"Відремонтованих телефонів немає"} />
         ) : (
           <>

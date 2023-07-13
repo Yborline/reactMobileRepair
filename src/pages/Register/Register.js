@@ -1,9 +1,9 @@
-import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import FormSignUp from "../../components/FormSignUp/FormSignUp";
 
 const Register = () => {
   return (
     <div style={{ position: "relative" }}>
-      <SignUpForm />
+      <FormSignUp />
     </div>
   );
 };

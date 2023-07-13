@@ -13,9 +13,9 @@ import {
   LoadingBttn,
   SpanError,
   Form,
-} from "./LoginForm.styled";
+} from "./FormLogin.styled";
 import LoadingButton from "@mui/lab/LoadingButton";
-import SignUpForm from "../SignUpForm/SignUpForm";
+import SignUpForm from "../FormSignUp/FormSignUp";
 import { Field, Formik, FormikProps } from "formik";
 import validationSchema from "../../validations/login";
 import {
@@ -30,7 +30,7 @@ import FormLabel from "@mui/joy/FormLabel";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 
-const LoginForm = ({ toggleModal }) => {
+const FormLogin = ({ toggleModal }) => {
   //   const [name, setName] = useState("");
 
   const logged = useSelector(getLoggedIn);
@@ -59,7 +59,7 @@ const LoginForm = ({ toggleModal }) => {
       <>
         {" "}
         <DivClose>
-          <h3>Login</h3>
+          <h3>Вхід</h3>
         </DivClose>
         <Formik
           initialValues={{
@@ -107,7 +107,7 @@ const LoginForm = ({ toggleModal }) => {
                 {/* <GoogleAuthBtn /> */}
                 <Li>
                   <label>
-                    Email
+                    Електронна адреса
                     {!values.email.length ||
                       (errors.email && <SpanError> *</SpanError>)}
                   </label>
@@ -127,7 +127,7 @@ const LoginForm = ({ toggleModal }) => {
                 </Li>
                 <Li>
                   <label htmlFor="password">
-                    Password
+                    Пароль
                     {!values.password.length ||
                       (errors.password && <SpanError> *</SpanError>)}
                   </label>
@@ -150,7 +150,7 @@ const LoginForm = ({ toggleModal }) => {
                 <Li>
                   <label>
                     <Field type="checkbox" name="remember" />
-                    Remember me
+                    Запам'ятати мене
                   </label>
                 </Li>
                 {/* <Button
@@ -200,4 +200,4 @@ const LoginForm = ({ toggleModal }) => {
   );
 };
 
-export default LoginForm;
+export default FormLogin;

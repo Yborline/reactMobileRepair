@@ -2,17 +2,12 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
-// import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { NavLink } from "react-router-dom";
 import { Ul, Li, Div, Link } from "./NavbarMobile.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoggedIn } from "../../redux/auth/auth-selectors";
 import authOperations from "../../redux/auth/auth-operatins";
+import MenuIcon from "@mui/icons-material/Menu";
 import Modal from "../Modal/Modal";
 import LogOut from "../LogOut/LogOut";
 import { useState } from "react";
@@ -97,7 +92,9 @@ export default function NavbarMobile() {
 
   return (
     <Div>
-      <Button onClick={toggleDrawer(true)}>{"right"}</Button>
+      <Button color="secondary" onClick={toggleDrawer(true)}>
+        <MenuIcon />
+      </Button>
       <SwipeableDrawer
         anchor={"right"}
         open={state}

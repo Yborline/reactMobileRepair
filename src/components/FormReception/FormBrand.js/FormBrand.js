@@ -3,20 +3,14 @@ import Input from "@mui/joy/Input";
 import Button from "@mui/material/Button";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { Form, Label, DivInput, DivButton } from "./FormModel.styled";
-import { validationFormModelSchema } from "../../../validations/formModule";
-import { addModel } from "../../../services/api";
+import { Form, Label, DivInput, DivButton } from "./FormBrand.styled";
+import { validationFormBrandSchema } from "../../../validations/formModule";
+import { addBrand } from "../../../services/api";
 import Alert from "@mui/material/Alert";
 import TransitionAlerts from "../../Alert/AlertSuccess";
 import { useEffect, useState } from "react";
 
-const FormModel = ({
-  сlearBrand,
-  setFieldValue,
-  changePhone,
-  brand = "",
-  close,
-}) => {
+const FormBrand = ({ close, changePhone }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -25,18 +19,6 @@ const FormModel = ({
     }, 5000);
   }, [open]);
 
-  const newArrayPhones = (data) => {
-    changePhone((prevState) => [
-      ...prevState.map((item) => {
-        const newArray =
-          item._id === data.updateModel._id
-            ? { ...item, model: data.updateModel.model }
-            : item;
-        setFieldValue("brand", newArray);
-        return newArray;
-      }),
-    ]);
-  };
   return (
     <>
       <IconButton
@@ -49,23 +31,25 @@ const FormModel = ({
       <TransitionAlerts
         open={open}
         setOpen={setOpen}
-        text="Модель добавлена"
+        text="Бренд та її перша модель додана!"
         top={"-100px"}
       />
       <Formik
         initialValues={{
+          brand: "",
           model: "",
         }}
         alidateOnBlur
-        validationSchema={validationFormModelSchema}
+        validationSchema={validationFormBrandSchema}
         onSubmit={(values, formikProps) => {
           // console.log(values);
-          console.log(brand._id);
-          console.log(values);
           // addModel(brand._id, values);
 
-          addModel(brand._id, values).then((data) =>
-            data.status ? (setOpen(true), newArrayPhones(data)) : alert(data)
+          addBrand({ ...values, model: [values.model] }).then((data) =>
+            data.status
+              ? (setOpen(true),
+                changePhone((prevState) => [...prevState, data.data]))
+              : alert(data)
           );
 
           // .catch((error) => alert(error.message));
@@ -98,7 +82,23 @@ const FormModel = ({
               This is a success alert — check it out!
             </Alert> */}
 
-            <Label>Введіть назву моделі на англійській мові</Label>
+            <Label>
+              Введіть назву бренду який хочете добавити на англійській мові
+            </Label>
+            <DivInput>
+              <Input
+                type="text"
+                placeholder="Brand"
+                name="brand"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.brand}
+              />
+              {errors.brand && touched.brand && errors.brand}
+            </DivInput>
+            <Label>
+              Введіть назву однієї моделі бренду на англійській мові
+            </Label>
             <DivInput>
               <Input
                 type="text"
@@ -119,7 +119,7 @@ const FormModel = ({
                 variant="contained"
                 // onClick={close}
               >
-                {brand.brand} : {values.model}
+                {values.brand} : {values.model}
               </Button>
             </DivButton>
           </Form>
@@ -129,4 +129,4 @@ const FormModel = ({
   );
 };
 
-export default FormModel;
+export default FormBrand;

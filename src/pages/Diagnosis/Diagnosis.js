@@ -67,9 +67,10 @@ const Diagnosis = () => {
           Виконана діагностика
         </Bttn>
       </BtnContainer>
-      {showFinishDiagnosis && (
+      {showFinishDiagnosis && dateFilterDiagnosis.length !== 0 && (
         <ContainerFilter>
           <Filter
+            marginBottom={width < 768 && "15px"}
             width={width > 768 ? "240px" : "100%"}
             marginRight={width > 768 && "20px"}
           />
@@ -86,7 +87,7 @@ const Diagnosis = () => {
           />
         ))}
       {showFinishDiagnosis &&
-        (diagnosis.finish.length === 0 ? (
+        (dateFilterDiagnosis.length === 0 ? (
           <EmptyText text={"Телефонів після діагностики немає"} />
         ) : (
           <>

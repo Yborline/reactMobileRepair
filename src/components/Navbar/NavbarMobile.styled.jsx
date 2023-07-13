@@ -21,6 +21,6 @@ export const Link = styled(NavLink)`
 color: ${({ theme }) => theme.link};
 &:hover,
 &.active{
- color: ${({theme}) => theme.activeLink}   
+ color: ${({theme}) => theme.activeLink}   ;
 }
 `

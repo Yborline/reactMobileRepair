@@ -11,6 +11,7 @@ import {
   DivTime,
   TitleCard,
   DivButton,
+  LinkPhone,
 } from "./ItemRepair.styled";
 import Button from "@mui/material/Button";
 import { useState } from "react";
@@ -107,7 +108,8 @@ const ItemRepair = ({ item, textStatus }) => {
           </IconButton> */}
         </DivInfo>
         <DivInfo>
-          <p>{numberPhone}</p>
+          <LinkPhone href={`tel:+${numberPhone}`}>{numberPhone}</LinkPhone>
+          {/* <p>{numberPhone}</p> */}
           {/* <IconButton aria-label="change number phone">
             <EditIcon />
           </IconButton> */}

@@ -16,8 +16,7 @@ import {
   H3,
   SpanError,
   Form,
-} from "./SignUpForm.styled";
-import LoginForm from "../LoginForm/LoginForm";
+} from "./FormSignUp.styled";
 import {
   getLoggedIn,
   getUser,

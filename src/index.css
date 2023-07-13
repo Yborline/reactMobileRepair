@@ -19,8 +19,9 @@ ul{
   margin: 0px;
 }
 
-a{
-  text-decoration: none;
+a {
+  color:#000000;
+text-decoration: none;
 }
 
 p,h1,h2,h3{margin: 0px;}

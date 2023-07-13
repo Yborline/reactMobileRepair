@@ -61,9 +61,10 @@ const Telephones = () => {
           Продані телефони
         </Bttn>
       </BtnContainer>
-      {showFinishPurchases && (
+      {showFinishPurchases && dateFilterPurchases && (
         <ContainerFilter>
           <Filter
+            marginBottom={width < 768 && "15px"}
             width={width > 768 ? "240px" : "100%"}
             marginRight={width > 768 && "20px"}
           />

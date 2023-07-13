@@ -9,6 +9,7 @@ import {
   DivTime,
   TitleCard,
   DivButton,
+  LinkPhone,
 } from "./ItemRepairFinish.styled";
 import Button from "@mui/material/Button";
 import { useState } from "react";
@@ -74,7 +75,7 @@ const ItemRepairFinish = ({ item, textStatus }) => {
           <p>{name}</p>
         </DivInfo>
         <DivInfo>
-          <p>{numberPhone}</p>
+          <LinkPhone href={`tel:+${numberPhone}`}>{numberPhone}</LinkPhone>
         </DivInfo>
         <DivInfo>
           {status === "repair" ? (
