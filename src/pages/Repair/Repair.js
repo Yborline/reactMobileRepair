@@ -77,7 +77,7 @@ const Repair = () => {
           Виконаний ремонт
         </Bttn>
       </BtnContainer>
-      {showFinishRepair && dateFilterRepairs.length !==0 && (
+      {showFinishRepair && (
         <ContainerFilter>
           <Filter
             marginBottom={width < 768 && "15px"}

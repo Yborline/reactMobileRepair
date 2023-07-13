@@ -5,11 +5,16 @@ export const Ul = styled.ul`
 width: 65vw;
 display: flex;
 flex-direction: column;
-justify-content: flex-end`
+justify-content: flex-end;
+padding-top:40px;`
 
 export const Li = styled.li`
+display:flex;
+ align-items: center;
+justify-content: center;
 text-align:center;
-height: 30px;
+height: 40px;
+box-shadow: 2px 1px 7px -3px rgba(0,0,0,0.75);
 
 `
 

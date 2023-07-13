@@ -61,7 +61,7 @@ const Telephones = () => {
           Продані телефони
         </Bttn>
       </BtnContainer>
-      {showFinishPurchases && dateFilterPurchases && (
+      {showFinishPurchases && (
         <ContainerFilter>
           <Filter
             marginBottom={width < 768 && "15px"}

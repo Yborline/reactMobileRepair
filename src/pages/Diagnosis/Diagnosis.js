@@ -67,7 +67,7 @@ const Diagnosis = () => {
           Виконана діагностика
         </Bttn>
       </BtnContainer>
-      {showFinishDiagnosis && dateFilterDiagnosis.length !== 0 && (
+      {showFinishDiagnosis && (
         <ContainerFilter>
           <Filter
             marginBottom={width < 768 && "15px"}
