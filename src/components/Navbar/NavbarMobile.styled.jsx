@@ -20,6 +20,7 @@ box-shadow: 2px 1px 7px -3px rgba(0,0,0,0.75);
 
 export const Div = styled.div`
 text-align:right;
+height:48px;
 `
 
 export const Link = styled(NavLink)`

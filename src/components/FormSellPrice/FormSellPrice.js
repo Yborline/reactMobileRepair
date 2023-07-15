@@ -15,6 +15,7 @@ import { Form, DivInput } from "./FormSellPrice.styled";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FormLabel from "@mui/joy/FormLabel";
+import ButtonClose from "../ButtonClose/ButtonClose";
 
 const initial = {
   money: "",
@@ -89,13 +90,7 @@ const FormSellPrice = ({
           {/* <div> */}
 
           {/* <button onClick={toggleModal}>sss</button> */}
-          <IconButton
-            style={{ position: "absolute", top: "0px", right: "0px" }}
-            onClick={close}
-            aria-label="delete"
-          >
-            <CloseIcon style={{ width: "30px", height: "30px" }} />
-          </IconButton>
+          <ButtonClose close={close} />
           <DivInput>
             <FormLabel>Вкажіть ціну роботи!</FormLabel>
             <Input

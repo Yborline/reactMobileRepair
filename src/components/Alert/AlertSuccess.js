@@ -4,7 +4,6 @@ import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
 
 export default function TransitionAlerts({ open, setOpen, text, top }) {
   return (
@@ -28,15 +27,6 @@ export default function TransitionAlerts({ open, setOpen, text, top }) {
           {text}
         </Alert>
       </Collapse>
-      {/* <Button
-        disabled={open}
-        variant="outlined"
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        Re-open
-      </Button> */}
     </Box>
   );
 }

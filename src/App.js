@@ -22,13 +22,18 @@ import PablicRoute from "./components/Route/PablicRoute";
 import PrivateRoute from "./components/Route/PrivateRoute";
 // import Navbar from "./components/Navbar/MobileVersion";
 import authOperations from "./redux/auth/auth-operatins";
-import { getIsFetchingCurrent, getLoggedIn } from "./redux/auth/auth-selectors";
+import {
+  getIsFetchingCurrent,
+  getLoggedIn,
+  getUserLoading,
+} from "./redux/auth/auth-selectors";
 import NoMatch from "./pages/NoMatch/NoMatch";
 
 function App() {
   const { themes } = useContext(ctx);
   const dispatch = useDispatch();
   const loadingPhone = useSelector(getLoading);
+  const loadingUser = useSelector(getUserLoading);
   const loggedIn = useSelector(getLoggedIn);
   const isFetchingCurrentUser = useSelector(getIsFetchingCurrent);
 
@@ -44,7 +49,7 @@ function App() {
       <ThemeProvider theme={themes === "light" ? lightTheme : darkTheme}>
         <Navbar />
         {!isFetchingCurrentUser && (
-          <ContainerContent load={loadingPhone}>
+          <ContainerContent load={loadingPhone && loadingUser}>
             <Routes>
               <Route path="/" element={<PrivateRoute />}>
                 <Route path="/" element={<Reception />} />

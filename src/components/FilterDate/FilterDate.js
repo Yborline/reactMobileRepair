@@ -13,19 +13,6 @@ const FilterDate = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(new Date());
 
-  //   const handleChangeDay = (e = "") => {
-
-  //     setValue(e);
-  //     // if (e === null) {
-  //     //     dispatch(changeFilterDate(""));
-  //     //   return;
-  //     // }
-  //     // const { $M: month, $y: year } = e;
-  //     // const newMounth = month.toString().length === 1 ? `0${month + 1}` : month;
-
-  //     // dispatch(changeFilterDate(`${newMounth}.${year}`));
-  //   };
-
   useEffect(() => {
     console.log(value);
     if (value === null) {
@@ -39,7 +26,10 @@ const FilterDate = () => {
       dispatch(changeFilterDate(`${newMounth}.${year}`));
     } else {
       const mouthNow = value.getMonth() + 1;
-      const normalMouth = mouthNow.length === 1 ? `0${mouthNow}` : mouthNow;
+
+      const normalMouth =
+        mouthNow.toString().length === 1 ? `0${mouthNow}` : mouthNow;
+
       dispatch(changeFilterDate(`${normalMouth}.${value.getFullYear()}`));
     }
   }, [changeFilterDate, dispatch, value]);

@@ -48,8 +48,8 @@ const ItemRepair = ({ item, textStatus }) => {
     _id,
     repairPrice,
   } = item;
-  const arrayTime = finishDay.split("T");
-  const normalTime = arrayTime.join(" ");
+  const arrayTime = finishDay?.split("T");
+  const normalTime = arrayTime?.join(" ");
   const headerString = `${brand.toUpperCase()} ${model}`;
   const [finalTime, setFinalTime] = hook.useFinaltimer(finishDay, "");
   console.log(finalTime);
@@ -108,7 +108,12 @@ const ItemRepair = ({ item, textStatus }) => {
           </IconButton> */}
         </DivInfo>
         <DivInfo>
-          <LinkPhone href={`tel:+${numberPhone}`}>{numberPhone}</LinkPhone>
+          {numberPhone ? (
+            <LinkPhone href={`tel:+${numberPhone}`}>{numberPhone}</LinkPhone>
+          ) : (
+            <p>Номер не вказано!</p>
+          )}
+
           {/* <p>{numberPhone}</p> */}
           {/* <IconButton aria-label="change number phone">
             <EditIcon />

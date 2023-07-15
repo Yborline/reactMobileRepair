@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import ListRepair from "../../components/ListRapair/ListRepair";
 import {
   filterPhones,
-  findFinishPhones,
+  findFinishPhonesDate,
   findFinishPurchases,
   getTypesPhone,
 } from "../../redux/telephones/phones-selector";
@@ -27,7 +27,7 @@ const Diagnosis = () => {
   const [showDiagnosis, setShowDiagnosis] = useState(false);
   const [showFinishDiagnosis, setShowFinishDiagnosis] = useState(false);
   const { filteredDiagnosis } = useSelector(filterPhones);
-  const { dateFilterDiagnosis } = useSelector(findFinishPhones);
+  const { dateFilterDiagnosis } = useSelector(findFinishPhonesDate);
   const [width, height] = useWindowSize();
   const handleClickDiagnosis = () => {
     if (showFinishDiagnosis) {

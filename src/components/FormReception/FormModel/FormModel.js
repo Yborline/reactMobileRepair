@@ -1,14 +1,13 @@
 import { Formik } from "formik";
 import Input from "@mui/joy/Input";
 import Button from "@mui/material/Button";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { Form, Label, DivInput, DivButton } from "./FormModel.styled";
 import { validationFormModelSchema } from "../../../validations/formModule";
 import { addModel } from "../../../services/api";
 import Alert from "@mui/material/Alert";
 import TransitionAlerts from "../../Alert/AlertSuccess";
 import { useEffect, useState } from "react";
+import ButtonClose from "../../ButtonClose/ButtonClose";
 
 const FormModel = ({
   сlearBrand,
@@ -39,13 +38,7 @@ const FormModel = ({
   };
   return (
     <>
-      <IconButton
-        style={{ position: "absolute", top: "0px", right: "0px" }}
-        onClick={close}
-        aria-label="delete"
-      >
-        <CloseIcon style={{ width: "30px", height: "30px" }} />
-      </IconButton>
+      <ButtonClose close={close} />
       <TransitionAlerts
         open={open}
         setOpen={setOpen}
@@ -64,7 +57,7 @@ const FormModel = ({
           console.log(values);
           // addModel(brand._id, values);
 
-          addModel(brand._id, values).then((data) =>
+          addModel(brand._id, { model: values.model.trim() }).then((data) =>
             data.status ? (setOpen(true), newArrayPhones(data)) : alert(data)
           );
 

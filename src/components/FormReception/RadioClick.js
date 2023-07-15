@@ -10,6 +10,8 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { useWindowSize } from "@react-hook/window-size";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const typeOfWork = [
   { label: "Діагностика", value: "diagnosis", id: 1 },
@@ -39,8 +41,8 @@ export default function RadioClick({ changeValidation, setField }) {
         <RadioGroup
           aria-labelledby="radio-buttons-group-label"
           name="radio-buttons-group"
-          defaultValue="diagnosis"
           orientation="horizontal"
+          defaultValue="diagnosis"
           sx={{ flexDirection: "row" }}
           onChange={(event, newValue) => changeRadioClick(event.target)}
         >
@@ -108,23 +110,3 @@ export default function RadioClick({ changeValidation, setField }) {
     </FormControl>
   );
 }
-
-// <Field component={RadioGroup} name={name}>
-//   <Radio
-//     overlay
-//     value={item}
-//     label={item}
-//     sx={{ flexGrow: 1, flexDirection: "row-reverse" }}
-//     slotProps={{
-//       action: ({ checked }) => ({
-//         sx: (theme) => ({
-//           ...(checked && {
-//             inset: -1,
-//             border: "2px solid",
-//             borderColor: theme.vars.palette.primary[500],
-//           }),
-//         }),
-//       }),
-//     }}
-//   />
-// </Field>

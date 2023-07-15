@@ -50,7 +50,9 @@ export const changeStatus = createAsyncThunk(
       const persistedToken = state.auth.token;
       token.set(persistedToken);
       const date = new Date();
-      const newDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+      const newDate = `${date.toLocaleDateString(
+        "uk-UA"
+      )} ${date.toLocaleTimeString()}`;
       const { data } = await axios.patch(`/action/status/${id}`, {
         status: status,
         finishDay: finishDay ? finishDay : newDate,
@@ -72,7 +74,9 @@ export const changeStatusStart = createAsyncThunk(
       const persistedToken = state.auth.token;
       token.set(persistedToken);
       const date = new Date();
-      const newDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+      const newDate = `${date.toLocaleDateString(
+        "uk-UA"
+      )} ${date.toLocaleTimeString()}`;
       console.log(newDate);
       const { data } = await axios.patch(`/action/statusRepair/${id}`, {
         finishDay: newDate,

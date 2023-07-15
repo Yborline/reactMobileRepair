@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ListRepair from "../../components/ListRapair/ListRepair";
 import {
   filterPhones,
-  findFinishPhones,
+  findFinishPhonesDate,
   getPhones,
   getTypesPhone,
 } from "../../redux/telephones/phones-selector";
@@ -31,7 +31,7 @@ const Repair = () => {
 
   const [showFinishRepair, setShowFinishRepair] = useState(false);
   const { filteredRepairs } = useSelector(filterPhones);
-  const { dateFilterRepairs } = useSelector(findFinishPhones);
+  const { dateFilterRepairs } = useSelector(findFinishPhonesDate);
   const handleClickFinishRepair = () => {
     if (showRepair) {
       setShowFinishRepair(!showFinishRepair);

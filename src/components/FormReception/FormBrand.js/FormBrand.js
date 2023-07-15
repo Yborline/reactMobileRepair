@@ -9,6 +9,7 @@ import { addBrand } from "../../../services/api";
 import Alert from "@mui/material/Alert";
 import TransitionAlerts from "../../Alert/AlertSuccess";
 import { useEffect, useState } from "react";
+import ButtonClose from "../../ButtonClose/ButtonClose";
 
 const FormBrand = ({ close, changePhone }) => {
   const [open, setOpen] = useState(false);
@@ -21,13 +22,7 @@ const FormBrand = ({ close, changePhone }) => {
 
   return (
     <>
-      <IconButton
-        style={{ position: "absolute", top: "0px", right: "0px" }}
-        onClick={close}
-        aria-label="delete"
-      >
-        <CloseIcon style={{ width: "30px", height: "30px" }} />
-      </IconButton>
+      <ButtonClose close={close} />
       <TransitionAlerts
         open={open}
         setOpen={setOpen}
@@ -45,14 +40,16 @@ const FormBrand = ({ close, changePhone }) => {
           // console.log(values);
           // addModel(brand._id, values);
 
-          addBrand({ ...values, model: [values.model] }).then((data) =>
+          addBrand({
+            brand: values.brand.toLocaleLowerCase().trim(),
+            model: [values.model.trim()],
+          }).then((data) =>
             data.status
               ? (setOpen(true),
                 changePhone((prevState) => [...prevState, data.data]))
-              : alert(data)
+              : alert("Така модель вже є")
           );
 
-          // .catch((error) => alert(error.message));
           formikProps.resetForm();
         }}
       >

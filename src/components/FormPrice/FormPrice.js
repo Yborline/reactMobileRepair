@@ -11,6 +11,7 @@ import { Form, DivInput } from "./FormPrice.styled";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FormLabel from "@mui/joy/FormLabel";
+import ButtonClose from "../ButtonClose/ButtonClose";
 
 const initial = {
   money: "",
@@ -37,7 +38,6 @@ const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
         isSubmitting,
         setFieldValue,
         onReset,
-        /* and other goodies */
       }) => (
         <Form
           id="form"
@@ -47,18 +47,7 @@ const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
             handleSubmit();
           }}
         >
-          {/* <TransitionAlerts open={open} setOpen={setOpen} /> */}
-
-          {/* <div> */}
-
-          {/* <button onClick={toggleModal}>sss</button> */}
-          <IconButton
-            style={{ position: "absolute", top: "0px", right: "0px" }}
-            onClick={close}
-            aria-label="delete"
-          >
-            <CloseIcon style={{ width: "30px", height: "30px" }} />
-          </IconButton>
+          <ButtonClose close={close} />
           <DivInput>
             <labe>Вкажіть ціну роботи!</labe>
             <Input
@@ -79,12 +68,6 @@ const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
           >
             Зміна оплати за послугу
           </Button>
-          {/* <Radio name="action" options={listJenisKelamin} /> */}
-          {/* <Field component={RadioGroup} name="action"> */}
-          {/* <RadioPositionEnd handleChange={setFieldValue} /> */}
-          {/* </Field> */}
-
-          {/* </div> */}
         </Form>
       )}
     </Formik>

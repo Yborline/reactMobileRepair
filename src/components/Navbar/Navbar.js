@@ -9,7 +9,7 @@ import NavbarMobile from "./NavbarMobile";
 import LinearProgress from "@mui/joy/LinearProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoading } from "../../redux/telephones/phones-selector";
-import { getLoggedIn } from "../../redux/auth/auth-selectors";
+import { getLoggedIn, getUserLoading } from "../../redux/auth/auth-selectors";
 import Button from "@mui/material/Button";
 import authOperations from "../../redux/auth/auth-operatins";
 import { useState } from "react";
@@ -19,6 +19,7 @@ import LogOut from "../LogOut/LogOut";
 const Navbar = () => {
   const logged = useSelector(getLoggedIn);
   const loading = useSelector(getLoading);
+  const loadingUser = useSelector(getUserLoading);
   const [width, height] = useWindowSize();
 
   const [showModal, setShowModal] = useState(false);
@@ -66,13 +67,14 @@ const Navbar = () => {
             )}
           </Ul>
         )}
-        {loading && (
-          <LinearProgress
-            color="info"
-            sx={{ position: "absolute", bottom: "-5px", left: 0, right: 0 }}
-            size="sm"
-          />
-        )}
+        {loading ||
+          (loadingUser && (
+            <LinearProgress
+              color="info"
+              sx={{ position: "absolute", bottom: "-5px", left: 0, right: 0 }}
+              size="sm"
+            />
+          ))}
         {showModal && (
           <Modal close={toggleModal}>
             <LogOut toggleModal={toggleModal} />

@@ -75,7 +75,11 @@ const ItemRepairFinish = ({ item, textStatus }) => {
           <p>{name}</p>
         </DivInfo>
         <DivInfo>
-          <LinkPhone href={`tel:+${numberPhone}`}>{numberPhone}</LinkPhone>
+          {numberPhone ? (
+            <LinkPhone href={`tel:+${numberPhone}`}>{numberPhone}</LinkPhone>
+          ) : (
+            <p>Номер не вказано!</p>
+          )}
         </DivInfo>
         <DivInfo>
           {status === "repair" ? (

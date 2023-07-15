@@ -19,6 +19,7 @@ import CircularProgress from "@mui/joy/CircularProgress";
 import { getLoading } from "../../redux/telephones/phones-selector";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import ButtonClose from "../ButtonClose/ButtonClose";
 
 const initial = {
   finishDay: null,
@@ -87,13 +88,7 @@ const FormDate = ({ id, toggleModal, time, status, finishTime }) => {
           {/* <TransitionAlerts open={open} setOpen={setOpen} /> */}
 
           {/* <div> */}
-          <IconButton
-            style={{ position: "absolute", top: "0px", right: "0px" }}
-            onClick={toggleModal}
-            aria-label="delete"
-          >
-            <CloseIcon style={{ width: "30px", height: "30px" }} />
-          </IconButton>
+          <ButtonClose close={toggleModal} />
           <Stack spacing={2}>
             {/* <button onClick={toggleModal}>sss</button> */}
 

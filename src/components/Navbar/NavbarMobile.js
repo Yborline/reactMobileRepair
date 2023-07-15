@@ -93,7 +93,7 @@ export default function NavbarMobile() {
   return (
     <Div>
       <Button color="secondary" onClick={toggleDrawer(true)}>
-        <MenuIcon />
+        <MenuIcon fontSize="large" />
       </Button>
       <SwipeableDrawer
         anchor={"right"}

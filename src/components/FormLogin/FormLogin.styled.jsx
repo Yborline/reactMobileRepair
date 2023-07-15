@@ -35,14 +35,7 @@ height: 30px;
 border-color:${({ theme }) => theme.error};
 margin-bottom: 10px; `
 
-export const ButtonClose = styled.button`
-height: 30px;`
 
-export const ButtonLog = styled.button`
-margin-top: 15px;
-width:100%;
-height: 30px;
-`
 
 export const DivClose = styled.div`
 display:flex;

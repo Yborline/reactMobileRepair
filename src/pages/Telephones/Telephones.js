@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import ListPurchase from "../../components/ListPurchase/ListPurchase";
 import {
   filterPhones,
-  findFinishPhones,
+  findFinishPhonesDate,
   getTypesPhone,
 } from "../../redux/telephones/phones-selector";
 import FormDate from "../../components/FormDate/FormDate";
@@ -23,7 +23,7 @@ import Profit from "../../components/Profit/Profit";
 
 const Telephones = () => {
   const { purchases } = useSelector(getTypesPhone);
-  const { dateFilterPurchases } = useSelector(findFinishPhones);
+  const { dateFilterPurchases } = useSelector(findFinishPhonesDate);
   const { filteredPurchases } = useSelector(filterPhones);
   const [width, height] = useWindowSize();
 
@@ -78,7 +78,7 @@ const Telephones = () => {
           <ListPurchase phones={purchases.start} />
         ))}
       {showFinishPurchases &&
-        (purchases.finish.length === 0 ? (
+        (dateFilterPurchases.length === 0 ? (
           <EmptyText text={"Проданих телефонів немає"} />
         ) : (
           <>
