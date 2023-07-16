@@ -1,26 +1,20 @@
-import { useSelector } from "react-redux";
-import ListRepair from "../../components/ListRapair/ListRepair";
+import { useSelector } from 'react-redux';
+import ListRepair from '../../components/ListRapair/ListRepair';
 import {
   filterPhones,
   findFinishPhonesDate,
-  findFinishPurchases,
   getTypesPhone,
-} from "../../redux/telephones/phones-selector";
-import { Button, Stack } from "@mui/material";
+} from '../../redux/telephones/phones-selector';
 
-import { useEffect, useState } from "react";
-import ListRepairFinish from "../../components/ListRapair/ListRepairFinish/ListRepairFinish";
-import EmptyText from "../../components/EmptyText/EmptyText";
-import Filter from "../../components/Filter/Filter";
-import { useWindowSize } from "@react-hook/window-size";
-import {
-  Container,
-  BtnContainer,
-  Bttn,
-  ContainerFilter,
-} from "./Diagnosis.styled";
-import FilterDate from "../../components/FilterDate/FilterDate";
-import Profit from "../../components/Profit/Profit";
+import { useState } from 'react';
+import ListRepairFinish from '../../components/ListRapair/ListRepairFinish/ListRepairFinish';
+import EmptyText from '../../components/EmptyText/EmptyText';
+import Filter from '../../components/Filter/Filter';
+import { useWindowSize } from '@react-hook/window-size';
+import { Container, BtnContainer, ContainerFilter } from './Diagnosis.styled';
+import FilterDate from '../../components/FilterDate/FilterDate';
+import Profit from '../../components/Profit/Profit';
+import { BttnSuccess } from '../../components/BttnSuccess/BttnSuccess';
 
 const Diagnosis = () => {
   const { diagnosis } = useSelector(getTypesPhone);
@@ -28,7 +22,7 @@ const Diagnosis = () => {
   const [showFinishDiagnosis, setShowFinishDiagnosis] = useState(false);
   const { filteredDiagnosis } = useSelector(filterPhones);
   const { dateFilterDiagnosis } = useSelector(findFinishPhonesDate);
-  const [width, height] = useWindowSize();
+  const [width] = useWindowSize();
   const handleClickDiagnosis = () => {
     if (showFinishDiagnosis) {
       setShowDiagnosis(!showDiagnosis);
@@ -36,10 +30,6 @@ const Diagnosis = () => {
     }
     setShowDiagnosis(!showDiagnosis);
   };
-
-  // useEffect(() => {
-  //       dispatch(fetchTelephones());
-  // })
 
   const handleClickFinishDiagnosis = () => {
     if (showDiagnosis) {
@@ -52,34 +42,26 @@ const Diagnosis = () => {
   return (
     <Container>
       <BtnContainer spacing={2}>
-        <Bttn
-          onClick={handleClickDiagnosis}
-          variant="contained"
-          color="success"
-        >
+        <BttnSuccess handleClick={handleClickDiagnosis}>
           Діагностика
-        </Bttn>
-        <Bttn
-          onClick={handleClickFinishDiagnosis}
-          variant="contained"
-          color="success"
-        >
+        </BttnSuccess>
+        <BttnSuccess handleClick={handleClickFinishDiagnosis}>
           Виконана діагностика
-        </Bttn>
+        </BttnSuccess>
       </BtnContainer>
       {showFinishDiagnosis && (
         <ContainerFilter>
           <Filter
-            marginBottom={width < 768 && "15px"}
-            width={width > 768 ? "240px" : "100%"}
-            marginRight={width > 768 && "20px"}
+            marginBottom={width < 768 ? '15px' : '0px'}
+            width={width > 768 ? '240px' : '100%'}
+            marginRight={width > 768 ? '20px' : '0px'}
           />
           <FilterDate />
         </ContainerFilter>
       )}
       {showDiagnosis &&
         (diagnosis.start.length === 0 ? (
-          <EmptyText text={"Телефонів на діагностиці не має"} />
+          <EmptyText text={'Телефонів на діагностиці не має'} />
         ) : (
           <ListRepair
             textStatus="Діагностика розпочата"
@@ -88,10 +70,10 @@ const Diagnosis = () => {
         ))}
       {showFinishDiagnosis &&
         (dateFilterDiagnosis.length === 0 ? (
-          <EmptyText text={"Телефонів після діагностики немає"} />
+          <EmptyText text={'Телефонів після діагностики немає'} />
         ) : (
           <>
-            {" "}
+            {' '}
             <Profit items={dateFilterDiagnosis} />
             <ListRepairFinish
               textStatus="Діагностика закінчена"

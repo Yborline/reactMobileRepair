@@ -1,33 +1,33 @@
-import { Route, Routes } from "react-router-dom";
-import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
-import Reception from "./pages/Reception/Reception";
-import History from "./pages/History/History";
-import Repair from "./pages/Repair/Repair";
-import Accounting from "./pages/Accounting/Accounting";
-import SpareParts from "./pages/SpareParts/SpareParts";
-import Telephones from "./pages/Telephones/Telephones";
-import { useContext, useEffect } from "react";
-import ctx from "./context/themeContext";
-import { ThemeProvider } from "styled-components";
-import { GlobalStyles, lightTheme, darkTheme } from "./Theme/ThemeConfig";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchTelephones } from "./redux/telephones/phones-operations";
-import Diagnosis from "./pages/Diagnosis/Diagnosis";
-import { Container, ContainerContent } from "./App.stlyed";
-import { getLoading } from "./redux/telephones/phones-selector";
-import User from "./pages/User/User";
-import Register from "./pages/Register/Register";
-import PablicRoute from "./components/Route/PablicRoute";
-import PrivateRoute from "./components/Route/PrivateRoute";
-// import Navbar from "./components/Navbar/MobileVersion";
-import authOperations from "./redux/auth/auth-operatins";
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import Navbar from './components/Navbar/Navbar';
+import Reception from './pages/Reception/Reception';
+import Repair from './pages/Repair/Repair';
+// import History from "./pages/History/History";
+// import Accounting from "./pages/Accounting/Accounting";
+// import SpareParts from "./pages/SpareParts/SpareParts";
+import Telephones from './pages/Telephones/Telephones';
+import { useContext, useEffect } from 'react';
+import ctx from './context/themeContext';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles, lightTheme, darkTheme } from './Theme/ThemeConfig';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTelephones } from './redux/telephones/phones-operations';
+import Diagnosis from './pages/Diagnosis/Diagnosis';
+import { Container, ContainerContent } from './App.stlyed';
+import { getLoading } from './redux/telephones/phones-selector';
+import User from './pages/User/User';
+import Register from './pages/Register/Register';
+import PablicRoute from './components/Route/PablicRoute';
+import PrivateRoute from './components/Route/PrivateRoute';
+import authOperations from './redux/auth/auth-operatins';
 import {
   getIsFetchingCurrent,
   getLoggedIn,
   getUserLoading,
-} from "./redux/auth/auth-selectors";
-import NoMatch from "./pages/NoMatch/NoMatch";
+} from './redux/auth/auth-selectors';
+import NoMatch from './pages/NoMatch/NoMatch';
+import ButtonUp from './components/ButtonUp/ButtonUp';
 
 function App() {
   const { themes } = useContext(ctx);
@@ -43,10 +43,10 @@ function App() {
     }
     dispatch(authOperations.fetchCurrentUser());
   }, [dispatch, loggedIn]);
-  console.log(themes);
+
   return (
     <Container>
-      <ThemeProvider theme={themes === "light" ? lightTheme : darkTheme}>
+      <ThemeProvider theme={themes === 'light' ? lightTheme : darkTheme}>
         <Navbar />
         {!isFetchingCurrentUser && (
           <ContainerContent load={loadingPhone && loadingUser}>
@@ -83,6 +83,7 @@ function App() {
             </Routes>
           </ContainerContent>
         )}
+        <ButtonUp />
         <GlobalStyles />
       </ThemeProvider>
     </Container>

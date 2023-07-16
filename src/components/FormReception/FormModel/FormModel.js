@@ -1,19 +1,18 @@
-import { Formik } from "formik";
-import Input from "@mui/joy/Input";
-import Button from "@mui/material/Button";
-import { Form, Label, DivInput, DivButton } from "./FormModel.styled";
-import { validationFormModelSchema } from "../../../validations/formModule";
-import { addModel } from "../../../services/api";
-import Alert from "@mui/material/Alert";
-import TransitionAlerts from "../../Alert/AlertSuccess";
-import { useEffect, useState } from "react";
-import ButtonClose from "../../ButtonClose/ButtonClose";
+import { Formik } from 'formik';
+import Input from '@mui/joy/Input';
+import Button from '@mui/material/Button';
+import { Form, Label, DivInput, DivButton } from './FormModel.styled';
+import { validationFormModelSchema } from '../../../validations/formModule';
+import { addModel } from '../../../services/api';
+import TransitionAlerts from '../../Alert/AlertSuccess';
+import { useEffect, useState } from 'react';
+import ButtonClose from '../../ButtonClose/ButtonClose';
 
 const FormModel = ({
   сlearBrand,
   setFieldValue,
   changePhone,
-  brand = "",
+  brand = '',
   close,
 }) => {
   const [open, setOpen] = useState(false);
@@ -24,14 +23,14 @@ const FormModel = ({
     }, 5000);
   }, [open]);
 
-  const newArrayPhones = (data) => {
-    changePhone((prevState) => [
-      ...prevState.map((item) => {
+  const newArrayPhones = data => {
+    changePhone(prevState => [
+      ...prevState.map(item => {
         const newArray =
           item._id === data.updateModel._id
             ? { ...item, model: data.updateModel.model }
             : item;
-        setFieldValue("brand", newArray);
+        setFieldValue('brand', newArray);
         return newArray;
       }),
     ]);
@@ -43,25 +42,19 @@ const FormModel = ({
         open={open}
         setOpen={setOpen}
         text="Модель добавлена"
-        top={"-100px"}
+        top={'-100px'}
       />
       <Formik
         initialValues={{
-          model: "",
+          model: '',
         }}
         alidateOnBlur
         validationSchema={validationFormModelSchema}
         onSubmit={(values, formikProps) => {
-          // console.log(values);
-          console.log(brand._id);
-          console.log(values);
-          // addModel(brand._id, values);
-
-          addModel(brand._id, { model: values.model.trim() }).then((data) =>
-            data.status ? (setOpen(true), newArrayPhones(data)) : alert(data)
+          addModel(brand._id, { model: values.model.trim() }).then(data =>
+            data.status ? (setOpen(true), newArrayPhones(data)) : alert(data),
           );
 
-          // .catch((error) => alert(error.message));
           formikProps.resetForm();
         }}
       >
@@ -76,21 +69,15 @@ const FormModel = ({
           isSubmitting,
           setFieldValue,
           onReset,
-          /* and other goodies */
         }) => (
           <Form
             id="form"
             encType="multipart/form-data"
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
               handleSubmit();
             }}
           >
-            {/* <div> */}
-            {/* <Alert severity="success">
-              This is a success alert — check it out!
-            </Alert> */}
-
             <Label>Введіть назву моделі на англійській мові</Label>
             <DivInput>
               <Input
@@ -106,11 +93,10 @@ const FormModel = ({
 
             <DivButton>
               <Button
-                disabled={values.model === "" ? true : false}
-                style={{ width: "100%" }}
+                disabled={values.model === '' ? true : false}
+                style={{ width: '100%' }}
                 type="submit"
                 variant="contained"
-                // onClick={close}
               >
                 {brand.brand} : {values.model}
               </Button>

@@ -1,26 +1,22 @@
-import { Ul, Nav, Div, LiUser, Link } from "./Navbar.styled";
+import { Ul, Nav, Div, LiUser, Link } from './Navbar.styled';
 
-import {
-  useWindowSize,
-  useWindowWidth,
-  useWindowHeight,
-} from "@react-hook/window-size";
-import NavbarMobile from "./NavbarMobile";
-import LinearProgress from "@mui/joy/LinearProgress";
-import { useDispatch, useSelector } from "react-redux";
-import { getLoading } from "../../redux/telephones/phones-selector";
-import { getLoggedIn, getUserLoading } from "../../redux/auth/auth-selectors";
-import Button from "@mui/material/Button";
-import authOperations from "../../redux/auth/auth-operatins";
-import { useState } from "react";
-import Modal from "../Modal/Modal";
-import LogOut from "../LogOut/LogOut";
+import { useWindowSize } from '@react-hook/window-size';
+import NavbarMobile from './NavbarMobile';
+import LinearProgress from '@mui/joy/LinearProgress';
+import { useSelector } from 'react-redux';
+import { getLoading } from '../../redux/telephones/phones-selector';
+import { getLoggedIn, getUserLoading } from '../../redux/auth/auth-selectors';
+import Button from '@mui/material/Button';
+
+import { useState } from 'react';
+import Modal from '../Modal/Modal';
+import LogOut from '../LogOut/LogOut';
 
 const Navbar = () => {
   const logged = useSelector(getLoggedIn);
   const loading = useSelector(getLoading);
   const loadingUser = useSelector(getUserLoading);
-  const [width, height] = useWindowSize();
+  const [width] = useWindowSize();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -71,7 +67,7 @@ const Navbar = () => {
           (loadingUser && (
             <LinearProgress
               color="info"
-              sx={{ position: "absolute", bottom: "-5px", left: 0, right: 0 }}
+              sx={{ position: 'absolute', bottom: '-5px', left: 0, right: 0 }}
               size="sm"
             />
           ))}

@@ -1,6 +1,5 @@
-import { createReducer, createSlice } from "@reduxjs/toolkit";
-import authOperations from "./auth-operatins";
-import { combineReducers } from "redux";
+import { createSlice } from '@reduxjs/toolkit';
+import authOperations from './auth-operatins';
 
 const initialState = {
   user: { name: null, email: null, type: null },
@@ -12,10 +11,10 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
 
       .addCase(authOperations.register.fulfilled, (state, { payload }) => {
@@ -46,12 +45,12 @@ const userSlice = createSlice({
           return {
             ...state,
             user: { ...payload?.user },
-            // isLoggedIn: payload ? true : false,
+
             isLoggedIn: true,
-            //
+
             isFetchingCurrentUser: false,
           };
-        }
+        },
       )
       .addCase(
         authOperations.fetchCurrentUser.pending,
@@ -59,12 +58,10 @@ const userSlice = createSlice({
           return {
             ...state,
             user: { ...payload?.user },
-            // isLoggedIn: payload ? true : false,
 
-            //
             isFetchingCurrentUser: true,
           };
-        }
+        },
       )
       .addCase(
         authOperations.fetchCurrentUser.rejected,
@@ -72,42 +69,41 @@ const userSlice = createSlice({
           return {
             ...state,
             user: { ...payload?.user },
-            // isLoggedIn: payload ? true : false,
+
             isLoggedIn: false,
-            //
+
             isFetchingCurrentUser: false,
           };
-        }
+        },
       )
       .addMatcher(
-        (action) => action.type.endsWith("/auth/fulfilled"),
+        action => action.type.endsWith('/auth/fulfilled'),
         (state, action) => {
           return {
             ...state,
             userLoading: false,
             userError: null,
           };
-        }
+        },
       )
       .addMatcher(
-        (action) => action.type.endsWith("/auth/pending"),
+        action => action.type.endsWith('/auth/pending'),
         (state, action) => {
           return {
             ...state,
             userLoading: true,
           };
-        }
+        },
       )
       .addMatcher(
-        // matcher can be defined inline as a type predicate function
-        (action) => action.type.endsWith("/auth/rejected"),
+        action => action.type.endsWith('/auth/rejected'),
         (state, { payload }) => {
           return {
             ...state,
             userLoading: false,
             userError: payload,
           };
-        }
+        },
       );
   },
 });

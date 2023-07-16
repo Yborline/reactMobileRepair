@@ -1,0 +1,12 @@
+.button {
+    z-index: 2000;
+    position: fixed;
+    bottom: 5%;
+    right: 2%;
+    color: #1E90FF;
+
+}
+
+.button:hover {
+    color: #696969;
+}

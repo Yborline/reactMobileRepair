@@ -1,28 +1,24 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from '@reduxjs/toolkit';
 
-export const getPhones = (state) => state.phones.items;
-export const getLoading = (state) => state.phones.loading;
-export const getFilter = (state) => state.phones.filter;
-export const getFilterDate = (state) => state.phones.filterDate;
-export const getTypesPhone = createSelector([getPhones], (phones) => {
+export const getPhones = state => state.phones.items;
+export const getLoading = state => state.phones.loading;
+export const getFilter = state => state.phones.filter;
+export const getFilterDate = state => state.phones.filterDate;
+export const getTypesPhone = createSelector([getPhones], phones => {
   const { repair, diagnosis, purchase } = phones;
 
-  const repairsFinish = repair?.filter(
-    (item) => item.statusRepair === "finish"
-  );
-  const repairsStart = repair?.filter((item) => item.statusRepair === "start");
+  const repairsFinish = repair?.filter(item => item.statusRepair === 'finish');
+  const repairsStart = repair?.filter(item => item.statusRepair === 'start');
   const diagnosisFinish = diagnosis?.filter(
-    (item) => item.statusRepair === "finish"
+    item => item.statusRepair === 'finish',
   );
   const diagnosisStart = diagnosis?.filter(
-    (item) => item.statusRepair === "start"
+    item => item.statusRepair === 'start',
   );
   const purchaseFinish = purchase?.filter(
-    (item) => item.statusRepair === "finish"
+    item => item.statusRepair === 'finish',
   );
-  const purchaseStart = purchase?.filter(
-    (item) => item.statusRepair === "start"
-  );
+  const purchaseStart = purchase?.filter(item => item.statusRepair === 'start');
 
   return {
     repairs: { finish: repairsFinish, start: repairsStart },
@@ -35,19 +31,19 @@ export const findFinishPhonesDate = createSelector(
   [getTypesPhone, getFilter, getFilterDate],
   ({ purchases, diagnosis, repairs }, filter, filterDate) => {
     const dateFilterDiagnosis = diagnosis.finish.filter(({ finishDay }) =>
-      finishDay.slice(3).toLowerCase().includes(filterDate)
+      finishDay.slice(3).toLowerCase().includes(filterDate),
     );
 
     const dateFilterRepairs = repairs.finish.filter(({ finishDay }) =>
-      finishDay.slice(3).toLowerCase().includes(filterDate)
+      finishDay.slice(3).toLowerCase().includes(filterDate),
     );
 
     const dateFilterPurchases = purchases.finish.filter(({ finishDay }) =>
-      finishDay.slice(3).toLowerCase().includes(filterDate)
+      finishDay.slice(3).toLowerCase().includes(filterDate),
     );
 
     return { dateFilterDiagnosis, dateFilterRepairs, dateFilterPurchases };
-  }
+  },
 );
 
 export const filterPhones = createSelector(
@@ -58,20 +54,20 @@ export const filterPhones = createSelector(
       ({ brand, model, description, numberPhone, finishDay }) =>
         `${brand} ${model} ${description} ${numberPhone} ${finishDay}`
           .toLowerCase()
-          .includes(normalizedFilter)
+          .includes(normalizedFilter),
     );
     const filteredRepairs = dateFilterRepairs.filter(
       ({ brand, model, description, numberPhone, finishDay }) =>
         `${brand} ${model} ${description} ${numberPhone} ${finishDay}`
           .toLowerCase()
-          .includes(normalizedFilter)
+          .includes(normalizedFilter),
     );
     const filteredPurchases = dateFilterPurchases.filter(
       ({ brand, model, description, numberPhone, finishDay }) =>
         `${brand} ${model} ${description} ${numberPhone} ${finishDay}`
           .toLowerCase()
-          .includes(normalizedFilter)
+          .includes(normalizedFilter),
     );
     return { filteredDiagnosis, filteredRepairs, filteredPurchases };
-  }
+  },
 );

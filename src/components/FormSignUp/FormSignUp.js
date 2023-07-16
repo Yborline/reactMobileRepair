@@ -1,41 +1,32 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import authOperations from "../../redux/auth/auth-operatins";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import authOperations from '../../redux/auth/auth-operatins';
 
-import { Field, Formik, FormikProps } from "formik";
-import validationSchema from "../../validations/register";
+import { Formik } from 'formik';
+import validationSchema from '../../validations/register';
 import {
   Div,
   Ul,
-  ButtonLog,
   DivClose,
   Li,
-  // Input,
-  ButtonClose,
   Error,
   H3,
   SpanError,
   Form,
-} from "./FormSignUp.styled";
+} from './FormSignUp.styled';
 import {
-  getLoggedIn,
   getUser,
   getUserError,
   getUserLoading,
-} from "../../redux/auth/auth-selectors";
-import Input from "@mui/joy/Input";
-import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
-import TransitionAlerts from "../Alert/AlertSuccess";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { Stack } from "@mui/material";
+} from '../../redux/auth/auth-selectors';
+import Input from '@mui/joy/Input';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import TransitionAlerts from '../Alert/AlertSuccess';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Stack } from '@mui/material';
 
 const SignUpForm = ({ changeForm, signUpForm }) => {
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-
-  const logged = useSelector(getLoggedIn);
   const dispatch = useDispatch();
   const loading = useSelector(getUserLoading);
   const error = useSelector(getUserError);
@@ -50,36 +41,10 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
       setOpen(true);
       setTimeout(() => {
         setOpen(false);
-        navigate("/user");
+        navigate('/user');
       }, 3000);
     }
   }, [navigation, navigate, open, user.name]);
-
-  // const handleChange = ({ target: { name, value } }) => {
-  //   switch (name) {
-  //     case "name":
-  //       return setName(value);
-  //     case "email":
-  //       return setEmail(value);
-  //     case "password":
-  //       return setPassword(value);
-  //     default:
-  //       return;
-  //   }
-  // };
-
-  // const clearState = () => {
-  //   setName("");
-  //   setEmail("");
-  //   setPassword("");
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   dispatch(authOperations.register({ name, email, password }));
-  //   toggleModal();
-  //   clearState();
-  // };
 
   return (
     <Div>
@@ -87,32 +52,32 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
         open={open}
         setOpen={setOpen}
         text="Реєстрація пройшла успішно!"
-        top={"-18px"}
+        top={'-18px'}
       />
       <DivClose>
         <H3>Реєстрація</H3>
       </DivClose>
       <Formik
         initialValues={{
-          name: "",
-          lastName: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
+          name: '',
+          lastName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
           user: false,
         }}
         validateOnBlur
         validationSchema={validationSchema}
-        onSubmit={(values) => {
-          const { name, lastName, email, password, user } = values;
+        onSubmit={values => {
+          const { name, lastName, email, password } = values;
           dispatch(
             authOperations.register({
               name: name.toLowerCase().trim(),
               lastName: lastName.toLowerCase().trim(),
               email: email.toLowerCase().trim(),
               password,
-              user: "master",
-            })
+              user: 'master',
+            }),
           );
           setNavigation(true);
         }}
@@ -128,8 +93,8 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
           handleSubmit,
         }) => (
           <Form
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
                 e.preventDefault();
                 handleSubmit(values);
               }
@@ -141,7 +106,7 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                 <label
                   htmlFor="name"
                   className="form__label"
-                  style={{ marginTop: "28px" }}
+                  style={{ marginTop: '28px' }}
                 >
                   Ім'я
                   {!values.name.length || errors.name ? (
@@ -163,7 +128,7 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                 />
 
                 <SpanError className="input__error">
-                  {touched.name && errors.name ? errors.name : ""}
+                  {touched.name && errors.name ? errors.name : ''}
                 </SpanError>
 
                 <br />
@@ -172,7 +137,7 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                 <label
                   htmlFor="name"
                   className="form__label"
-                  style={{ marginTop: "28px" }}
+                  style={{ marginTop: '28px' }}
                 >
                   Прізвище
                   {!values.name.length || errors.name ? (
@@ -194,7 +159,7 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                 />
 
                 <SpanError>
-                  {touched.lastName && errors.lastName ? errors.lastName : ""}
+                  {touched.lastName && errors.lastName ? errors.lastName : ''}
                 </SpanError>
 
                 <br />
@@ -222,7 +187,7 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                 <br />
 
                 <SpanError className="input__error">
-                  {touched.email && errors.email ? errors.email : ""}
+                  {touched.email && errors.email ? errors.email : ''}
                 </SpanError>
               </Li>
 
@@ -248,7 +213,7 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                 />
                 <br />
                 <SpanError className="input__error">
-                  {touched.password && errors.password ? errors.password : ""}
+                  {touched.password && errors.password ? errors.password : ''}
                 </SpanError>
               </Li>
 
@@ -270,7 +235,7 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.confirmPassword}
-                  onPaste={(e) => {
+                  onPaste={e => {
                     e.preventDefault();
                   }}
                 />
@@ -279,24 +244,14 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                 <SpanError className="input__error">
                   {touched.confirmPassword && errors.confirmPassword
                     ? errors.confirmPassword
-                    : ""}
+                    : ''}
                 </SpanError>
               </Li>
-              {/* {type.user === "admin" ? (
-                    <Li>
-                      <label>
-                        <Field type="checkbox" name="user" />
-                        Опт
-                      </label>
-                    </Li>
-                  ) : (
-                    <></>
-                  )} */}
 
-              {error === "Request failed with status code 409" && (
+              {error === 'Request failed with status code 409' && (
                 <Error>Такий користувач вже існує!</Error>
               )}
-              <Stack style={{ width: "100%" }} spacing={2}>
+              <Stack style={{ width: '100%' }} spacing={2}>
                 <LoadingButton
                   variant="outlined"
                   loading={loading}
@@ -304,19 +259,8 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
                 >
                   Зареєструватися
                 </LoadingButton>
-                <Button onClick={() => navigate("/user")}>Вхід</Button>
+                <Button onClick={() => navigate('/user')}>Вхід</Button>
               </Stack>
-              {/* {logged && (
-                    <Button
-                      type="submit"
-                      onClick={() => dispatch(authOperations.logout())}
-                    >
-                      Exit
-                    </Button>
-                  )} */}
-              {/* <p>
-                    Вже з нами? <a href="./login">Увійти</a>
-                  </p> */}
             </Ul>
           </Form>
         )}

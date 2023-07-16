@@ -1,15 +1,12 @@
-import { Formik } from "formik";
-import Input from "@mui/joy/Input";
-import Button from "@mui/material/Button";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { Form, Label, DivInput, DivButton } from "./FormBrand.styled";
-import { validationFormBrandSchema } from "../../../validations/formModule";
-import { addBrand } from "../../../services/api";
-import Alert from "@mui/material/Alert";
-import TransitionAlerts from "../../Alert/AlertSuccess";
-import { useEffect, useState } from "react";
-import ButtonClose from "../../ButtonClose/ButtonClose";
+import { Formik } from 'formik';
+import Input from '@mui/joy/Input';
+import Button from '@mui/material/Button';
+import { Form, Label, DivInput, DivButton } from './FormBrand.styled';
+import { validationFormBrandSchema } from '../../../validations/formModule';
+import { addBrand } from '../../../services/api';
+import TransitionAlerts from '../../Alert/AlertSuccess';
+import { useEffect, useState } from 'react';
+import ButtonClose from '../../ButtonClose/ButtonClose';
 
 const FormBrand = ({ close, changePhone }) => {
   const [open, setOpen] = useState(false);
@@ -27,27 +24,24 @@ const FormBrand = ({ close, changePhone }) => {
         open={open}
         setOpen={setOpen}
         text="Бренд та її перша модель додана!"
-        top={"-100px"}
+        top={'-100px'}
       />
       <Formik
         initialValues={{
-          brand: "",
-          model: "",
+          brand: '',
+          model: '',
         }}
         alidateOnBlur
         validationSchema={validationFormBrandSchema}
         onSubmit={(values, formikProps) => {
-          // console.log(values);
-          // addModel(brand._id, values);
-
           addBrand({
             brand: values.brand.toLocaleLowerCase().trim(),
             model: [values.model.trim()],
-          }).then((data) =>
+          }).then(data =>
             data.status
               ? (setOpen(true),
-                changePhone((prevState) => [...prevState, data.data]))
-              : alert("Така модель вже є")
+                changePhone(prevState => [...prevState, data.data]))
+              : alert('Така модель вже є'),
           );
 
           formikProps.resetForm();
@@ -64,21 +58,15 @@ const FormBrand = ({ close, changePhone }) => {
           isSubmitting,
           setFieldValue,
           onReset,
-          /* and other goodies */
         }) => (
           <Form
             id="form"
             encType="multipart/form-data"
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
               handleSubmit();
             }}
           >
-            {/* <div> */}
-            {/* <Alert severity="success">
-              This is a success alert — check it out!
-            </Alert> */}
-
             <Label>
               Введіть назву бренду який хочете добавити на англійській мові
             </Label>
@@ -110,11 +98,10 @@ const FormBrand = ({ close, changePhone }) => {
 
             <DivButton>
               <Button
-                disabled={values.model === "" ? true : false}
-                style={{ width: "100%" }}
+                disabled={values.model === '' ? true : false}
+                style={{ width: '100%' }}
                 type="submit"
                 variant="contained"
-                // onClick={close}
               >
                 {values.brand} : {values.model}
               </Button>

@@ -1,13 +1,11 @@
-import ItemRepairFinish from "../ItemRepairFinish/ItemRepairFinish";
-import { Ul } from "./ListRepairFinish.styled";
+import ItemRepairFinish from '../ItemRepairFinish/ItemRepairFinish';
+import { Ul } from './ListRepairFinish.styled';
 
 const ListRepairFinish = ({ phones, textStatus }) => {
-  console.log(phones);
-
   return (
     <Ul>
       {phones &&
-        phones.map((item) => (
+        phones.map(item => (
           <ItemRepairFinish
             textStatus={textStatus}
             key={item._id}

@@ -1,39 +1,28 @@
-import { Formik } from "formik";
-import validationFormDiscription from "../../validations/formDiscription";
-import Button from "@mui/material/Button";
-import { Stack } from "@mui/joy";
-import { useDispatch, useSelector } from "react-redux";
-import { changePrice } from "../../redux/telephones/phones-operations";
-import CircularProgress from "@mui/joy/CircularProgress";
-import { getLoading } from "../../redux/telephones/phones-selector";
-import Input from "@mui/joy/Input";
-import { Form, DivInput } from "./FormDescription.styled";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import FormLabel from "@mui/joy/FormLabel";
-import ButtonClose from "../ButtonClose/ButtonClose";
+import { Formik } from 'formik';
+import validationFormDiscription from '../../validations/formDiscription';
+import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { changePrice } from '../../redux/telephones/phones-operations';
+import Input from '@mui/joy/Input';
+import { Form, DivInput } from './FormDescription.styled';
+
+import FormLabel from '@mui/joy/FormLabel';
+import ButtonClose from '../ButtonClose/ButtonClose';
 
 const initial = {
-  description: "",
+  description: '',
 };
 
 const FormDescription = ({ id, close, status, finishTime }) => {
   const dispatch = useDispatch();
 
-  //   const repairClick = () => {
-  //     finishTime === null
-  //       ? toggleModal()
-  //       : dispatch(changeStatus({ id: id, status: "repair" }));
-  //   };
-  console.log(status);
   return (
     <Formik
       initialValues={initial}
       alidateOnBlur
       validationSchema={validationFormDiscription}
       onSubmit={({ description }, formikProps) => {
-        console.log(description);
-        dispatch(changePrice({ id, other: description, key: "description" }));
+        dispatch(changePrice({ id, other: description, key: 'description' }));
         close();
       }}
     >
@@ -48,21 +37,15 @@ const FormDescription = ({ id, close, status, finishTime }) => {
         isSubmitting,
         setFieldValue,
         onReset,
-        /* and other goodies */
       }) => (
         <Form
           id="form"
           encType="multipart/form-data"
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault();
             handleSubmit();
           }}
         >
-          {/* <TransitionAlerts open={open} setOpen={setOpen} /> */}
-
-          {/* <div> */}
-
-          {/* <button onClick={toggleModal}>sss</button> */}
           <ButtonClose close={close} />
           <DivInput>
             <FormLabel>Ваші нотатки!</FormLabel>
@@ -77,7 +60,7 @@ const FormDescription = ({ id, close, status, finishTime }) => {
           </DivInput>
 
           <Button
-            disabled={values.money === "" ? true : false}
+            disabled={values.money === '' ? true : false}
             type="submit"
             variant="contained"
           >

@@ -18,7 +18,7 @@ export default function Filter({ width, marginRight, marginBottom }) {
   }, [changeFilter, dispatch, location]);
 
   return (
-    <Div marginRight={marginRight} marginBottom={marginBottom}>
+    <Div marginright={marginRight} marginbottom={marginBottom}>
       <Label width={width}>
         <Input
           placeholder="Фільтр"

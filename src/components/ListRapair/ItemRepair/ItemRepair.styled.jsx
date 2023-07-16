@@ -70,18 +70,3 @@ export const LinkPhone = styled.a`
 &:hover{
     color:${({theme})=>theme.activeLink};
 }`
-// export const DivStatus = styled.div`
-// position: absolute;
-// top:0;
-// left:0;
-// width: 100%;
-// height:100px;
-// text-align:center;
-// background-color: ${({theme}) => theme.statusRepairStart}
-// `
-
-// export const TitleCard = styled.h3`
-// position: absolute;
-// top:20px;
-
-// z-index:2;`

@@ -5,8 +5,8 @@ export const Div = styled.div`
 display:flex;
 flex-direction:column;
 align-items: center;
-margin-right: ${props => props.marginRight};
-margin-bottom: ${({marginBottom}) =>marginBottom }
+margin-right: ${({marginright}) => marginright};
+margin-bottom: ${({marginbottom}) =>marginbottom }
 `
 
 

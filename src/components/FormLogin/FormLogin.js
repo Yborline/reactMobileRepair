@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import authOperations from "../../redux/auth/auth-operatins";
+import { useDispatch, useSelector } from 'react-redux';
+import authOperations from '../../redux/auth/auth-operatins';
 import {
   Div,
   Ul,
@@ -10,24 +9,21 @@ import {
   LoadingBttn,
   SpanError,
   Form,
-} from "./FormLogin.styled";
-import { Field, Formik } from "formik";
-import validationSchema from "../../validations/login";
+} from './FormLogin.styled';
+import { Field, Formik } from 'formik';
+import validationSchema from '../../validations/login';
 import {
   getLoggedIn,
-  getUser,
   getUserError,
   getUserLoading,
-} from "../../redux/auth/auth-selectors";
-import Input from "@mui/joy/Input";
-import Button from "@mui/material/Button";
+} from '../../redux/auth/auth-selectors';
+import Input from '@mui/joy/Input';
+import Button from '@mui/material/Button';
 
-import { useNavigate } from "react-router-dom";
-import { Stack } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import { Stack } from '@mui/material';
 
-const FormLogin = ({ toggleModal }) => {
-  //   const [name, setName] = useState("");
-
+const FormLogin = () => {
   const logged = useSelector(getLoggedIn);
   const loading = useSelector(getUserLoading);
   const error = useSelector(getUserError);
@@ -36,19 +32,19 @@ const FormLogin = ({ toggleModal }) => {
 
   return (
     <Div>
-      {" "}
+      {' '}
       <DivClose>
         <h3>Вхід</h3>
       </DivClose>
       <Formik
         initialValues={{
-          email: "",
-          password: "",
+          email: '',
+          password: '',
           remember: false,
         }}
         validateOnBlur
         validationSchema={validationSchema}
-        onSubmit={async (values) => {
+        onSubmit={async values => {
           const { email, password, remember } = values;
 
           dispatch(authOperations.login({ email, password, remember }));
@@ -65,7 +61,7 @@ const FormLogin = ({ toggleModal }) => {
           handleSubmit,
         }) => (
           <Form
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
               handleSubmit();
             }}
@@ -89,7 +85,7 @@ const FormLogin = ({ toggleModal }) => {
                 />
 
                 <SpanError>
-                  {touched.email && errors.email ? errors.email : ""}
+                  {touched.email && errors.email ? errors.email : ''}
                 </SpanError>
               </Li>
               <Li>
@@ -111,7 +107,7 @@ const FormLogin = ({ toggleModal }) => {
                 <br />
 
                 <SpanError>
-                  {touched.password && errors.password ? errors.password : ""}
+                  {touched.password && errors.password ? errors.password : ''}
                 </SpanError>
               </Li>
               <Li>
@@ -120,11 +116,11 @@ const FormLogin = ({ toggleModal }) => {
                   Запам'ятати мене
                 </label>
               </Li>
-              {(error === "Request failed with status code 401" ||
-                error === "Request failed with status code 400") && (
+              {(error === 'Request failed with status code 401' ||
+                error === 'Request failed with status code 400') && (
                 <Error>Невірна почта або пароль </Error>
               )}
-              <Stack style={{ width: "100%" }} spacing={2}>
+              <Stack style={{ width: '100%' }} spacing={2}>
                 <LoadingBttn
                   variant="outlined"
                   loading={loading}
@@ -132,7 +128,7 @@ const FormLogin = ({ toggleModal }) => {
                 >
                   <span>Увійти</span>
                 </LoadingBttn>
-                <Button onClick={() => navigate("/register")}>
+                <Button onClick={() => navigate('/register')}>
                   Реєстрація
                 </Button>
               </Stack>

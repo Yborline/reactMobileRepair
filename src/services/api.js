@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-axios.defaults.baseURL = "https://mobilerepair.onrender.com/api/";
+axios.defaults.baseURL = 'https://mobilerepair.onrender.com/api/';
 
 export const getAllbrand = async () => {
   try {
-    const { data } = await axios.get("/brand");
+    const { data } = await axios.get('/brand');
     return data;
   } catch (error) {
     return error;
@@ -19,7 +19,7 @@ export const addModel = async (id, model) => {
     return error.message;
   }
 };
-export const addBrand = async (values) => {
+export const addBrand = async values => {
   try {
     const { data } = await axios.post(`/brand`, values);
     return data;

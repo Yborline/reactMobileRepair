@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 export const Ul = styled.ul`
+
 display: flex;
 justify-content: space-evenly;
 align-items: center;
+height: 50px;
 
 `
 

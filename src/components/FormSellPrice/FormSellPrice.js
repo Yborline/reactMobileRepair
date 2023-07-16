@@ -1,65 +1,44 @@
-import { Formik } from "formik";
-import validationFormPrice from "../../validations/formPrice";
-import Button from "@mui/material/Button";
-import { Stack } from "@mui/joy";
-import { useDispatch, useSelector } from "react-redux";
+import { Formik } from 'formik';
+import validationFormPrice from '../../validations/formPrice';
+import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
 import {
-  changePrice,
   changeStatus,
   changeStatusStart,
-} from "../../redux/telephones/phones-operations";
-import CircularProgress from "@mui/joy/CircularProgress";
-import { getLoading } from "../../redux/telephones/phones-selector";
-import Input from "@mui/joy/Input";
-import { Form, DivInput } from "./FormSellPrice.styled";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import FormLabel from "@mui/joy/FormLabel";
-import ButtonClose from "../ButtonClose/ButtonClose";
+} from '../../redux/telephones/phones-operations';
+import Input from '@mui/joy/Input';
+import { Form, DivInput } from './FormSellPrice.styled';
+import FormLabel from '@mui/joy/FormLabel';
+import ButtonClose from '../ButtonClose/ButtonClose';
 
 const initial = {
-  money: "",
+  money: '',
 };
 
-const FormSellPrice = ({
-  id,
-  close,
-  status,
-  finishTime,
-  // price,
-  changeOther,
-}) => {
-  const loading = useSelector(getLoading);
+const FormSellPrice = ({ id, close, status }) => {
   const dispatch = useDispatch();
 
-  //   const repairClick = () => {
-  //     finishTime === null
-  //       ? toggleModal()
-  //       : dispatch(changeStatus({ id: id, status: "repair" }));
-  //   };
-  console.log(status);
   return (
     <Formik
       initialValues={initial}
       alidateOnBlur
       validationSchema={validationFormPrice}
       onSubmit={({ money }, formikProps) => {
-        console.log(status);
-        status === "purchase"
+        status === 'purchase'
           ? dispatch(
               changeStatusStart({
                 id,
                 sellPrice: money,
-                statusRepair: "finish",
-              })
+                statusRepair: 'finish',
+              }),
             )
           : dispatch(
               changeStatus({
                 id,
-                status: "purchase",
+                status: 'purchase',
                 sellPrice: money,
-                statusRepair: "finish",
-              })
+                statusRepair: 'finish',
+              }),
             );
         close();
       }}
@@ -75,28 +54,21 @@ const FormSellPrice = ({
         isSubmitting,
         setFieldValue,
         onReset,
-        /* and other goodies */
       }) => (
         <Form
           id="form"
           encType="multipart/form-data"
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault();
             handleSubmit();
           }}
         >
-          {/* <TransitionAlerts open={open} setOpen={setOpen} /> */}
-
-          {/* <div> */}
-
-          {/* <button onClick={toggleModal}>sss</button> */}
           <ButtonClose close={close} />
           <DivInput>
             <FormLabel>Вкажіть ціну роботи!</FormLabel>
             <Input
               type="number"
               name="money"
-              // onChange={(event) => setCash(event.target.value)}
               onChange={handleChange}
               value={values.money}
               placeholder="Ціна"
@@ -105,7 +77,7 @@ const FormSellPrice = ({
           </DivInput>
 
           <Button
-            disabled={values.money === "" ? true : false}
+            disabled={values.money === '' ? true : false}
             type="submit"
             variant="contained"
           >

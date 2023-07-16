@@ -1,9 +1,9 @@
-import hook from "../../../hooks/hookTimer";
+import hook from '../../../hooks/hookTimer';
 // import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
-import EditIcon from "@mui/icons-material/Edit";
-import IconButton from "@mui/material/IconButton";
-import BuildIcon from "@mui/icons-material/Build";
-import PaidIcon from "@mui/icons-material/Paid";
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
+import BuildIcon from '@mui/icons-material/Build';
+import PaidIcon from '@mui/icons-material/Paid';
 import {
   LiCard,
   DivInfo,
@@ -12,19 +12,19 @@ import {
   TitleCard,
   DivButton,
   LinkPhone,
-} from "./ItemRepair.styled";
-import Button from "@mui/material/Button";
-import { useState } from "react";
-import Modal from "../../Modal/Modal";
-import FormDate from "../../FormDate/FormDate";
-import { useDispatch } from "react-redux";
+} from './ItemRepair.styled';
+import Button from '@mui/material/Button';
+import { useState } from 'react';
+import Modal from '../../Modal/Modal';
+import FormDate from '../../FormDate/FormDate';
+import { useDispatch } from 'react-redux';
 import {
   changePrice,
   changeStatusStart,
-} from "../../../redux/telephones/phones-operations";
-import FormPrice from "../../FormPrice/FormPrice";
-import FormDescription from "../../FormDescription/FormDescription";
-import choiceMoney from "../../../helpers/choiceMoney";
+} from '../../../redux/telephones/phones-operations';
+import FormPrice from '../../FormPrice/FormPrice';
+import FormDescription from '../../FormDescription/FormDescription';
+import choiceMoney from '../../../helpers/choiceMoney';
 
 const ItemRepair = ({ item, textStatus }) => {
   const [showTime, setShowTime] = useState(false);
@@ -48,11 +48,10 @@ const ItemRepair = ({ item, textStatus }) => {
     _id,
     repairPrice,
   } = item;
-  const arrayTime = finishDay?.split("T");
-  const normalTime = arrayTime?.join(" ");
+  const arrayTime = finishDay?.split('T');
+  const normalTime = arrayTime?.join(' ');
   const headerString = `${brand.toUpperCase()} ${model}`;
-  const [finalTime, setFinalTime] = hook.useFinaltimer(finishDay, "");
-  console.log(finalTime);
+  const [finalTime] = hook.useFinaltimer(finishDay, '');
   const toggleModal = () => {
     setShowModalTime(!showModalTime);
   };
@@ -69,18 +68,18 @@ const ItemRepair = ({ item, textStatus }) => {
     setOpenRepairPrice(true);
   };
 
-  const submitPrice = (money) => {
+  const submitPrice = money => {
     if (openRepairPrice) {
-      dispatch(changePrice({ id: _id, other: money, key: "repairPrice" }));
+      dispatch(changePrice({ id: _id, other: money, key: 'repairPrice' }));
     } else {
       dispatch(
-        changePrice({ id: _id, other: money, key: choiceMoney(status) })
+        changePrice({ id: _id, other: money, key: choiceMoney(status) }),
       );
     }
     toggleModalPrice();
   };
   return (
-    <LiCard style={{ position: "relative" }}>
+    <LiCard style={{ position: 'relative' }}>
       <div>
         <TitleCard>{headerString}</TitleCard>
         <DivStatus status={statusRepair}>
@@ -120,7 +119,7 @@ const ItemRepair = ({ item, textStatus }) => {
           </IconButton> */}
         </DivInfo>
         <DivInfo>
-          {status === "repair" ? (
+          {status === 'repair' ? (
             <>
               <p>{moneyRepair} грн.</p>
               <IconButton onClick={toggleModalPrice} aria-label="change price">
@@ -136,7 +135,7 @@ const ItemRepair = ({ item, textStatus }) => {
             </>
           ) : (
             <>
-              {" "}
+              {' '}
               <p>{moneyDiagnosis} грн.</p>
               <IconButton onClick={toggleModalPrice} aria-label="change price">
                 <EditIcon />
@@ -169,9 +168,9 @@ const ItemRepair = ({ item, textStatus }) => {
       <DivButton>
         <Button
           onClick={() =>
-            dispatch(changeStatusStart({ id: _id, statusRepair: "finish" }))
+            dispatch(changeStatusStart({ id: _id, statusRepair: 'finish' }))
           }
-          style={{ width: "100%", marginLeft: "10px" }}
+          style={{ width: '100%', marginLeft: '10px' }}
           variant="contained"
           color="success"
         >
@@ -192,7 +191,7 @@ const ItemRepair = ({ item, textStatus }) => {
         <Modal close={toggleModalPrice}>
           <FormPrice
             price={
-              status === "repair"
+              status === 'repair'
                 ? openRepairPrice
                   ? repairPrice
                   : moneyRepair

@@ -1,16 +1,9 @@
 import { Formik } from "formik";
 import validationFormPrice from "../../validations/formPrice";
 import Button from "@mui/material/Button";
-import { Stack } from "@mui/joy";
-import { useDispatch, useSelector } from "react-redux";
-import { changePrice } from "../../redux/telephones/phones-operations";
-import CircularProgress from "@mui/joy/CircularProgress";
-import { getLoading } from "../../redux/telephones/phones-selector";
 import Input from "@mui/joy/Input";
 import { Form, DivInput } from "./FormPrice.styled";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import FormLabel from "@mui/joy/FormLabel";
+
 import ButtonClose from "../ButtonClose/ButtonClose";
 
 const initial = {
@@ -53,7 +46,6 @@ const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
             <Input
               type="number"
               name="money"
-              // onChange={(event) => setCash(event.target.value)}
               onChange={handleChange}
               value={values.money}
               placeholder={`${price}`}

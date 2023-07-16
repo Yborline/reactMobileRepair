@@ -1,28 +1,26 @@
-import { createPortal } from "react-dom";
-import { Backdrop, ModalContent } from "./Modal.styled";
-import { useEffect } from "react";
+import { createPortal } from 'react-dom';
+import { Backdrop, ModalContent } from './Modal.styled';
+import { useEffect } from 'react';
 
 const modalRoot = document.querySelector(`#modal-root`);
 
 const Modal = ({ close, children }) => {
-  const handleKeyDown = (e) => {
-    if (e.code === "Escape") {
+  const handleKeyDown = e => {
+    if (e.code === 'Escape') {
       close();
     }
   };
 
-  const handleBackdropClick = (e) => {
+  const handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
       close();
     }
   };
   useEffect(() => {
-    console.log("sss");
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      console.log("remove");
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   });
 
@@ -30,7 +28,7 @@ const Modal = ({ close, children }) => {
     <Backdrop onClick={handleBackdropClick}>
       <ModalContent>{children}</ModalContent>
     </Backdrop>,
-    modalRoot
+    modalRoot,
   );
 };
 

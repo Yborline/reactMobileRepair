@@ -1,59 +1,58 @@
-import { useEffect, useState } from "react";
-import Autocomplete from "@mui/joy/Autocomplete";
-import { Stack } from "@mui/joy";
-import Input from "@mui/joy/Input";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Formik } from "formik";
-import RadioClick from "./RadioClick";
+import { useEffect, useState } from 'react';
+import Autocomplete from '@mui/joy/Autocomplete';
+import Input from '@mui/joy/Input';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Formik } from 'formik';
+import RadioClick from './RadioClick';
 import {
   Form,
   MarginItem,
   StyledTextarea,
   SpanError,
-} from "./FormReception.styled";
-import "dayjs/locale/uk";
-import dayjs from "dayjs";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import Button from "@mui/material/Button";
+} from './FormReception.styled';
+import 'dayjs/locale/uk';
+import dayjs from 'dayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+
 import {
   validationDiagnosisSchema,
   validationSchemaRepair,
   validationRepairSchema,
-} from "../../validations/formReception";
-import { getAllbrand } from "../../services/api";
-import Modal from "../Modal/Modal";
-import FormModel from "./FormModel/FormModel";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
-import IconButton from "@mui/material/IconButton";
-import { useDispatch, useSelector } from "react-redux";
-import { addTelephones } from "../../redux/telephones/phones-operations";
-import TransitionAlerts from "../Alert/AlertSuccess";
-import { normalDate } from "../../helpers/normalDate";
-import { getLoading } from "../../redux/telephones/phones-selector";
-import LoadingButton from "@mui/lab/LoadingButton";
-import FormBrand from "./FormBrand.js/FormBrand";
+} from '../../validations/formReception';
+import { getAllbrand } from '../../services/api';
+import Modal from '../Modal/Modal';
+import FormModel from './FormModel/FormModel';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import IconButton from '@mui/material/IconButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTelephones } from '../../redux/telephones/phones-operations';
+import TransitionAlerts from '../Alert/AlertSuccess';
+import { normalDate } from '../../helpers/normalDate';
+import { getLoading } from '../../redux/telephones/phones-selector';
+import LoadingButton from '@mui/lab/LoadingButton';
+import FormBrand from './FormBrand.js/FormBrand';
 
 const FormReception = () => {
   const [showModalBrand, setShowModalBrand] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [telephones, setTelephones] = useState([]);
-  const [validation, setValidation] = useState("normal");
+  const [validation, setValidation] = useState('normal');
   const [open, setOpen] = useState(false);
   const loading = useSelector(getLoading);
 
   const initial = {
     brand: null,
     model: null,
-    numberPhone: "",
-    name: "",
-    status: "diagnosis",
+    numberPhone: '',
+    name: '',
+    status: 'diagnosis',
     finishDay: null,
     finishTime: null,
-    money: "",
-    description: "",
-    repairPrice: "",
+    money: '',
+    description: '',
+    repairPrice: '',
   };
 
   useEffect(() => {
@@ -61,7 +60,7 @@ const FormReception = () => {
       setOpen(false);
     }, 4000);
   }, [open]);
-  // const [open, setOpen] = useState(true);
+
   const dispatch = useDispatch();
 
   const toggleModalBrand = () => {
@@ -73,8 +72,7 @@ const FormReception = () => {
   };
 
   useEffect(() => {
-    getAllbrand().then((data) => setTelephones(data.allBrand));
-    // console.log(data);
+    getAllbrand().then(data => setTelephones(data.allBrand));
   }, []);
 
   const handlerAutocomplate = (setFieldValue, text, data, other) => {
@@ -82,13 +80,13 @@ const FormReception = () => {
     setFieldValue(other, null);
   };
 
-  const choiceValidation = (value) => {
+  const choiceValidation = value => {
     switch (value) {
-      case "purchase":
+      case 'purchase':
         return validationSchemaRepair;
-      case "diagnosis":
+      case 'diagnosis':
         return validationDiagnosisSchema;
-      case "repair":
+      case 'repair':
         return validationRepairSchema;
       default:
         return validationDiagnosisSchema;
@@ -96,19 +94,18 @@ const FormReception = () => {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: 'relative' }}>
       <TransitionAlerts
         open={open}
         setOpen={setOpen}
         text="Телефон додано!"
-        top={"-13px"}
+        top={'-13px'}
       />
       <Formik
         initialValues={initial}
         alidateOnBlur
         validationSchema={choiceValidation(validation)}
         onSubmit={(values, formikProps) => {
-          console.log(values);
           const {
             brand,
             model,
@@ -129,10 +126,10 @@ const FormReception = () => {
             numberPhone:
               numberPhone.length === 0 ? null : numberPhone.toString(),
             finishDay: normalDate(finishTime) ? normalDate(finishTime) : null,
-            moneyRepair: status === "repair" ? money : 0,
-            moneyDiagnosis: status === "diagnosis" ? money : 0,
-            moneyPurchase: status === "purchase" ? money : 0,
-            repairPrice: status === "repair" ? repairPrice : 0,
+            moneyRepair: status === 'repair' ? money : 0,
+            moneyDiagnosis: status === 'diagnosis' ? money : 0,
+            moneyPurchase: status === 'purchase' ? money : 0,
+            repairPrice: status === 'repair' ? repairPrice : 0,
             sellPrice: 0,
             description,
           };
@@ -140,7 +137,7 @@ const FormReception = () => {
           dispatch(addTelephones(result));
           setOpen(true);
           formikProps.resetForm();
-          formikProps.setFieldValue("status", status);
+          formikProps.setFieldValue('status', status);
         }}
       >
         {({
@@ -158,14 +155,11 @@ const FormReception = () => {
           <Form
             id="form"
             encType="multipart/form-data"
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
               handleSubmit();
             }}
           >
-            {/* <TransitionAlerts open={open} setOpen={setOpen} /> */}
-
-            {/* <div> */}
             <MarginItem spacing={2}>
               <div>
                 <RadioClick
@@ -177,11 +171,11 @@ const FormReception = () => {
                 </SpanError>
               </div>
               <div>
-                <div style={{ display: "flex" }}>
+                <div style={{ display: 'flex' }}>
                   <Autocomplete
                     style={{
-                      height: "40px",
-                      width: "100%",
+                      height: '40px',
+                      width: '100%',
                     }}
                     type="text"
                     name="brand"
@@ -189,14 +183,14 @@ const FormReception = () => {
                     value={values.brand}
                     options={telephones}
                     onBlur={handleBlur}
-                    getOptionLabel={(option) => option.brand}
-                    sx={{ height: "44px" }}
+                    getOptionLabel={option => option.brand}
+                    sx={{ height: '44px' }}
                     onChange={(event, newValue) =>
                       handlerAutocomplate(
                         setFieldValue,
-                        "brand",
+                        'brand',
                         newValue,
-                        "model"
+                        'model',
                       )
                     }
                     isOptionEqualToValue={(option, value) =>
@@ -213,11 +207,11 @@ const FormReception = () => {
               </div>
 
               <div>
-                <div style={{ display: "flex" }}>
+                <div style={{ display: 'flex' }}>
                   <Autocomplete
                     style={{
-                      height: "40px",
-                      width: "100%",
+                      height: '40px',
+                      width: '100%',
                     }}
                     type="text"
                     name="model"
@@ -226,9 +220,9 @@ const FormReception = () => {
                     disabled={values.brand !== null ? false : true}
                     options={values.brand ? values?.brand?.model : []}
                     onChange={(event, newValue) =>
-                      setFieldValue("model", newValue)
+                      setFieldValue('model', newValue)
                     }
-                    getOptionLabel={(option) => option}
+                    getOptionLabel={option => option}
                     isOptionEqualToValue={(option, value) => option === value}
                   />
                   <IconButton
@@ -251,7 +245,7 @@ const FormReception = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.name}
-                  sx={{ height: "40px" }}
+                  sx={{ height: '40px' }}
                 />
                 <SpanError>
                   {errors.name && touched.name && errors.name}
@@ -261,11 +255,10 @@ const FormReception = () => {
                 <Input
                   type="number"
                   name="numberPhone"
-                  // onChange={(event) => setCash(event.target.value)}
                   onChange={handleChange}
                   value={values.numberPhone}
                   placeholder="Номер телефону"
-                  sx={{ height: "44px" }}
+                  sx={{ height: '44px' }}
                 />
                 <SpanError>
                   {errors.numberPhone &&
@@ -273,7 +266,7 @@ const FormReception = () => {
                     errors.numberPhone}
                 </SpanError>
               </div>
-              {validation !== "purchase" && (
+              {validation !== 'purchase' && (
                 <LocalizationProvider
                   adapterLocale="uk"
                   dateAdapter={AdapterDayjs}
@@ -282,18 +275,18 @@ const FormReception = () => {
                     <div>
                       <DatePicker
                         value={values.finishDay}
-                        slotProps={{ textField: { size: "small" } }}
-                        onChange={(event) =>
+                        slotProps={{ textField: { size: 'small' } }}
+                        onChange={event =>
                           handlerAutocomplate(
                             setFieldValue,
-                            "finishDay",
+                            'finishDay',
                             event,
-                            "finishTime"
+                            'finishTime',
                           )
                         }
                         minDate={dayjs()}
                         label="Дата закінчення робіт"
-                        sx={{ width: "100%" }}
+                        sx={{ width: '100%' }}
                       />
                       <SpanError>
                         {errors.finishDay &&
@@ -305,13 +298,12 @@ const FormReception = () => {
                       <TimePicker
                         disabled={values.finishDay !== null ? false : true}
                         minutesStep={5}
-                        slotProps={{ textField: { size: "small" } }}
-                        // ampm={false}
+                        slotProps={{ textField: { size: 'small' } }}
                         label="Час закінчення робіт"
                         value={values.finishDay}
-                        sx={{ width: "100%" }}
+                        sx={{ width: '100%' }}
                         onChange={(event, newValue) =>
-                          setFieldValue("finishTime", event)
+                          setFieldValue('finishTime', event)
                         }
                       />
                       <SpanError>
@@ -323,16 +315,15 @@ const FormReception = () => {
                   </MarginItem>
                 </LocalizationProvider>
               )}
-              {validation === "repair" && (
+              {validation === 'repair' && (
                 <div>
                   <Input
                     type="number"
                     name="repairPrice"
-                    // onChange={(event) => setCash(event.target.value)}
                     onChange={handleChange}
                     value={values.repairPrice}
                     placeholder="Ціна запчастин"
-                    sx={{ height: "40px" }}
+                    sx={{ height: '40px' }}
                   />
                   <SpanError>
                     {errors.repairPrice &&
@@ -345,11 +336,10 @@ const FormReception = () => {
                 <Input
                   type="number"
                   name="money"
-                  // onChange={(event) => setCash(event.target.value)}
                   onChange={handleChange}
                   value={values.money}
                   placeholder="Ціна"
-                  sx={{ height: "40px" }}
+                  sx={{ height: '40px' }}
                 />
                 <SpanError>
                   {errors.money && touched.money && errors.money}
@@ -362,15 +352,6 @@ const FormReception = () => {
                   value={values.description}
                   name="description"
                 />
-
-                {/* <Input
-                type="text"
-                name="description"
-                // onChange={(event) => setCash(event.target.value)}
-                onChange={handleChange}
-                value={values.description}
-                placeholder="Ціна"
-              /> */}
                 <SpanError>
                   {errors.description &&
                     touched.description &&
@@ -385,10 +366,6 @@ const FormReception = () => {
               >
                 <span>Додати</span>
               </LoadingButton>
-              {/* <Radio name="action" options={listJenisKelamin} /> */}
-              {/* <Field component={RadioGroup} name="action"> */}
-              {/* <RadioPositionEnd handleChange={setFieldValue} /> */}
-              {/* </Field> */}
             </MarginItem>
 
             {showModal && (
@@ -402,7 +379,6 @@ const FormReception = () => {
                 />
               </Modal>
             )}
-
             {showModalBrand && (
               <Modal close={toggleModalBrand}>
                 <FormBrand
@@ -411,8 +387,6 @@ const FormReception = () => {
                 />
               </Modal>
             )}
-
-            {/* </div> */}
           </Form>
         )}
       </Formik>

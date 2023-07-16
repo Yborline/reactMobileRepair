@@ -1,12 +1,12 @@
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { phonesSlice } from "../../redux/telephones/phones-reducer";
-import { useDispatch } from "react-redux";
-import dayjs from "dayjs";
-import "dayjs/locale/uk";
-import { useEffect, useState } from "react";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { phonesSlice } from '../../redux/telephones/phones-reducer';
+import { useDispatch } from 'react-redux';
+import dayjs from 'dayjs';
+import 'dayjs/locale/uk';
+import { useEffect, useState } from 'react';
 
 const FilterDate = () => {
   const { changeFilterDate } = phonesSlice.actions;
@@ -14,9 +14,8 @@ const FilterDate = () => {
   const [value, setValue] = useState(new Date());
 
   useEffect(() => {
-    console.log(value);
     if (value === null) {
-      dispatch(changeFilterDate(""));
+      dispatch(changeFilterDate(''));
       return;
     }
     const { $M: month, $y: year } = value;
@@ -36,14 +35,14 @@ const FilterDate = () => {
 
   return (
     <LocalizationProvider adapterLocale="uk" dateAdapter={AdapterDayjs}>
-      <DemoContainer components={["DatePicker"]}>
+      <DemoContainer components={['DatePicker']}>
         <DatePicker
           label={'"Місяць" і "рік"'}
-          views={["month", "year"]}
-          minDate={dayjs(new Date("2023"))}
-          onChange={(e) => setValue(e)}
+          views={['month', 'year']}
+          minDate={dayjs(new Date('2023'))}
+          onChange={e => setValue(e)}
           value={dayjs(value)}
-          slotProps={{ textField: { size: "small" } }}
+          slotProps={{ textField: { size: 'small' } }}
         />
       </DemoContainer>
     </LocalizationProvider>

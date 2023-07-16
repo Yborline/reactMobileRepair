@@ -1,49 +1,49 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "https://mobilerepair.onrender.com/api/";
+axios.defaults.baseURL = 'https://mobilerepair.onrender.com/api/';
 
 const token = {
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   unset() {
-    axios.defaults.headers.common.Authorization = "";
+    axios.defaults.headers.common.Authorization = '';
   },
 };
 
 export const fetchTelephones = createAsyncThunk(
-  "fetchPhones/phones",
+  'fetchPhones/phones',
   async (_, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
       const persistedToken = state.auth.token;
       token.set(persistedToken);
-      const { data } = await axios.get("/action");
+      const { data } = await axios.get('/action');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const addTelephones = createAsyncThunk(
-  "addPhone/phones",
+  'addPhone/phones',
   async (result, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
       const persistedToken = state.auth.token;
       token.set(persistedToken);
-      const { data } = await axios.post("/action", result);
+      const { data } = await axios.post('/action', result);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const changeStatus = createAsyncThunk(
-  "changeStatus/phones",
+  'changeStatus/phones',
   async ({ id, status, finishDay, sellPrice, statusRepair }, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
@@ -51,7 +51,7 @@ export const changeStatus = createAsyncThunk(
       token.set(persistedToken);
       const date = new Date();
       const newDate = `${date.toLocaleDateString(
-        "uk-UA"
+        'uk-UA',
       )} ${date.toLocaleTimeString()}`;
       const { data } = await axios.patch(`/action/status/${id}`, {
         status: status,
@@ -63,11 +63,11 @@ export const changeStatus = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const changeStatusStart = createAsyncThunk(
-  "changeStatusRepair/phones",
+  'changeStatusRepair/phones',
   async ({ id, statusRepair, sellPrice, status }, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
@@ -75,9 +75,8 @@ export const changeStatusStart = createAsyncThunk(
       token.set(persistedToken);
       const date = new Date();
       const newDate = `${date.toLocaleDateString(
-        "uk-UA"
+        'uk-UA',
       )} ${date.toLocaleTimeString()}`;
-      console.log(newDate);
       const { data } = await axios.patch(`/action/statusRepair/${id}`, {
         finishDay: newDate,
         statusRepair,
@@ -87,11 +86,11 @@ export const changeStatusStart = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const changeTime = createAsyncThunk(
-  "changeTime/phones",
+  'changeTime/phones',
   async ({ id, result }, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
@@ -102,11 +101,11 @@ export const changeTime = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const changePrice = createAsyncThunk(
-  "changeOther/phones",
+  'changeOther/phones',
   async ({ id, other, key }, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
@@ -119,5 +118,5 @@ export const changePrice = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  },
 );
