@@ -15,40 +15,24 @@ import { useWindowSize } from '@react-hook/window-size';
 import FilterDate from '../../components/FilterDate/FilterDate';
 import Profit from '../../components/Profit/Profit';
 import { BttnSuccess } from '../../components/BttnSuccess/BttnSuccess';
+import { useToggleButton } from '../../hooks/useToggleButton';
 
 const Repair = () => {
-  const { repairs, diagnosis } = useSelector(getTypesPhone);
-  const [showRepair, setShowRepair] = useState(false);
-  const [width] = useWindowSize();
+  const { showFirstBtn, showSecondBtn, toggleFirst, toggleSecond } =
+    useToggleButton();
 
-  const [showFinishRepair, setShowFinishRepair] = useState(false);
+  const { repairs, diagnosis } = useSelector(getTypesPhone);
+  const [width] = useWindowSize();
   const { filteredRepairs } = useSelector(filterPhones);
   const { dateFilterRepairs } = useSelector(findFinishPhonesDate);
-  const handleClickFinishRepair = () => {
-    if (showRepair) {
-      setShowFinishRepair(!showFinishRepair);
-      setShowRepair(!showRepair);
-    }
-    setShowFinishRepair(!showFinishRepair);
-  };
-
-  const handleClickRepair = () => {
-    if (showFinishRepair) {
-      setShowFinishRepair(!showFinishRepair);
-      setShowRepair(!showRepair);
-    }
-    setShowRepair(!showRepair);
-  };
 
   return (
     <Container>
       <BtnContainer spacing={2}>
-        <BttnSuccess handleClick={handleClickRepair}>Ремонт</BttnSuccess>
-        <BttnSuccess handleClick={handleClickFinishRepair}>
-          Виконаний ремонт
-        </BttnSuccess>
+        <BttnSuccess handleClick={toggleFirst}>Ремонт</BttnSuccess>
+        <BttnSuccess handleClick={toggleSecond}>Виконаний ремонт</BttnSuccess>
       </BtnContainer>
-      {showFinishRepair && (
+      {showSecondBtn && (
         <ContainerFilter>
           <Filter
             marginBottom={width < 768 ? '15px' : '0px'}
@@ -58,13 +42,13 @@ const Repair = () => {
           <FilterDate />
         </ContainerFilter>
       )}
-      {showRepair &&
+      {showFirstBtn &&
         (repairs.start.length === 0 ? (
           <EmptyText text={'Телефонів на ремонті не має'} />
         ) : (
           <ListRepair textStatus="В ремонті" phones={repairs.start} />
         ))}
-      {showFinishRepair &&
+      {showSecondBtn &&
         (dateFilterRepairs.length === 0 ? (
           <EmptyText text={'Відремонтованих телефонів немає'} />
         ) : (

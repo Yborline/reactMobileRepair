@@ -1,13 +1,13 @@
-import { Formik } from "formik";
-import validationFormPrice from "../../validations/formPrice";
-import Button from "@mui/material/Button";
-import Input from "@mui/joy/Input";
-import { Form, DivInput } from "./FormPrice.styled";
+import { Formik } from 'formik';
+import validationFormPrice from '../../validations/formPrice';
+import Button from '@mui/material/Button';
+import Input from '@mui/joy/Input';
+import { Form, DivInput } from './FormPrice.styled';
 
-import ButtonClose from "../ButtonClose/ButtonClose";
+import ButtonClose from '../ButtonClose/ButtonClose';
 
 const initial = {
-  money: "",
+  money: '',
 };
 
 const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
@@ -35,14 +35,14 @@ const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
         <Form
           id="form"
           encType="multipart/form-data"
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault();
             handleSubmit();
           }}
         >
           <ButtonClose close={close} />
           <DivInput>
-            <labe>Вкажіть ціну роботи!</labe>
+            <label>Вкажіть ціну роботи!</label>
             <Input
               type="number"
               name="money"
@@ -54,7 +54,7 @@ const FormPrice = ({ id, close, status, finishTime, price, submit }) => {
           </DivInput>
 
           <Button
-            disabled={values.money === "" ? true : false}
+            disabled={values.money === '' ? true : false}
             type="submit"
             variant="contained"
           >

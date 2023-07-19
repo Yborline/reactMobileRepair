@@ -1,4 +1,4 @@
-import hook from '../../../hooks/hookTimer';
+import hook from '../../../hooks/useHookTimer';
 // import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
@@ -25,13 +25,15 @@ import {
 import FormPrice from '../../FormPrice/FormPrice';
 import FormDescription from '../../FormDescription/FormDescription';
 import choiceMoney from '../../../helpers/choiceMoney';
+import { useTogglePrice } from '../../../hooks/useTogglePrice';
+import { useToggleFormDate } from '../../../hooks/useToggleFormDate';
 
 const ItemRepair = ({ item, textStatus }) => {
   const [showTime, setShowTime] = useState(false);
-  const [showModalTime, setShowModalTime] = useState(false);
-  const [showModalPrice, setShowModalPrice] = useState(false);
+  const { isOpenDate, open, close, toggleDate } = useToggleFormDate();
+  const { isOpenCosts, isOpenMoney, toggleMoney, toggleCoasts } =
+    useTogglePrice();
   const [showModalDescription, setShowModalDescription] = useState(false);
-  const [openRepairPrice, setOpenRepairPrice] = useState(false);
 
   const dispatch = useDispatch();
   const {
@@ -52,31 +54,20 @@ const ItemRepair = ({ item, textStatus }) => {
   const normalTime = arrayTime?.join(' ');
   const headerString = `${brand.toUpperCase()} ${model}`;
   const [finalTime] = hook.useFinaltimer(finishDay, '');
-  const toggleModal = () => {
-    setShowModalTime(!showModalTime);
-  };
-  const toggleModalPrice = () => {
-    setShowModalPrice(!showModalPrice);
-    setOpenRepairPrice(false);
-  };
+
   const toggleModalDescription = () => {
     setShowModalDescription(!showModalDescription);
   };
 
-  const toggleModalPriceRepairMoney = () => {
-    setShowModalPrice(!showModalPrice);
-    setOpenRepairPrice(true);
-  };
-
   const submitPrice = money => {
-    if (openRepairPrice) {
+    if (isOpenCosts) {
       dispatch(changePrice({ id: _id, other: money, key: 'repairPrice' }));
     } else {
       dispatch(
         changePrice({ id: _id, other: money, key: choiceMoney(status) }),
       );
     }
-    toggleModalPrice();
+    toggleMoney();
   };
   return (
     <LiCard style={{ position: 'relative' }}>
@@ -91,8 +82,6 @@ const ItemRepair = ({ item, textStatus }) => {
           <div>
             <IconButton
               onClick={toggleModalDescription}
-              //   disabled={values.brand !== null ? false : true}
-              //   onClick={toggleModal}
               aria-label="change description"
             >
               <EditIcon />
@@ -102,9 +91,6 @@ const ItemRepair = ({ item, textStatus }) => {
 
         <DivInfo>
           <p>{name}</p>
-          {/* <IconButton aria-label="change name">
-            <EditIcon />
-          </IconButton> */}
         </DivInfo>
         <DivInfo>
           {numberPhone ? (
@@ -112,24 +98,16 @@ const ItemRepair = ({ item, textStatus }) => {
           ) : (
             <p>Номер не вказано!</p>
           )}
-
-          {/* <p>{numberPhone}</p> */}
-          {/* <IconButton aria-label="change number phone">
-            <EditIcon />
-          </IconButton> */}
         </DivInfo>
         <DivInfo>
           {status === 'repair' ? (
             <>
               <p>{moneyRepair} грн.</p>
-              <IconButton onClick={toggleModalPrice} aria-label="change price">
+              <IconButton onClick={toggleMoney} aria-label="change price">
                 <PaidIcon />
               </IconButton>
               <p>{repairPrice} грн.</p>
-              <IconButton
-                onClick={toggleModalPriceRepairMoney}
-                aria-label="change price"
-              >
+              <IconButton onClick={toggleCoasts} aria-label="change price">
                 <BuildIcon />
               </IconButton>
             </>
@@ -137,7 +115,7 @@ const ItemRepair = ({ item, textStatus }) => {
             <>
               {' '}
               <p>{moneyDiagnosis} грн.</p>
-              <IconButton onClick={toggleModalPrice} aria-label="change price">
+              <IconButton onClick={toggleMoney} aria-label="change price">
                 <EditIcon />
               </IconButton>
             </>
@@ -153,7 +131,7 @@ const ItemRepair = ({ item, textStatus }) => {
               {normalTime}
             </Button>
 
-            <IconButton onClick={toggleModal} aria-label="change">
+            <IconButton onClick={toggleDate} aria-label="change">
               <EditIcon />
             </IconButton>
           </DivInfo>
@@ -177,29 +155,29 @@ const ItemRepair = ({ item, textStatus }) => {
           Виконано
         </Button>
       </DivButton>
-      {showModalTime && (
-        <Modal close={toggleModal}>
+      {isOpenDate && (
+        <Modal close={toggleDate}>
           <FormDate
             id={_id}
             time={true}
-            toggleModal={toggleModal}
+            toggleModal={toggleDate}
             status={status}
           />
         </Modal>
       )}
-      {showModalPrice && (
-        <Modal close={toggleModalPrice}>
+      {(isOpenCosts || isOpenMoney) && (
+        <Modal close={isOpenMoney ? toggleMoney : toggleCoasts}>
           <FormPrice
             price={
               status === 'repair'
-                ? openRepairPrice
+                ? isOpenCosts
                   ? repairPrice
                   : moneyRepair
                 : moneyDiagnosis
             }
             id={_id}
             status={status}
-            close={toggleModalPrice}
+            close={isOpenMoney ? toggleMoney : toggleCoasts}
             submit={submitPrice}
           />
         </Modal>

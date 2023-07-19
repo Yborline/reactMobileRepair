@@ -18,12 +18,14 @@ import FormSellPrice from '../../FormSellPrice/FormSellPrice';
 import FinishResult from './FinishResult';
 import { Stack } from '@mui/material';
 import choiceMoney from '../../../helpers/choiceMoney';
+import { useToggleFormDate } from '../../../hooks/useToggleFormDate';
+import { useToggleModalSell } from '../../../hooks/useToggleModalSell';
 
 const ItemPurchase = ({ phone, textStatus }) => {
-  const [showModal, setShowModal] = useState(false);
+  const { isOpenDate, toggleDate } = useToggleFormDate();
   const [showModalPrice, setShowModalPrice] = useState(false);
-  const [showModalSell, setShowModalSell] = useState(false);
 
+  const { isOpenModalSell, toggleModalSell } = useToggleModalSell();
   const dispatch = useDispatch();
   const {
     brand,
@@ -40,16 +42,8 @@ const ItemPurchase = ({ phone, textStatus }) => {
     repairPrice,
   } = phone;
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
-
   const toggleModalPrice = () => {
     setShowModalPrice(!showModalPrice);
-  };
-
-  const toggleModalSell = () => {
-    setShowModalSell(!showModalSell);
   };
 
   const submitPrice = money => {
@@ -99,7 +93,7 @@ const ItemPurchase = ({ phone, textStatus }) => {
           <Stack spacing={2}>
             <DivButton>
               <Button
-                onClick={toggleModal}
+                onClick={toggleDate}
                 style={{ width: '100%' }}
                 variant="contained"
                 color="warning"
@@ -126,11 +120,11 @@ const ItemPurchase = ({ phone, textStatus }) => {
         </div>
       )}
 
-      {showModal && (
-        <Modal close={toggleModal}>
+      {isOpenDate && (
+        <Modal close={toggleDate}>
           <FormDate
             id={_id}
-            toggleModal={toggleModal}
+            toggleModal={toggleDate}
             status={status}
             finishTime={finishDay}
             time={false}
@@ -148,7 +142,7 @@ const ItemPurchase = ({ phone, textStatus }) => {
           />
         </Modal>
       )}
-      {showModalSell && (
+      {isOpenModalSell && (
         <Modal close={toggleModalSell}>
           <FormSellPrice id={_id} status={status} close={toggleModalSell} />
         </Modal>

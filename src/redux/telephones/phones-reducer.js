@@ -75,7 +75,7 @@ export const phonesSlice = createSlice({
 
           [payload.result.status]: [
             payload.result,
-            state.items[payload.result.status],
+            ...state.items[payload.result.status],
           ],
           loading: false,
           error: null,

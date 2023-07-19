@@ -15,41 +15,25 @@ import { Container, BtnContainer, ContainerFilter } from './Diagnosis.styled';
 import FilterDate from '../../components/FilterDate/FilterDate';
 import Profit from '../../components/Profit/Profit';
 import { BttnSuccess } from '../../components/BttnSuccess/BttnSuccess';
+import { useToggleButton } from '../../hooks/useToggleButton';
 
 const Diagnosis = () => {
   const { diagnosis } = useSelector(getTypesPhone);
-  const [showDiagnosis, setShowDiagnosis] = useState(false);
-  const [showFinishDiagnosis, setShowFinishDiagnosis] = useState(false);
+  const { showFirstBtn, showSecondBtn, toggleFirst, toggleSecond } =
+    useToggleButton();
   const { filteredDiagnosis } = useSelector(filterPhones);
   const { dateFilterDiagnosis } = useSelector(findFinishPhonesDate);
   const [width] = useWindowSize();
-  const handleClickDiagnosis = () => {
-    if (showFinishDiagnosis) {
-      setShowDiagnosis(!showDiagnosis);
-      setShowFinishDiagnosis(!showFinishDiagnosis);
-    }
-    setShowDiagnosis(!showDiagnosis);
-  };
-
-  const handleClickFinishDiagnosis = () => {
-    if (showDiagnosis) {
-      setShowDiagnosis(!showDiagnosis);
-      setShowFinishDiagnosis(!showFinishDiagnosis);
-    }
-    setShowFinishDiagnosis(!showFinishDiagnosis);
-  };
 
   return (
     <Container>
       <BtnContainer spacing={2}>
-        <BttnSuccess handleClick={handleClickDiagnosis}>
-          Діагностика
-        </BttnSuccess>
-        <BttnSuccess handleClick={handleClickFinishDiagnosis}>
+        <BttnSuccess handleClick={toggleFirst}>Діагностика</BttnSuccess>
+        <BttnSuccess handleClick={toggleSecond}>
           Виконана діагностика
         </BttnSuccess>
       </BtnContainer>
-      {showFinishDiagnosis && (
+      {showSecondBtn && (
         <ContainerFilter>
           <Filter
             marginBottom={width < 768 ? '15px' : '0px'}
@@ -59,7 +43,7 @@ const Diagnosis = () => {
           <FilterDate />
         </ContainerFilter>
       )}
-      {showDiagnosis &&
+      {showFirstBtn &&
         (diagnosis.start.length === 0 ? (
           <EmptyText text={'Телефонів на діагностиці не має'} />
         ) : (
@@ -68,7 +52,7 @@ const Diagnosis = () => {
             phones={diagnosis.start}
           />
         ))}
-      {showFinishDiagnosis &&
+      {showSecondBtn &&
         (dateFilterDiagnosis.length === 0 ? (
           <EmptyText text={'Телефонів після діагностики немає'} />
         ) : (

@@ -14,11 +14,12 @@ import FormDate from '../../FormDate/FormDate';
 import FormSellPrice from '../../FormSellPrice/FormSellPrice';
 import BuildIcon from '@mui/icons-material/Build';
 import PaidIcon from '@mui/icons-material/Paid';
+import { useToggleFormDate } from '../../../hooks/useToggleFormDate';
+import { useToggleModalSell } from '../../../hooks/useToggleModalSell';
 
 const ItemRepairFinish = ({ item, textStatus }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [showModalSell, setShowModalSell] = useState(false);
-
+  const { isOpenModalSell, toggleModalSell } = useToggleModalSell();
+  const { isOpenDate, toggleDate } = useToggleFormDate();
   const {
     model,
     brand,
@@ -36,13 +37,6 @@ const ItemRepairFinish = ({ item, textStatus }) => {
   } = item;
 
   const headerString = `${brand.toUpperCase()} ${model}`;
-
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
-  const toggleModalSell = () => {
-    setShowModalSell(!showModalSell);
-  };
 
   return (
     <LiCard style={{ position: 'relative' }}>
@@ -93,7 +87,7 @@ const ItemRepairFinish = ({ item, textStatus }) => {
       {status === 'diagnosis' ? (
         <DivButton>
           <Button
-            onClick={toggleModal}
+            onClick={toggleDate}
             style={{ width: '100%' }}
             variant="contained"
             color="success"
@@ -111,17 +105,17 @@ const ItemRepairFinish = ({ item, textStatus }) => {
           Продажа
         </Button>
       )}
-      {showModal && (
-        <Modal close={toggleModal}>
+      {isOpenDate && (
+        <Modal close={toggleDate}>
           <FormDate
             id={_id}
-            toggleModal={toggleModal}
+            toggleModal={toggleDate}
             status={status}
             time={false}
           />
         </Modal>
       )}
-      {showModalSell && (
+      {isOpenModalSell && (
         <Modal close={toggleModalSell}>
           <FormSellPrice id={_id} status={status} close={toggleModalSell} />
         </Modal>

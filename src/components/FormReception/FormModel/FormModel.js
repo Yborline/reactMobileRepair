@@ -7,6 +7,7 @@ import { addModel } from '../../../services/api';
 import TransitionAlerts from '../../Alert/AlertSuccess';
 import { useEffect, useState } from 'react';
 import ButtonClose from '../../ButtonClose/ButtonClose';
+import { useHookAlert } from '../../../hooks/useHookAlert';
 
 const FormModel = ({
   сlearBrand,
@@ -15,13 +16,7 @@ const FormModel = ({
   brand = '',
   close,
 }) => {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setOpen(false);
-    }, 5000);
-  }, [open]);
+  const { open, setOpen } = useHookAlert();
 
   const newArrayPhones = data => {
     changePhone(prevState => [
