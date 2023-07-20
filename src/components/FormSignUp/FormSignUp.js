@@ -25,8 +25,9 @@ import { useNavigate } from 'react-router-dom';
 import TransitionAlerts from '../Alert/AlertSuccess';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Stack } from '@mui/material';
+import GoogleAuthBtn from '../GoogleAuth/GoogleAuth';
 
-const SignUpForm = ({ changeForm, signUpForm }) => {
+const SignUpForm = () => {
   const dispatch = useDispatch();
   const loading = useSelector(getUserLoading);
   const error = useSelector(getUserError);
@@ -39,10 +40,11 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
   useEffect(() => {
     if (user.name && navigation) {
       setOpen(true);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setOpen(false);
         navigate('/user');
       }, 3000);
+      return () => clearTimeout(timer);
     }
   }, [navigation, navigate, open, user.name]);
 
@@ -101,7 +103,6 @@ const SignUpForm = ({ changeForm, signUpForm }) => {
             }}
           >
             <Ul>
-              {/* <GoogleAuthBtn /> */}
               <Li>
                 <label
                   htmlFor="name"

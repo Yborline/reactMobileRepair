@@ -1,13 +1,12 @@
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import Button from "@mui/material/Button";
-import CloseIcon from "@mui/icons-material/Close";
+import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function TransitionAlerts({ open, setOpen, text, top }) {
   return (
-    <Box sx={{ position: "absolute", top: top, width: "100%", zIndex: 9099 }}>
+    <Box sx={{ position: 'absolute', top: top, width: '100%', zIndex: 9099 }}>
       <Collapse in={open}>
         <Alert
           action={

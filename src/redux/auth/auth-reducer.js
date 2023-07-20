@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import authOperations from './auth-operatins';
+import authOperations, { loginG } from './auth-operatins';
 
 const initialState = {
   user: { name: null, email: null, type: null },
@@ -10,10 +10,19 @@ const initialState = {
   userError: null,
 };
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    loginG(state, { payload }) {
+      return {
+        ...state,
+        isLoggedIn: true,
+        token: payload.token,
+        user: payload.user,
+      };
+    },
+  },
   extraReducers: builder => {
     builder
 
@@ -76,6 +85,7 @@ const userSlice = createSlice({
           };
         },
       )
+
       .addMatcher(
         action => action.type.endsWith('/auth/fulfilled'),
         (state, action) => {

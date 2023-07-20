@@ -33,33 +33,28 @@ import { normalDate } from '../../helpers/normalDate';
 import { getLoading } from '../../redux/telephones/phones-selector';
 import LoadingButton from '@mui/lab/LoadingButton';
 import FormBrand from './FormBrand.js/FormBrand';
+import { useHookAlert } from '../../hooks/useHookAlert';
 
-const FormReception = () => {
+const initial = {
+  brand: null,
+  model: null,
+  numberPhone: '',
+  name: '',
+  status: 'diagnosis',
+  finishDay: null,
+  finishTime: null,
+  money: '',
+  description: '',
+  repairPrice: '',
+};
+
+const FormReception = ({ scroll }) => {
   const [showModalBrand, setShowModalBrand] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [telephones, setTelephones] = useState([]);
   const [validation, setValidation] = useState('normal');
-  const [open, setOpen] = useState(false);
+  const { open, setOpen } = useHookAlert();
   const loading = useSelector(getLoading);
-
-  const initial = {
-    brand: null,
-    model: null,
-    numberPhone: '',
-    name: '',
-    status: 'diagnosis',
-    finishDay: null,
-    finishTime: null,
-    money: '',
-    description: '',
-    repairPrice: '',
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setOpen(false);
-    }, 4000);
-  }, [open]);
 
   const dispatch = useDispatch();
 
@@ -91,6 +86,10 @@ const FormReception = () => {
       default:
         return validationDiagnosisSchema;
     }
+  };
+
+  const handleUpButton = () => {
+    window.scrollBy(0, 0);
   };
 
   return (
@@ -136,6 +135,7 @@ const FormReception = () => {
 
           dispatch(addTelephones(result));
           setOpen(true);
+          scroll();
           formikProps.resetForm();
           formikProps.setFieldValue('status', status);
         }}

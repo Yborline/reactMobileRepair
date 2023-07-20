@@ -2,7 +2,7 @@ import {
   configureStore,
   getDefaultMiddleware,
   combineReducers,
-} from "@reduxjs/toolkit";
+} from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
@@ -12,12 +12,13 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-import storage from "redux-persist/lib/storage";
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 // import logger from "redux-logger";
-import authReducer from "./auth/auth-reducer";
+import authReducer from './auth/auth-reducer';
+import devToolsEnhancer from 'remote-redux-devtools';
 
-import phonesReducer from "./telephones/phones-reducer";
+import phonesReducer from './telephones/phones-reducer';
 // import { number } from "prop-types";
 
 const middleware = [
@@ -30,7 +31,7 @@ const middleware = [
 ];
 
 const authPersistConfig = {
-  key: "auth",
+  key: 'auth',
   storage,
   whitelist: [`token`],
 };
@@ -42,7 +43,8 @@ export const store = configureStore({
     phones: phonesReducer,
   },
   middleware,
-  devTools: process.env.NODE_ENV === "development",
+  devTools: process.env.NODE_ENV === 'development',
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 });
 
 export const persistor = persistStore(store);

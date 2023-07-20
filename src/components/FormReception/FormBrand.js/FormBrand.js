@@ -7,16 +7,10 @@ import { addBrand } from '../../../services/api';
 import TransitionAlerts from '../../Alert/AlertSuccess';
 import { useEffect, useState } from 'react';
 import ButtonClose from '../../ButtonClose/ButtonClose';
+import { useHookAlert } from '../../../hooks/useHookAlert';
 
 const FormBrand = ({ close, changePhone }) => {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setOpen(false);
-    }, 5000);
-  }, [open]);
-
+  const { open, setOpen } = useHookAlert();
   return (
     <>
       <ButtonClose close={close} />
