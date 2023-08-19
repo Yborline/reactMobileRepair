@@ -74,6 +74,7 @@ export const changeStatusStart = createAsyncThunk(
       const persistedToken = state.auth.token;
       token.set(persistedToken);
       const date = new Date();
+      console.log(date.__proto__);
       const newDate = `${date.toLocaleDateString(
         'uk-UA',
       )} ${date.toLocaleTimeString()}`;

@@ -20,11 +20,12 @@ import { Stack } from '@mui/material';
 import choiceMoney from '../../../helpers/choiceMoney';
 import { useToggleFormDate } from '../../../hooks/useToggleFormDate';
 import { useToggleModalSell } from '../../../hooks/useToggleModalSell';
+import StorageForm from '../../FormStorage/StorageForm';
 
-const ItemPurchase = ({ phone, textStatus }) => {
+const ItemPurchase = ({ phone, textStatus, setOpen, scrollTop }) => {
   const { isOpenDate, toggleDate } = useToggleFormDate();
   const [showModalPrice, setShowModalPrice] = useState(false);
-
+  const [isOpenModalStorage, setIsOpenModalStorage] = useState(false);
   const { isOpenModalSell, toggleModalSell } = useToggleModalSell();
   const dispatch = useDispatch();
   const {
@@ -41,6 +42,10 @@ const ItemPurchase = ({ phone, textStatus }) => {
     sellPrice,
     repairPrice,
   } = phone;
+
+  const toggleModalStorage = () => {
+    setIsOpenModalStorage(!isOpenModalStorage);
+  };
 
   const toggleModalPrice = () => {
     setShowModalPrice(!showModalPrice);
@@ -104,6 +109,7 @@ const ItemPurchase = ({ phone, textStatus }) => {
                 style={{ width: '100%', marginLeft: '10px' }}
                 variant="contained"
                 color="info"
+                onClick={toggleModalStorage}
               >
                 На запчастини
               </Button>
@@ -118,6 +124,18 @@ const ItemPurchase = ({ phone, textStatus }) => {
             </Button>
           </Stack>
         </div>
+      )}
+      {isOpenModalStorage && (
+        <Modal close={toggleModalStorage}>
+          <StorageForm
+            scrollTop={scrollTop}
+            setOpen={setOpen}
+            id={_id}
+            brand={brand}
+            model={model}
+            close={toggleModalStorage}
+          />
+        </Modal>
       )}
 
       {isOpenDate && (

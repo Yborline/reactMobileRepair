@@ -14,6 +14,7 @@ export const lightTheme = {
   link: '#4B0082',
   activeLink: '#7B68EE',
   BlueBtn: '#4169E1',
+  sparePartsbutton: '#DCDCDC',
 };
 
 export const darkTheme = {

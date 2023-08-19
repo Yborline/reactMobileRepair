@@ -1,4 +1,4 @@
-export const normalDate = (finishTime) => {
+export const normalDate = finishTime => {
   if (finishTime === null) {
     return null;
   }

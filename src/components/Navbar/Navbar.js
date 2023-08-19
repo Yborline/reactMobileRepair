@@ -43,10 +43,10 @@ const Navbar = () => {
             <li>
               <Link to="/telephones">Телефони</Link>
             </li>
-            {/* <li>
-              <NavLink to="/spareParts">Запчастини</NavLink>
-            </li>
             <li>
+              <Link to="/spareParts">Запчастини</Link>
+            </li>
+            {/* <li>
               <NavLink to="Accounting">Бухгалтерія</NavLink>
             </li>
             <li>

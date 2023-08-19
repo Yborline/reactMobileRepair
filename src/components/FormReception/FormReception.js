@@ -88,10 +88,6 @@ const FormReception = ({ scroll }) => {
     }
   };
 
-  const handleUpButton = () => {
-    window.scrollBy(0, 0);
-  };
-
   return (
     <div style={{ position: 'relative' }}>
       <TransitionAlerts

@@ -1,32 +1,32 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import { Ul, Li, Div, Link } from "./NavbarMobile.styled";
-import { useDispatch, useSelector } from "react-redux";
-import { getLoggedIn } from "../../redux/auth/auth-selectors";
-import authOperations from "../../redux/auth/auth-operatins";
-import MenuIcon from "@mui/icons-material/Menu";
-import Modal from "../Modal/Modal";
-import LogOut from "../LogOut/LogOut";
-import { useState } from "react";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import { Ul, Li, Div, Link } from './NavbarMobile.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLoggedIn } from '../../redux/auth/auth-selectors';
+import authOperations from '../../redux/auth/auth-operatins';
+import MenuIcon from '@mui/icons-material/Menu';
+import Modal from '../Modal/Modal';
+import LogOut from '../LogOut/LogOut';
+import { useState } from 'react';
 // import InboxIcon from "@mui/icons-material/MoveToInbox";
 // import MailIcon from "@mui/icons-material/Mail";
 
 const pathNavbar = [
   {
-    path: "/",
-    text: "Прийом",
+    path: '/',
+    text: 'Прийом',
     id: 1,
   },
-  { path: "/repair", text: "Ремонт", id: 2 },
-  { path: "/diagnosis", text: "Діагностика", id: 3 },
-  { path: "/telephones", text: "Телефони", id: 4 },
-  // { path: "/spareParts", text: "Запчастини", id: 5 },
+  { path: '/repair', text: 'Ремонт', id: 2 },
+  { path: '/diagnosis', text: 'Діагностика', id: 3 },
+  { path: '/telephones', text: 'Телефони', id: 4 },
+  { path: '/spareParts', text: 'Запчастини', id: 5 },
   // { path: "Accounting", text: "Бухгалтерія", id: 6 },
   // { path: "/history", text: "Історія", id: 7 },
-  { path: "/user", text: "User", id: 8 },
+  { path: '/user', text: 'User', id: 8 },
 ];
 
 export default function NavbarMobile() {
@@ -35,11 +35,11 @@ export default function NavbarMobile() {
 
   const logged = useSelector(getLoggedIn);
 
-  const toggleDrawer = (open) => (event) => {
+  const toggleDrawer = open => event => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
@@ -52,7 +52,7 @@ export default function NavbarMobile() {
   };
   const list = () => (
     <Box
-      sx={{ width: "auto" }}
+      sx={{ width: 'auto' }}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
@@ -60,12 +60,12 @@ export default function NavbarMobile() {
       <Ul>
         {pathNavbar.map(({ path, text, id }) => (
           <Li key={id}>
-            {logged && path === "/user" ? (
+            {logged && path === '/user' ? (
               <Button color="error" type="submit" onClick={toggleModal}>
                 Вихід
               </Button>
             ) : (
-              <Link style={{ width: "100%" }} to={path}>
+              <Link style={{ width: '100%' }} to={path}>
                 {text}
               </Link>
             )}
@@ -96,7 +96,7 @@ export default function NavbarMobile() {
         <MenuIcon fontSize="large" />
       </Button>
       <SwipeableDrawer
-        anchor={"right"}
+        anchor={'right'}
         open={state}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}

@@ -16,9 +16,10 @@ import {
 import storage from 'redux-persist/lib/storage';
 // import logger from "redux-logger";
 import authReducer from './auth/auth-reducer';
+import storageReducer from './storage/storage-reducer';
+import phonesReducer from './telephones/phones-reducer';
 import devToolsEnhancer from 'remote-redux-devtools';
 
-import phonesReducer from './telephones/phones-reducer';
 // import { number } from "prop-types";
 
 const middleware = [
@@ -40,6 +41,7 @@ export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
     // auth: persistReducer(authPersistConfig, authReducer),
+    storage: storageReducer,
     phones: phonesReducer,
   },
   middleware,

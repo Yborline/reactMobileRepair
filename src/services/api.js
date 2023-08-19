@@ -27,3 +27,21 @@ export const addBrand = async values => {
     return error.message;
   }
 };
+
+export const getOnePhone = async values => {
+  try {
+    const { data } = await axios.post(`/brand`, values);
+    return data;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getOnePhoneStorage = async brand => {
+  try {
+    const { data } = await axios.get(`/storage/${brand}`);
+    return data;
+  } catch (error) {
+    return error.message;
+  }
+};

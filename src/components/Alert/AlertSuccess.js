@@ -9,6 +9,8 @@ export default function TransitionAlerts({ open, setOpen, text, top }) {
     <Box sx={{ position: 'absolute', top: top, width: '100%', zIndex: 9099 }}>
       <Collapse in={open}>
         <Alert
+          variant="filled"
+          severity="info"
           action={
             <IconButton
               aria-label="close"

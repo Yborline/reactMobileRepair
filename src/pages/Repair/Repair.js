@@ -26,6 +26,10 @@ const Repair = () => {
   const { filteredRepairs } = useSelector(filterPhones);
   const { dateFilterRepairs } = useSelector(findFinishPhonesDate);
 
+  const sortDate = (a, b) => {
+    return a.finishDay - b.finishDay;
+  };
+
   return (
     <Container>
       <BtnContainer spacing={2}>
@@ -46,7 +50,10 @@ const Repair = () => {
         (repairs.start.length === 0 ? (
           <EmptyText text={'Телефонів на ремонті не має'} />
         ) : (
-          <ListRepair textStatus="В ремонті" phones={repairs.start} />
+          <ListRepair
+            textStatus="В ремонті"
+            phones={repairs.start.sort(sortDate)}
+          />
         ))}
       {showSecondBtn &&
         (dateFilterRepairs.length === 0 ? (

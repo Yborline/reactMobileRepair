@@ -5,7 +5,7 @@ import Reception from './pages/Reception/Reception';
 import Repair from './pages/Repair/Repair';
 // import History from "./pages/History/History";
 // import Accounting from "./pages/Accounting/Accounting";
-// import SpareParts from "./pages/SpareParts/SpareParts";
+import SpareParts from './pages/SpareParts/SpareParts';
 import Telephones from './pages/Telephones/Telephones';
 import { useContext, useEffect } from 'react';
 import ctx from './context/themeContext';
@@ -28,6 +28,8 @@ import {
 } from './redux/auth/auth-selectors';
 import NoMatch from './pages/NoMatch/NoMatch';
 import ButtonUp from './components/ButtonUp/ButtonUp';
+import { fetchStorage } from './redux/storage/storage-operations';
+import OneItemSpareParts from './pages/SpareParts/OneItemSpareParts/OneItemSpareParts';
 
 function App() {
   const { themes } = useContext(ctx);
@@ -36,12 +38,15 @@ function App() {
   const loadingUser = useSelector(getUserLoading);
   const loggedIn = useSelector(getLoggedIn);
   const isFetchingCurrentUser = useSelector(getIsFetchingCurrent);
+  console.log('ss');
 
   useEffect(() => {
     if (loggedIn) {
       dispatch(fetchTelephones());
+      dispatch(fetchStorage());
+    } else {
+      dispatch(authOperations.fetchCurrentUser());
     }
-    dispatch(authOperations.fetchCurrentUser());
   }, [dispatch, loggedIn]);
 
   return (
@@ -66,11 +71,12 @@ function App() {
               </Route>
               {/* <Route path="/history" element={<PrivateRoute />}>
                 <Route path="/history" element={<History />} />
-              </Route>
+              </Route> */}
               <Route path="/spareParts" element={<PrivateRoute />}>
                 <Route path="/spareParts" element={<SpareParts />} />
+                <Route path=":id" element={<OneItemSpareParts />} />
               </Route>
-              <Route path="/accounting" element={<PrivateRoute />}>
+              {/* <Route path="/accounting" element={<PrivateRoute />}>
                 <Route path="/accounting" element={<Accounting />} />
               </Route> */}
               <Route path="/user" element={<PablicRoute restricted />}>
