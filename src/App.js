@@ -62,7 +62,6 @@ function App() {
               <Route path="/telephones" element={<PrivateRoute />}>
                 <Route path="/telephones" element={<Telephones />} />
               </Route>
-
               <Route path="/repair" element={<PrivateRoute />}>
                 <Route path="/repair" element={<Repair />} />
               </Route>
